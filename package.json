@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "boom": "^7.2.0",
+    "color": "^3.0.0",
+    "commander": "^2.15.0",
+    "create-react-app": "^2.1.5",
+    "hapi": "^17.2.2",
+    "inert": "^5.1.2",
+    "jsonwebtoken": "^8.2.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "react-scripts": "2.1.5"
+    "react-scripts": "2.1.5",
+    "request": "^2.85.0",
+    "selfsigned": "^1.10.2"
   },
   "scripts": {
     "start": "react-scripts start",
