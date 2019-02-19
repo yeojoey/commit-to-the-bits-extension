@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Authentication from './util/Authentication/Authentication'
+import Authentication from '../../util/Authentication/Authentication'
 
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
