@@ -101,7 +101,7 @@ const server = new Hapi.Server(serverOptions);
       path: "/{path*}",
       handler: {
         directory: {
-          path: path.join(__dirname, 'build'),
+          path: "./build",
           listing: false,
           index: true
         }
