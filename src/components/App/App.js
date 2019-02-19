@@ -11,6 +11,7 @@ class App extends Component {
 
       //if the extension is running on twitch or dev rig, set the shorthand here. otherwise, set to null.
       this.twitch = window.Twitch ? window.Twitch.ext : null
+      console.log(this.twitch);
       this.state={
           finishedLoading:false,
           theme:'light',
