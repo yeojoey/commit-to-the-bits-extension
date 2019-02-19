@@ -14,6 +14,8 @@
  *    limitations under the License.
  */
 
+require('dotenv').config();
+
 const fs = require('fs');
 const Hapi = require('hapi');
 const path = require('path');
