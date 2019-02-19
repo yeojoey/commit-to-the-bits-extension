@@ -102,8 +102,9 @@ const server = new Hapi.Server(serverOptions);
       handler: {
         directory: {
           path: "./build",
-          listing: false,
-          index: true
+          listing: true,
+          index: true,
+          redirectToSlash: true
         }
       }
     });
