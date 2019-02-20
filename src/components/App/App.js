@@ -118,7 +118,7 @@ class App extends Component {
                       <p>My opaque ID is {this.Authentication.getOpaqueId()}.</p>
                       <div>{this.Authentication.isModerator() ? <p>I am currently a mod, and here's a special mod button <input value='mod button' type='button'/></p>  : 'I am currently not a mod.'}</div>
                       <p>I have {this.Authentication.hasSharedId() ? `shared my ID, and my user_id is ${this.Authentication.getUserId()}` : 'not shared my ID'}.</p>
-                      //<p style="color:red">{this.state.textToDisplay}</p>
+                      <p style="color:red">{this.state.textToDisplay}</p>
                       <form onSubmit={this.handleSubmit}>
                         <button type="submit">Scream</button>
                       </form>

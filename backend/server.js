@@ -257,7 +257,7 @@ function screamQueryHandler(req) {
 
 function screamAddHandler(req) {
 
-  Verify request
+  //Verify request
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
