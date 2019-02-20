@@ -4,6 +4,12 @@ import Authentication from '../../util/Authentication/Authentication'
 import './App.css';
 
 class App extends Component {
+  state = {
+    response: "",
+    post: "",
+    responseToPost: "",
+    textToDisplay: ""
+  }
 
   constructor(props){
       super(props)
@@ -65,12 +71,42 @@ class App extends Component {
               this.contextUpdate(context,delta)
           })
       }
+
+      this.callApi()
+        .then(console.log("Done"))
+        .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    console.log("this is happening");
+    const response = await fetch("/api/getScream", {
+      method: "GET",
+      headers: {
+      }
+    });
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    console.log(JSON.stringify(body));
+    this.setState(body);
+    return body;
   }
 
   componentWillUnmount(){
       if(this.twitch){
           this.twitch.unlisten('broadcast', ()=>console.log('successfully unlistened'))
       }
+  }
+
+  handleSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/postScream", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
   }
 
   render() {
@@ -83,6 +119,7 @@ class App extends Component {
                       <p>My opaque ID is {this.Authentication.getOpaqueId()}.</p>
                       <div>{this.Authentication.isModerator() ? <p>I am currently a mod, and here's a special mod button <input value='mod button' type='button'/></p>  : 'I am currently not a mod.'}</div>
                       <p>I have {this.Authentication.hasSharedId() ? `shared my ID, and my user_id is ${this.Authentication.getUserId()}` : 'not shared my ID'}.</p>
+                      <p style="color:red">{this.state.textToDisplay}</p>
                   </div>
               </div>
           )
@@ -90,6 +127,10 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
+                <p style="color:red">{this.state.textToDisplay}</p>
+                <form onSubmit={this.handleSubmit}>
+                  <button type="submit">Scream</button>
+                </form>
               </div>
           )
       }

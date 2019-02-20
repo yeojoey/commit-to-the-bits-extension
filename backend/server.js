@@ -45,6 +45,9 @@ const channelColors = {};
 const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
+const channelScreams = {};
+const initialText = "Scream with me: ";
+
 const STRINGS = {
   secretEnv: usingValue('secret'),
   clientIdEnv: usingValue('client-id'),
@@ -61,6 +64,8 @@ const STRINGS = {
   cooldown: 'Please wait before clicking again',
   invalidAuthHeader: 'Invalid authorization header',
   invalidJwt: 'Invalid JWT',
+  sendText: "Sending \"%s\" to c:%s",
+  changeText: "Changing text to %s on c:%s behalf of u:%s"
 };
 
 ext.
@@ -125,6 +130,20 @@ const server = new Hapi.Server(serverOptions);
     handler: colorQueryHandler,
   });
 
+  // Test GET
+  server.route ({
+    method: 'GET',
+    path: '/api/getScream',
+    handler: screamQueryHandler
+  });
+
+  // Test POST
+  server.route ({
+    method: 'POST',
+    path: '/api/postScream',
+    handler: screamAddHandler
+  });
+
   // Start the server.
   await server.start();
   console.log(STRINGS.serverStarted, server.info.uri);
@@ -173,6 +192,17 @@ function verifyAndDecode(header) {
   throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
+function colorQueryHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the color for the channel from the payload and return it.
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const currentColor = color(channelColors[channelId] || initialColor).hex();
+  verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
+  return currentColor;
+}
+
 function colorCycleHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
@@ -199,16 +229,6 @@ function colorCycleHandler(req) {
   return currentColor;
 }
 
-function colorQueryHandler(req) {
-  // Verify all requests.
-  const payload = verifyAndDecode(req.headers.authorization);
-
-  // Get the color for the channel from the payload and return it.
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  const currentColor = color(channelColors[channelId] || initialColor).hex();
-  verboseLog(STRINGS.sendColor, currentColor, opaqueUserId);
-  return currentColor;
-}
 
 function attemptColorBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.
@@ -222,6 +242,88 @@ function attemptColorBroadcast(channelId) {
     // It isn't; schedule a delayed broadcast if we haven't already done so.
     cooldown.trigger = setTimeout(sendColorBroadcast, now - cooldown.time, channelId);
   }
+}
+
+function screamQueryHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the scream for the channel from the payload and return it.
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const currentText = (channelScreams[channelId] || initialText);
+  return { textToDisplay: currentText };
+
+}
+
+function screamAddHandler(req) {
+
+  Verify request
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  // Store the text for the channel.
+  let currentText = channelScreams[channelId] || initialText;
+
+  // Bot abuse prevention:  don't allow a user to spam the button.
+  if (userIsInCooldown(opaqueUserId)) {
+    throw Boom.tooManyRequests(STRINGS.cooldown);
+  }
+
+  // Append A
+  currentText = [currentText, "A"].join("");
+
+  channelScreams[channelId] = currentText;
+
+  // Broadcast the scream to all other extension instances on this channel.
+  attemptScreamBroadcast(channelId);
+  return { textToDisplay: currentText };
+
+}
+
+function attemptScreamBroadcast(channelId) {
+  // Check the cool-down to determine if it's okay to send now.
+  const now = Date.now();
+  const cooldown = channelCooldowns[channelId];
+  if (!cooldown || cooldown.time < now) {
+    // It is.
+    sendScreamBroadcast(channelId);
+    channelCooldowns[channelId] = { time: now + channelCooldownMs };
+  } else if (!cooldown.trigger) {
+    // It isn't; schedule a delayed broadcast if we haven't already done so.
+    cooldown.trigger = setTimeout(sendColorBroadcast, now - cooldown.time, channelId);
+  }
+}
+
+function sendScreamBroadcast(channelId) {
+  // Set the HTTP headers required by the Twitch API.
+  const headers = {
+    'Client-ID': clientId,
+    'Content-Type': 'application/json',
+    'Authorization': bearerPrefix + makeServerToken(channelId),
+  };
+
+  const currentText = channelScreams[channelId];
+  const body = JSON.stringify({
+    content_type: 'application/json',
+    message: currentText,
+    targets: ['broadcast'],
+  });
+
+  request(
+    `https://api.twitch.tv/extensions/message/${channelId}`,
+    {
+      method: 'POST',
+      headers,
+      body,
+    }
+    , (err, res) => {
+      if (err) {
+        console.log(STRINGS.messageSendError, channelId, err);
+      } else {
+        verboseLog(STRINGS.pubsubResponse, channelId, res.statusCode);
+      }
+    });
+
 }
 
 function sendColorBroadcast(channelId) {
