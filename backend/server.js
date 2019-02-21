@@ -180,6 +180,7 @@ function getOption(optionName, environmentName) {
 
 // Verify the header and the enclosed JWT.
 function verifyAndDecode(header) {
+  console.log(header);
   if (header.startsWith(bearerPrefix)) {
     try {
       const token = header.substring(bearerPrefix.length);
