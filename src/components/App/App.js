@@ -62,7 +62,7 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
-            console.log("Pubsub: " + message);
+            this.setState({ textToDisplay: message});
           })
 
           // this.twitch.listen('broadcast',(target,contentType,body)=>{
