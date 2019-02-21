@@ -118,7 +118,7 @@ const server = new Hapi.Server(serverOptions);
       }
     });
 
-  //PARKER STUFF
+  //Create a bot to listen and interact with chat.
   const AcaBot = new AcademicBot()
 
   // Handle a viewer request to cycle the color.
@@ -147,6 +147,13 @@ const server = new Hapi.Server(serverOptions);
     method: 'POST',
     path: '/api/postScream',
     handler: screamAddHandler
+  });
+
+  // GET Character
+  server.route ({
+    method: 'GET',
+    path: '/api/getCharacter',
+    handler: characterQueryHandler
   });
 
   // Start the server.
@@ -284,6 +291,22 @@ function screamAddHandler(req) {
   // Broadcast the scream to all other extension instances on this channel.
   attemptScreamBroadcast(channelId);
   return { textToDisplay: currentText };
+
+}
+
+function characterQueryHandler(req) {
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get character suggestion from collection.
+  let character = AcaBot.getCharacter();
+  if(character == 0)
+  {
+    character = "Undefined"
+  }
+
+  return { characterSuggestion: character };
 
 }
 
