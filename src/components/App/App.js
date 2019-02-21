@@ -8,7 +8,8 @@ class App extends Component {
     response: "",
     post: "",
     responseToPost: "",
-    textToDisplay: ""
+    textToDisplay: "",
+    characterSuggestion: ""
   }
 
   constructor(props){
@@ -113,6 +114,19 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleCSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/getCharacter", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   render() {
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
@@ -126,6 +140,10 @@ class App extends Component {
                       <p>{this.state.textToDisplay}</p>
                       <form onSubmit={this.handleSubmit}>
                         <button type="submit">Scream</button>
+                      </form>
+                      <p>{this.state.characterSuggestion}</p>
+                      <form onSubmit={this.handleCSubmit}>
+                        <button type="submit">Get New Character</button>
                       </form>
                   </div>
               </div>
