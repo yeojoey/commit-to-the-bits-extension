@@ -82,7 +82,6 @@ class App extends Component {
   }
 
   callApi = async () => {
-    console.log("this is happening");
     const response = await fetch("/api/getScream", {
       method: "GET",
       headers: {
