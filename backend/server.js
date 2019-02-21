@@ -187,14 +187,14 @@ function getOption(optionName, environmentName) {
 function verifyAndDecode(header) {
   // if (header.startsWith(bearerPrefix)) {
   try {
-    const token = header.substring(bearerPrefix.length);
+    const token = header; //header.substring(bearerPrefix.length);
     return jsonwebtoken.verify(token, secret, { algorithms: ['HS256'] });
     }
   catch (ex) {
     throw Boom.unauthorized(STRINGS.invalidJwt);
   }
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
-// }
+}
 
 function colorQueryHandler(req) {
   // Verify all requests.
