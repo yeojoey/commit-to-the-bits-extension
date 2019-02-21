@@ -258,7 +258,7 @@ function attemptColorBroadcast(channelId) {
 
 function screamQueryHandler(req) {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
+  console.log(JSON.stringify(req.headers));
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the scream for the channel from the payload and return it.
