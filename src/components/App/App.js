@@ -53,10 +53,6 @@ class App extends Component {
                   this.setState(()=>{
                       return {finishedLoading:true}
                   })
-
-                  this.callApi()
-                    .then(console.log("Done"))
-                    .catch(err => console.log(err));
               }
           })
 
@@ -81,6 +77,9 @@ class App extends Component {
           })
       }
 
+      this.callApi()
+        .then(console.log("Auth: " + this.Authentication.state.token))
+        .catch(err => console.log(err));
 
   }
 
