@@ -297,7 +297,7 @@ function attemptScreamBroadcast(channelId) {
     channelCooldowns[channelId] = { time: now + channelCooldownMs };
   } else if (!cooldown.trigger) {
     // It isn't; schedule a delayed broadcast if we haven't already done so.
-    cooldown.trigger = setTimeout(sendColorBroadcast, now - cooldown.time, channelId);
+    cooldown.trigger = setTimeout(sendScreamBroadcast, now - cooldown.time, channelId);
   }
 }
 
