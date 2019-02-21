@@ -9,7 +9,8 @@ class App extends Component {
     post: "",
     responseToPost: "",
     textToDisplay: "",
-    characterSuggestion: ""
+    characterSuggestion: "",
+    extensionState: ""
   }
 
   constructor(props){
@@ -18,7 +19,6 @@ class App extends Component {
 
       //if the extension is running on twitch or dev rig, set the shorthand here. otherwise, set to null.
       this.twitch = window.Twitch ? window.Twitch.ext : null
-      console.log(this.twitch);
       this.state={
           finishedLoading:false,
           theme:'light',
@@ -56,7 +56,7 @@ class App extends Component {
               }
 
               this.callApi()
-                .then(console.log("Auth: " + this.Authentication.state.token))
+                .then()
                 .catch(err => console.log(err));
 
           })

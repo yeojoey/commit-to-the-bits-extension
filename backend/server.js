@@ -257,7 +257,6 @@ function attemptColorBroadcast(channelId) {
 
 function screamQueryHandler(req) {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers));
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the scream for the channel from the payload and return it.
@@ -270,7 +269,6 @@ function screamQueryHandler(req) {
 function screamAddHandler(req) {
 
   //Verify request
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
@@ -295,7 +293,6 @@ function screamAddHandler(req) {
 
 function characterQueryHandler(req) {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get character suggestion from collection.
