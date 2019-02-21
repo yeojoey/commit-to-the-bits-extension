@@ -98,10 +98,9 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
     key: fs.readFileSync(serverPathRoot + '.key'),
   };
 }
-const server = new Hapi.Server(serverOptions);
-
 //Create a bot to listen and interact with chat.
 const AcaBot = new AcademicBot()
+const server = new Hapi.Server(serverOptions);
 
 (async () => {
 
