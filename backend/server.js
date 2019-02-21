@@ -25,6 +25,8 @@ const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 
+const AcademicBot = require('./academicbot.js')
+
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -115,6 +117,9 @@ const server = new Hapi.Server(serverOptions);
         }
       }
     });
+
+  //PARKER STUFF
+  const AcaBot = new AcademicBot()
 
   // Handle a viewer request to cycle the color.
   server.route({
