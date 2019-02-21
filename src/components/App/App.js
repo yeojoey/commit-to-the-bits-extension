@@ -55,18 +55,6 @@ class App extends Component {
                   })
               }
 
-              callApi = async () => {
-                console.log(this.Authentication.state.token);
-                const response = await fetch("/api/getScream", {
-                  method: "GET",
-                  headers: {
-                    "authorization": this.Authentication.state.token
-                  }
-                });
-              const body = await response.json();
-              if (response.status !== 200) throw Error(body.message);
-              this.setState(body);
-            }
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
@@ -88,14 +76,30 @@ class App extends Component {
           this.twitch.onContext((context,delta)=>{
               this.contextUpdate(context,delta)
           })
+
+          this.callApi()
+            .then(console.log("Auth: " + this.Authentication.state.token))
+            .catch(err => console.log(err));
       }
 
-      this.callApi()
-        .then(console.log("Done"))
-        .catch(err => console.log(err));
+      // this.callApi()
+      //   .then(console.log("Auth: " + this.Authentication.state.token))
+      //   .catch(err => console.log(err));
+
   }
 
-
+  callApi = async () => {
+    console.log(this.Authentication.state.token);
+    const response = await fetch("/api/getScream", {
+      method: "GET",
+      headers: {
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    this.setState(body);
+    return body;
   }
 
   componentWillUnmount(){
