@@ -100,6 +100,9 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 }
 const server = new Hapi.Server(serverOptions);
 
+//Create a bot to listen and interact with chat.
+const AcaBot = new AcademicBot()
+
 (async () => {
 
   await server.register(require('inert'));
@@ -117,9 +120,6 @@ const server = new Hapi.Server(serverOptions);
         }
       }
     });
-
-  //Create a bot to listen and interact with chat.
-  const AcaBot = new AcademicBot()
 
   // Handle a viewer request to cycle the color.
   server.route({
