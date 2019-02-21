@@ -55,6 +55,10 @@ class App extends Component {
                   })
               }
 
+              this.callApi()
+                .then(console.log("Auth: " + this.Authentication.state.token))
+                .catch(err => console.log(err));
+
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
@@ -77,9 +81,7 @@ class App extends Component {
               this.contextUpdate(context,delta)
           })
 
-          this.callApi()
-            .then(console.log("Auth: " + this.Authentication.state.token))
-            .catch(err => console.log(err));
+
       }
 
       // this.callApi()
