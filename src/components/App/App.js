@@ -54,6 +54,7 @@ class App extends Component {
                       return {finishedLoading:true}
                   })
               }
+
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
@@ -75,11 +76,15 @@ class App extends Component {
           this.twitch.onContext((context,delta)=>{
               this.contextUpdate(context,delta)
           })
+
+          this.callApi()
+            .then(console.log("Auth: " + this.Authentication.state.token))
+            .catch(err => console.log(err));
       }
 
-      this.callApi()
-        .then(console.log("Auth: " + this.Authentication.state.token))
-        .catch(err => console.log(err));
+      // this.callApi()
+      //   .then(console.log("Auth: " + this.Authentication.state.token))
+      //   .catch(err => console.log(err));
 
   }
 
