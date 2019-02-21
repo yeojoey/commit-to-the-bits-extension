@@ -83,7 +83,7 @@ class App extends Component {
   }
 
   callApi = async () => {
-    console.log("this is happening");
+    console.log(this.Authentication.state.token);
     const response = await fetch("/api/getScream", {
       method: "GET",
       headers: {
