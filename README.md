@@ -1,3 +1,5 @@
+Code base for [Commit to the Bits Helper](https://www.twitch.tv/ext/tndhpyr8a9l40u3m5cw5wpnrbievij-0.0.1).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -55,13 +55,17 @@ class App extends Component {
               }
           })
 
-          this.twitch.listen('broadcast',(target,contentType,body)=>{
-              this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`)
-              // now that you've got a listener, do something with the result...
-
-              // do something...
-
+          this.twitch.listen("broadcast", (target, contentType, message) => {
+            console.log("Pubsub: " + message);
           })
+
+          // this.twitch.listen('broadcast',(target,contentType,body)=>{
+          //     this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`)
+          //     // now that you've got a listener, do something with the result...
+          //
+          //     // do something...
+          //
+          // })
 
           this.twitch.onVisibilityChanged((isVisible,_c)=>{
               this.visibilityChanged(isVisible)
