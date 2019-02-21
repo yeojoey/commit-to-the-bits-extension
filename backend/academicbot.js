@@ -27,7 +27,7 @@ const ABot = class AcademicBot
     this.Bot = new TwitchBot({
       username: 'academicpark',
       oauth: 'oauth:2jrfodmjzcqlhlulsuwbid9dwzgqm3',
-      channels: ['committothebits']
+      channels: ['charlieparke']
     })
 
     this.startup()
