@@ -189,7 +189,7 @@ function verifyAndDecode(header) {
     throw Boom.unauthorized(STRINGS.invalidJwt);
   }
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
-// }
+}
 
 function colorQueryHandler(req) {
   // Verify all requests.
