@@ -180,18 +180,16 @@ function getOption(optionName, environmentName) {
 
 // Verify the header and the enclosed JWT.
 function verifyAndDecode(header) {
-  console.log(header);
-  if (header.startsWith(bearerPrefix)) {
-    try {
-      const token = header.substring(bearerPrefix.length);
-      return jsonwebtoken.verify(token, secret, { algorithms: ['HS256'] });
+  // if (header.startsWith(bearerPrefix)) {
+  try {
+    const token = header.substring(bearerPrefix.length);
+    return jsonwebtoken.verify(token, secret, { algorithms: ['HS256'] });
     }
-    catch (ex) {
-      throw Boom.unauthorized(STRINGS.invalidJwt);
-    }
+  catch (ex) {
+    throw Boom.unauthorized(STRINGS.invalidJwt);
   }
-  throw Boom.unauthorized(STRINGS.invalidAuthHeader);
-}
+  //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
+// }
 
 function colorQueryHandler(req) {
   // Verify all requests.
@@ -248,6 +246,7 @@ function attemptColorBroadcast(channelId) {
 
 function screamQueryHandler(req) {
   // Verify all requests.
+  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the scream for the channel from the payload and return it.
