@@ -195,6 +195,7 @@ function verifyAndDecode(header) {
 
 function colorQueryHandler(req) {
   // Verify all requests.
+  console.log("Auth: " + req.headers.authorization);
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the color for the channel from the payload and return it.

@@ -82,6 +82,7 @@ class App extends Component {
     const response = await fetch("/api/getScream", {
       method: "GET",
       headers: {
+        "authorization": this.Authentication.state.token
       }
     });
     const body = await response.json();
