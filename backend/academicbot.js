@@ -334,6 +334,7 @@ const ABot = class AcademicBot
 
   voteFor(choice, user)
   {
+    console.log("Vote received. Voting for: "+ choice +", Vote by: " + user)
     if(this.votedAlready.indexOf(user) > -1)
     {
       return
