@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Voting from '../Voting/Voting'
+import Button from 'react-bootstrap/Button';
 
 import './App.css';
 
@@ -201,6 +202,7 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
+                <Voting />
               </div>
           )
       }

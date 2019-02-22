@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button, ButtonToolbar from 'react-bootstrap/Button';
 
 class Voting extends Component {
 
@@ -22,13 +23,19 @@ class Voting extends Component {
   render() {
 
     return(
-
       <div>
-        <p>Vote on an option:</p>
-        <input type="button" onClick={() => this.handleVote(0)} value={this.props.options ? this.props.options[0] : "test1"} />
-        <input type="button" onClick={() => this.handleVote(1)} value={this.props.options ? this.props.options[1] : "test2"} />
-        <input type="button" onClick={() => this.handleVote(2)} value={this.props.options ? this.props.options[2] : "test3"} />
-        <input type="button" onClick={() => this.handleVote(3)} value={this.props.options ? this.props.options[3] : "test4"} />
+      {this.state.votedBefore ?
+        <p>Thanks for voting!</p> :
+        <div>
+          <p>Vote on an option:</p>
+          <ButtonToolbar>
+            <Button onClick={() => this.handleVote(0)} value={this.props.options ? this.props.options[0] : "test1"} />
+            <Button onClick={() => this.handleVote(1)} value={this.props.options ? this.props.options[1] : "test2"} />
+            <Button onClick={() => this.handleVote(2)} value={this.props.options ? this.props.options[2] : "test3"} />
+            <Button onClick={() => this.handleVote(3)} value={this.props.options ? this.props.options[3] : "test4"} />
+          </ButtonToolbar>
+        </div>
+      }
       </div>
 
     )
