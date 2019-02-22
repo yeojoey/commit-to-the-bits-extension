@@ -376,7 +376,7 @@ function botEndVoteHandler(req)
   console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
-  // Start the vote with the bot.
+  // Display the winner of the vote.
   AcaBot.displayWinner();
 
   const state = AcaBot.getState();

@@ -156,7 +156,7 @@ class App extends Component {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
+        "authorization": this.Authentication.state.token,
         "userID": this.Authentication.getOpaqueId()
       },
       vote: 3
