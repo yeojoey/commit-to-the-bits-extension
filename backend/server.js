@@ -161,7 +161,6 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/startVote",
     handler: botStartVoteHandler
   });
-  /*
 
   // Config: end voting
   server.route ({
@@ -181,14 +180,6 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/getBotState",
     handler: botQueryHandler
   })
-
-  // GET Character
-  server.route ({
-    method: 'POST',
-    path: '/api/getCharacter',
-    handler: characterQueryHandler
-  });
-*/
   // Start the server.
   await server.start();
   console.log(STRINGS.serverStarted, server.info.uri);
@@ -326,19 +317,22 @@ function screamAddHandler(req) {
 
 }
 
-function characterQueryHandler(req) {
+function botQueryHandler(req)
+{
   // Verify all requests.
+  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
-  // Get character suggestion from collection.
-  let character = AcaBot.getCharacter();
-  if(character == 0)
-  {
-    character = "Undefined"
-  }
-
-  return { characterSuggestion: character };
-
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      isVoting: state.voting,
+      votes: state.votes,
+      options: state.options,
+      votedAlready: state.votedAlready,
+      finalWord: state.finalWord
+    }
+  };
 }
 
 function botClearHandler(req)
@@ -349,6 +343,14 @@ function botClearHandler(req)
 
   // Clear bot info.
   AcaBot.clear();
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      options: state.options,
+      isVoting: state.isVoting
+    }
+  };
 }
 
 function botStartVoteHandler(req)
@@ -359,6 +361,46 @@ function botStartVoteHandler(req)
 
   // Start the vote with the bot.
   AcaBot.vote();
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      options: state.options,
+      isVoting: state.isVoting
+    }
+  };
+}
+
+function botEndVoteHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Display the winner of the vote.
+  AcaBot.displayWinner();
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      finalWord: state.finalWord,
+      isVoting: state.isVoting
+    }
+  };
+}
+
+function botVoteHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the vote
+  const vote = req.vote;
+  console.log("In the server, the vote is "+vote)
+
+  // Send the vote
+  AcaBot.voteFor(vote, req.headers.userID);
 
   const state = AcaBot.getState();
   return {

@@ -147,7 +147,10 @@ class App extends Component {
     this.setState(body);
   }
 
-    this.setState({ options: this.state.botState.options });
+  handleEndSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/endVote", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.Authentication.state.token
@@ -181,7 +184,7 @@ class App extends Component {
 
                   {this.Authentication.isModerator() ? <Config isVoting={this.state.botState.isVoting} /> : "" }
 
-                  {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <b>{this.getFinalWord()}</b>}
+                  {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <b>{this.state.botState.finalWord}</b>}
 
                       // <p>Hello world!</p>
                       // <p>My token is: {this.Authentication.state.token}</p>
@@ -208,10 +211,6 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
-
-                <Config isVoting={this.state.botState.isVoting} />
-
-                {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <p><b>{this.getFinalWord()}</b></p>}
 
                 <p>{this.state.textToDisplay}</p>
                 <form onSubmit={this.handleSubmit}>
