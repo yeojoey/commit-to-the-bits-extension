@@ -162,14 +162,15 @@ class App extends Component {
 
   handleVoteSubmit = async e => {
     e.preventDefault();
+    console.log("OpaqueID: " + this.Authentication.getOpaqueId())
     const response = await fetch ("/api/vote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.Authentication.state.token,
-        "userID": this.Authentication.getOpaqueId()
+        "userID": this.Authentication.getOpaqueId(),
+        "vote": 3
       },
-      vote: 3
     });
     const body = await response.json();
     this.setState(body);
