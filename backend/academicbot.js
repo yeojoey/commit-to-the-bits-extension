@@ -345,7 +345,7 @@ const ABot = class AcademicBot
     {
       return
     }
-    this.votes[parseInt(choice)-1]++
+    this.votes[parseInt(choice)]++
     this.votedAlready.push(user)
   }
 
