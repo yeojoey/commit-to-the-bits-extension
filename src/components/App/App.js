@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Authentication from '../../util/Authentication/Authentication'
+import Config from '../Config/Config'
+import Voting from '../Voting/Voting'
 
 import './App.css';
 
@@ -9,8 +11,7 @@ class App extends Component {
     post: "",
     responseToPost: "",
     textToDisplay: "",
-    characterSuggestion: "",
-    extensionState: ""
+    characterSuggestion: ""
   }
 
   constructor(props){
@@ -23,6 +24,12 @@ class App extends Component {
           finishedLoading:false,
           theme:'light',
           isVisible:true
+      }
+
+      this.gameState = {
+          isVoting: false,
+          options: ["batman", "superman", "wonder woman", "aquaman"],
+          finalWord: "batman"
       }
   }
 
@@ -141,6 +148,11 @@ class App extends Component {
           return (
               <div className="App">
                   <div className={this.state.theme === 'light' ? 'App-light' : 'App-dark'} >
+
+                  {this.Authentication.isModerator() ? <Config /> : "" }
+
+                  {this.props.gameState.isVoting ? <Voting /> : `<h1>${this.props.gameState.finalWord}</h1>`}
+
                       <p>Hello world!</p>
                       <p>My token is: {this.Authentication.state.token}</p>
                       <p>My opaque ID is {this.Authentication.getOpaqueId()}.</p>
@@ -161,6 +173,9 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
+                <Config />
+
+                {this.props.gameState.isVoting ? <Voting /> : `<h1>${this.props.gameState.finalWord}</h1>`}
                 <p>{this.state.textToDisplay}</p>
                 <form onSubmit={this.handleSubmit}>
                   <button type="submit">Scream</button>

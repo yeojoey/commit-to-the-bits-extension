@@ -162,6 +162,7 @@ const server = new Hapi.Server(serverOptions);
   // Periodically clear cool-down tracking to prevent unbounded growth due to
   // per-session logged-out user tokens.
   setInterval(() => { userCooldowns = {}; }, userCooldownClearIntervalMs);
+
 })();
 
 function usingValue(name) {
