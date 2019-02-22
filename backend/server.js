@@ -168,7 +168,6 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/endVote",
     handler: botEndVoteHandler
   });
-  /*
 
   server.route ({
     method: 'POST',
@@ -176,6 +175,7 @@ const server = new Hapi.Server(serverOptions);
     handler: botVoteHandler
   });
 
+/*
   server.route ({
     method: "GET",
     path: "/api/getBotState",
@@ -375,7 +375,7 @@ function botEndVoteHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Start the vote with the bot.
-  AcaBot.displayWinner(3);
+  AcaBot.displayWinner();
 
   const state = AcaBot.getState();
   return {
@@ -384,6 +384,19 @@ function botEndVoteHandler(req)
       isVoting: state.isVoting
     }
   };
+}
+
+function botVoteHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the vote
+  const vote = req.vote;
+
+  // Send the vote
+  AcaBot.voteFor(vote);
 }
 
 function attemptScreamBroadcast(channelId) {

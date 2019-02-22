@@ -150,6 +150,20 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleVoteSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/vote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      },
+      vote: 3
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   render() {
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
@@ -169,6 +183,9 @@ class App extends Component {
                       </form>
                       <form onSubmit={this.handleEndSubmit}>
                         <button type="submit">End Vote</button>
+                      </form>
+                      <form onSubmit={this.handleVoteSubmit}>
+                        <button type="submit">Vote for 3</button>
                       </form>
                   </div>
               </div>
