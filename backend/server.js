@@ -397,12 +397,13 @@ function botVoteHandler(req)
 
   // Get the vote
   const vote = req;
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   console.log("req.headers.authorization" + req.headers.authorization);
-  console.log("req.headers.userID" + req.headers.userID);
+  console.log("req.headers.userID" + opaqueUserId);
   console.log("req.headers.vote" + req.headers.vote);
 
   // Send the vote
-  AcaBot.voteFor(req.headers.vote, req.headers.userID);
+  AcaBot.voteFor(req.headers.vote, opaqueUserId);
 
   const state = AcaBot.getState();
   return {
