@@ -2,7 +2,8 @@
   text-align: center;
   background-color: rgba(255, 255, 255, 0.4);
   position:absolute;
-  bottom:0
+  bottom:0;
+  width:100%
 }
 
 .App-logo {
