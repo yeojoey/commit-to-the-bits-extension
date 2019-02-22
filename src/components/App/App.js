@@ -181,6 +181,10 @@ class App extends Component {
 
   }
 
+  handleVote = (a) => {
+    handleVoteSubmit(a);
+  }
+
   render() {
 
       if (this.state.finishedLoading && this.state.isVisible) {
@@ -194,7 +198,7 @@ class App extends Component {
                             handleEnd={this.handleEndSubmit}
                             handleClear={this.handleClear} /> : "" }
 
-                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVoteSubmit} /> : <b>{this.state.botState.finalWord}</b>}
+                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : <b>{this.state.botState.finalWord}</b>}
 
                       <p>{this.state.textToDisplay}</p>
                       <form onSubmit={this.handleSubmit}>
