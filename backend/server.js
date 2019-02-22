@@ -120,20 +120,6 @@ const server = new Hapi.Server(serverOptions);
       }
     });
 
-  // Test GET
-  server.route ({
-    method: 'GET',
-    path: '/api/getScream',
-    handler: screamQueryHandler
-  });
-
-  // Test POST
-  server.route ({
-    method: 'POST',
-    path: '/api/postScream',
-    handler: screamAddHandler
-  });
-
   // Config: clear database
   server.route ({
     method: 'POST',
