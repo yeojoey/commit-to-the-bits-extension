@@ -161,24 +161,24 @@ class App extends Component {
   }
 
   handleVoteSubmit = async (vote) => {
-    try {
-      //e.preventDefault();
-      const userID = this.Authentication.getOpaqueId();
-      const response = await fetch ("/api/vote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": this.Authentication.state.token,
-          "userID": userID,
-          "vote": vote
-        },
-      });
-      const body = await response.json();
-      console.log(JSON.stringify(body));
-      this.setState(body);
-    } catch (e) {
-      console.log(e.message);
-    }
+    // try {
+    //   //e.preventDefault();
+    //   const userID = this.Authentication.getOpaqueId();
+    //   const response = await fetch ("/api/vote", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "authorization": this.Authentication.state.token,
+    //       "userID": userID,
+    //       "vote": vote
+    //     },
+    //   });
+    //   const body = await response.json();
+    //   console.log(JSON.stringify(body));
+    //   this.setState(body);
+    // } catch (e) {
+    //   console.log(e.message);
+    // }
 
   }
 
