@@ -341,6 +341,13 @@ function botClearHandler(req)
 
   // Clear bot info.
   AcaBot.clear();
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      options: state.options,
+      isVoting: state.isVoting
+    }
 }
 
 function botStartVoteHandler(req)
@@ -390,6 +397,13 @@ function botVoteHandler(req)
 
   // Send the vote
   AcaBot.voteFor(vote);
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      options: state.options,
+      isVoting: state.isVoting
+    }
 }
 
 function attemptScreamBroadcast(channelId) {
