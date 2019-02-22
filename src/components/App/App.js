@@ -10,7 +10,11 @@ class App extends Component {
     responseToPost: "",
     textToDisplay: "",
     characterSuggestion: "",
+<<<<<<< HEAD
     botState: ""
+=======
+    extensionState: ""
+>>>>>>> 9ef86666e2f1b6b3cb069df67039ed5c15b85c9c
   }
 
   constructor(props){
@@ -19,7 +23,6 @@ class App extends Component {
 
       //if the extension is running on twitch or dev rig, set the shorthand here. otherwise, set to null.
       this.twitch = window.Twitch ? window.Twitch.ext : null
-      console.log(this.twitch);
       this.state={
           finishedLoading:false,
           theme:'light',
@@ -56,10 +59,14 @@ class App extends Component {
                   })
               }
 
+              this.callApi()
+                .then()
+                .catch(err => console.log(err));
+
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
-            console.log("Pubsub: " + message);
+            this.setState({ textToDisplay: message});
           })
 
           // this.twitch.listen('broadcast',(target,contentType,body)=>{
@@ -78,9 +85,7 @@ class App extends Component {
               this.contextUpdate(context,delta)
           })
 
-          this.callApi()
-            .then(console.log("Auth: " + this.Authentication.state.token))
-            .catch(err => console.log(err));
+
       }
 
       // this.callApi()
