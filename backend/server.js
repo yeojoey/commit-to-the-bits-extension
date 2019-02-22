@@ -255,7 +255,6 @@ function screamAddHandler(req) {
 function botQueryHandler(req)
 {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
   const state = AcaBot.getState();
@@ -329,15 +328,11 @@ function botEndVoteHandler(req)
 function botVoteHandler(req)
 {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the vote
   const vote = req;
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  console.log("req.headers.authorization" + req.headers.authorization);
-  console.log("req.headers.userID" + opaqueUserId);
-  console.log("req.headers.vote" + req.headers.vote);
 
   // Send the vote
   AcaBot.voteFor(req.headers.vote, opaqueUserId);
@@ -374,7 +369,7 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  console.log("Attempting to broadcast ")
+  console.log("Attempting to broadcast " + body);
 
   const body = JSON.stringify({
     content_type: 'application/json',
