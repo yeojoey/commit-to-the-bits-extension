@@ -348,6 +348,7 @@ function botClearHandler(req)
       options: state.options,
       isVoting: state.isVoting
     }
+  };
 }
 
 function botStartVoteHandler(req)
