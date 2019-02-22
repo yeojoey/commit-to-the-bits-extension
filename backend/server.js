@@ -161,6 +161,7 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/startVote",
     handler: botStartVoteHandler
   });
+  /*
 
   // Config: end voting
   server.route ({
@@ -187,7 +188,7 @@ const server = new Hapi.Server(serverOptions);
     path: '/api/getCharacter',
     handler: characterQueryHandler
   });
-
+*/
   // Start the server.
   await server.start();
   console.log(STRINGS.serverStarted, server.info.uri);
