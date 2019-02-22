@@ -395,7 +395,7 @@ function botVoteHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Get the vote
-  const vote = JSON.stringify(req.vote);
+  const vote = JSON.stringify(req);
   console.log("In the server, the vote is "+vote)
 
   // Send the vote
