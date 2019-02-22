@@ -272,7 +272,6 @@ function botQueryHandler(req)
 function botClearHandler(req)
 {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Clear bot info.
@@ -290,7 +289,6 @@ function botClearHandler(req)
 function botStartVoteHandler(req)
 {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
@@ -311,7 +309,6 @@ function botStartVoteHandler(req)
 function botEndVoteHandler(req)
 {
   // Verify all requests.
-  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
@@ -376,9 +373,6 @@ function sendStateBroadcast(channelId) {
     message: obj,
     targets: ['broadcast'],
   });
-
-
-  console.log("Attempting to broadcast " + body);
 
   request(
     `https://api.twitch.tv/extensions/message/${channelId}`,
