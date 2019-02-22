@@ -148,9 +148,42 @@ const server = new Hapi.Server(serverOptions);
     handler: screamAddHandler
   });
 
+  // Config: clear database
+  server.route ({
+    method: 'POST',
+    path: "/api/clear",
+    handler: botClearHandler
+  });
+
+  // Config: start Voting
+  server.route ({
+    method: 'POST',
+    path: "/api/startVote",
+    handler: botStartVoteHandler
+  });
+
+  // Config: end voting
+  server.route ({
+    method: 'POST',
+    path: "/api/endVote",
+    handler: botEndVoteHandler
+  });
+
+  server.route ({
+    method: 'POST',
+    path: '/api/vote',
+    handler: botVoteHandler
+  });
+
+  server.route ({
+    method: "GET",
+    path: "/api/getBotState",
+    handler: botQueryHandler
+  })
+
   // GET Character
   server.route ({
-    method: 'GET',
+    method: 'POST',
     path: '/api/getCharacter',
     handler: characterQueryHandler
   });
@@ -307,6 +340,34 @@ function characterQueryHandler(req) {
 
   return { characterSuggestion: character };
 
+}
+
+function botClearHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Clear bot info.
+  AcaBot.clear();
+}
+
+function botStartVoteHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Start the vote with the bot.
+  AcaBot.vote();
+
+  const state = AcaBot.getState().json();
+  return {
+    botState: {
+      options: state.options,
+      isVoting: state.isVoting
+    }
+  };
 }
 
 function attemptScreamBroadcast(channelId) {

@@ -5,7 +5,7 @@ var os = require('os')
 const ABot = class AcademicBot
 {
 
-  constructor()
+  constructor(channel = "charlieparke")
   {
     //Suggestion Lists
     this.character  = []
@@ -27,7 +27,7 @@ const ABot = class AcademicBot
     this.Bot = new TwitchBot({
       username: 'academicpark',
       oauth: 'oauth:2jrfodmjzcqlhlulsuwbid9dwzgqm3',
-      channels: ['charlieparke']
+      channels: [channel]
     })
 
     this.startup()
@@ -111,6 +111,36 @@ const ABot = class AcademicBot
         }
       }
     })
+  }
+
+  // Clear internal information
+  clear()
+  {
+    //Suggestion Lists
+    this.character  = []
+    this.relationship = []
+    this.objective = []
+    this.where = []
+
+    //Voting variables
+    this.voting = false
+    this.votes = []
+    this.options = []
+    this.votedAlready = []
+  }
+
+  getState()
+  {
+    return {
+      character: this.character,
+      relationship: this.relationship,
+      objective: this.objective,
+      where: this.where,
+      isVoting: this.voting,
+      votes: this.votes,
+      options: this.options,
+      votedAlready: this.votedAlready
+    };
   }
 
   //SUGGESTION ADDITION
@@ -355,10 +385,10 @@ const ABot = class AcademicBot
     this.Bot.say("Format: '!v #'")
 
     //Tabulate results
-    setTimeout(() =>
-    {
-      this.displayWinner()
-    }, 15000)
+    //setTimeout(() =>
+    //{
+    //  this.displayWinner()
+    //}, 15000)
   }
 
   //Print out hotkey information
