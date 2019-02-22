@@ -25,10 +25,10 @@ class Voting extends Component {
 
       <div>
         <p>Vote on an option:</p>
-        <input type="button" onClick={() => this.props.handleVote(0)} value={this.props.options ? this.props.options[0] : "test1"} />
-        <input type="button" onClick={() => this.props.handleVote(1)} value={this.props.options ? this.props.options[1] : "test2"} />
-        <input type="button" onClick={() => this.props.handleVote(2)} value={this.props.options ? this.props.options[2] : "test3"} />
-        <input type="button" onClick={() => this.props.handleVote(3)} value={this.props.options ? this.props.options[3] : "test4"} />
+        <input type="button" onClick={() => this.handleVote(0)} value={this.props.options ? this.props.options[0] : "test1"} />
+        <input type="button" onClick={() => this.handleVote(1)} value={this.props.options ? this.props.options[1] : "test2"} />
+        <input type="button" onClick={() => this.handleVote(2)} value={this.props.options ? this.props.options[2] : "test3"} />
+        <input type="button" onClick={() => this.handleVote(3)} value={this.props.options ? this.props.options[3] : "test4"} />
       </div>
 
     )
