@@ -370,11 +370,11 @@ function sendStateBroadcast(channelId) {
 
   const state = AcaBot.getState();
 
-  const body = {
+  const body = JSON.stringify({
     content_type: 'application/json',
     message: {botState: state},
     targets: ['broadcast'],
-  };
+  });
 
 
   console.log("Attempting to broadcast " + body);
