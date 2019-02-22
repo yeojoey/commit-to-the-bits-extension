@@ -12,6 +12,7 @@ class App extends Component {
     characterSuggestion: "",
     botState: ""
   }
+  
 
   constructor(props){
       super(props)
