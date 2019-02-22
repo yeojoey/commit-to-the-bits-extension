@@ -19,6 +19,8 @@ const ABot = class AcademicBot
     this.options = []
     this.votedAlready = []
 
+    this.finalWord = ""
+
     //Hotkey Explanations
     this.hotkeys = ["!v - Initiates voting. This will grab a random suggestion from each of C, R, O, and W (if one exists) and post them in chat. It accepts votes for 15 seconds, or until it is manually stopped, and then posts the results.",
                   "!# - Manually selects a winner. This hotkey will only work while voting is in progress. It allows the user to select the suggestion they wish to win, denoted by its number. Voting ends immediately.",
@@ -139,7 +141,8 @@ const ABot = class AcademicBot
       isVoting: this.voting,
       votes: this.votes,
       options: this.options,
-      votedAlready: this.votedAlready
+      votedAlready: this.votedAlready,
+      finalWord: this.finalWord
     };
   }
 
@@ -364,7 +367,8 @@ const ABot = class AcademicBot
         console.log("Invalid winner chosen.")
         return -1
       }
-      this.Bot.say("Winner is " + this.options[winner])
+      this.finalWord = this.options[winner]
+      this.Bot.say("Winner is " + this.finalWord)
     }
     this.voting = false
   }

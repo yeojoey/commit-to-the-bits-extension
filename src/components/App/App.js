@@ -12,7 +12,7 @@ class App extends Component {
     characterSuggestion: "",
     botState: ""
   }
-  
+
 
   constructor(props){
       super(props)
@@ -124,9 +124,22 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleCSubmit = async e => {
+  handleStartSubmit = async e => {
     e.preventDefault();
     const response = await fetch ("/api/startVote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
+  handleEndSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/endVote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -151,9 +164,11 @@ class App extends Component {
                       <form onSubmit={this.handleSubmit}>
                         <button type="submit">Scream</button>
                       </form>
-                      <p>{this.state.characterSuggestion}</p>
-                      <form onSubmit={this.handleCSubmit}>
-                        <button type="submit">Get New Character</button>
+                      <form onSubmit={this.handleStartSubmit}>
+                        <button type="submit">Start Vote</button>
+                      </form>
+                      <form onSubmit={this.handleEndSubmit}>
+                        <button type="submit">End Vote</button>
                       </form>
                   </div>
               </div>

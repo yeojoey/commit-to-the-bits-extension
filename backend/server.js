@@ -161,7 +161,6 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/startVote",
     handler: botStartVoteHandler
   });
-  /*
 
   // Config: end voting
   server.route ({
@@ -169,6 +168,7 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/endVote",
     handler: botEndVoteHandler
   });
+  /*
 
   server.route ({
     method: 'POST',
@@ -363,6 +363,24 @@ function botStartVoteHandler(req)
   return {
     botState: {
       options: state.options,
+      isVoting: state.isVoting
+    }
+  };
+}
+
+function botEndVoteHandler(req)
+{
+  // Verify all requests.
+  console.log(JSON.stringify(req.headers))
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Start the vote with the bot.
+  AcaBot.displayWinner(3);
+
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      finalWord: state.finalWord,
       isVoting: state.isVoting
     }
   };
