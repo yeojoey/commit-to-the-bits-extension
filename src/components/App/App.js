@@ -10,11 +10,7 @@ class App extends Component {
     responseToPost: "",
     textToDisplay: "",
     characterSuggestion: "",
-<<<<<<< HEAD
     botState: ""
-=======
-    extensionState: ""
->>>>>>> 9ef86666e2f1b6b3cb069df67039ed5c15b85c9c
   }
 
   constructor(props){
