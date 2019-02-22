@@ -4,6 +4,10 @@ var os = require('os')
 
 require('dotenv').config();
 
+const defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
+const defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
+const defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
+const defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
 
 const ABot = class AcademicBot
 {
@@ -11,10 +15,10 @@ const ABot = class AcademicBot
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
     //Suggestion Lists
-    this.character  = []
-    this.relationship = []
-    this.objective = []
-    this.where = []
+    this.character  = defaultCharacter.slice()
+    this.relationship = defaultRelationship.slice()
+    this.objective = defaultObjective.slice()
+    this.where = defaultWhere.slice()
 
     //Voting variables
     this.voting = false
@@ -122,10 +126,10 @@ const ABot = class AcademicBot
   clear()
   {
     //Suggestion Lists
-    this.character  = []
-    this.relationship = []
-    this.objective = []
-    this.where = []
+    this.character  = defaultCharacter.slice()
+    this.relationship = defaultRelationship.slice()
+    this.objective = defaultObjective.slice()
+    this.where = defaultWhere.slice()
 
     //Voting variables
     this.voting = false
