@@ -404,6 +404,7 @@ function botVoteHandler(req)
       options: state.options,
       isVoting: state.isVoting
     }
+  };
 }
 
 function attemptScreamBroadcast(channelId) {
