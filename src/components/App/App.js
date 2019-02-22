@@ -157,6 +157,7 @@ class App extends Component {
       headers: {
         "Content-Type": "application/json",
         "authorization": this.Authentication.state.token
+        "userID": this.Authentication.getOpaqueId()
       },
       vote: 3
     });

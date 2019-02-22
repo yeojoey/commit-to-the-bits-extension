@@ -175,13 +175,11 @@ const server = new Hapi.Server(serverOptions);
     handler: botVoteHandler
   });
 
-/*
   server.route ({
     method: "GET",
     path: "/api/getBotState",
     handler: botQueryHandler
   })
-*/
   // Start the server.
   await server.start();
   console.log(STRINGS.serverStarted, server.info.uri);
@@ -318,19 +316,22 @@ function screamAddHandler(req) {
 
 }
 
-function characterQueryHandler(req) {
+function botQueryHandler(req)
+{
   // Verify all requests.
+  console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
 
-  // Get character suggestion from collection.
-  let character = AcaBot.getCharacter();
-  if(character == 0)
-  {
-    character = "Undefined"
-  }
-
-  return { characterSuggestion: character };
-
+  const state = AcaBot.getState();
+  return {
+    botState: {
+      isVoting: state.voting,
+      votes: state.votes,
+      options: state.options,
+      votedAlready: state.votedAlready,
+      finalWord: state.finalWord
+    }
+  };
 }
 
 function botClearHandler(req)
@@ -397,7 +398,7 @@ function botVoteHandler(req)
   const vote = req.vote;
 
   // Send the vote
-  AcaBot.voteFor(vote);
+  AcaBot.voteFor(vote, req.headers.userID);
 
   const state = AcaBot.getState();
   return {
