@@ -359,7 +359,7 @@ function botStartVoteHandler(req)
   // Start the vote with the bot.
   AcaBot.vote();
 
-  const state = AcaBot.getState().json();
+  const state = AcaBot.getState();
   return {
     botState: {
       options: state.options,
