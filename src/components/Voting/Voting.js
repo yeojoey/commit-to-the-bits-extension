@@ -30,10 +30,10 @@ class Voting extends Component {
         <div>
           <p>Vote on an option:</p>
           <ButtonToolbar>
-            <Button onClick={() => this.handleVote(0)} value={this.props.options ? this.props.options[0] : "test1"} />
-            <Button onClick={() => this.handleVote(1)} value={this.props.options ? this.props.options[1] : "test2"} />
-            <Button onClick={() => this.handleVote(2)} value={this.props.options ? this.props.options[2] : "test3"} />
-            <Button onClick={() => this.handleVote(3)} value={this.props.options ? this.props.options[3] : "test4"} />
+            <Button onClick={() => this.handleVote(0)}> {this.props.options ? this.props.options[0] : "test1"} </Button>
+            <Button onClick={() => this.handleVote(1)}> {this.props.options ? this.props.options[1] : "test2"} </Button>
+            <Button onClick={() => this.handleVote(2)}> {this.props.options ? this.props.options[2] : "test3"} </Button>
+            <Button onClick={() => this.handleVote(3)}> {this.props.options ? this.props.options[3] : "test4"} </Button>
           </ButtonToolbar>
         </div>
       }
