@@ -14,9 +14,7 @@ class Voting extends Component {
 
   handleVote(i) {
 
-    this.state = {
-      votedBefore: true
-    }
+    this.setState({votedBefore: true});
 
     this.props.handleVoteSubmit(i);
   }
