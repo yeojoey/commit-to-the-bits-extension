@@ -369,10 +369,11 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
+  const obj = JSON.stringify({botState: state});
 
   const body = JSON.stringify({
     content_type: 'application/json',
-    message: {botState: state},
+    message: obj,
     targets: ['broadcast'],
   });
 
