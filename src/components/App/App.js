@@ -103,7 +103,7 @@ class App extends Component {
 
   callApi = async () => {
     console.log(this.Authentication.state.token);
-    const response = await fetch("/api/getScream", {
+    const response = await fetch("/api/getBotState", {
       method: "GET",
       headers: {
         "authorization": this.Authentication.state.token
@@ -160,20 +160,25 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleVoteSubmit = async e => {
-    e.preventDefault();
-    const userID = this.Authentication.getOpaqueId();
-    const response = await fetch ("/api/vote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token,
-        "userID": userID,
-        "vote": 3
-      },
-    });
-    const body = await response.json();
-    this.setState(body);
+  handleVoteSubmit = async (vote) => {
+    try {
+      //e.preventDefault();
+      const userID = this.Authentication.getOpaqueId();
+      const response = await fetch ("/api/vote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": this.Authentication.state.token,
+          "userID": userID,
+          "vote": vote
+        },
+      });
+      const body = await response.json();
+      this.setState(body);
+    } catch (e) {
+      console.log(e.message);
+    }
+
   }
 
   render() {
@@ -183,9 +188,13 @@ class App extends Component {
               <div className="App">
                   <div className={this.state.theme === 'light' ? 'App-light' : 'App-dark'} >
 
-                  {this.Authentication.isModerator() ? <Config isVoting={this.state.botState.isVoting} /> : "" }
+                  {this.Authentication.isModerator() ?
+                    <Config isVoting={this.state.botState.isVoting}
+                            handleStart={this.handleStartSubmit}
+                            handleEnd={this.handleEndSubmit}
+                            handleClear={this.handleClear} /> : "" }
 
-                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} /> : <b>{this.state.botState.finalWord}</b>}
+                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit = {this.handleVoteSubmit} /> : <b>{this.state.botState.finalWord}</b>}
 
                       <p>{this.state.textToDisplay}</p>
                       <form onSubmit={this.handleSubmit}>
@@ -207,7 +216,6 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
-
                 <p>{this.state.textToDisplay}</p>
                 <form onSubmit={this.handleSubmit}>
                   <button type="submit">Scream</button>
