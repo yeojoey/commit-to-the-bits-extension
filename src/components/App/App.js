@@ -194,11 +194,6 @@ class App extends Component {
                             handleClear={this.handleClear} /> : "" }
 
                   {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : <b>{this.state.botState.finalWord}</b>}
-
-                      <p>{this.state.textToDisplay}</p>
-                      <form onSubmit={this.handleSubmit}>
-                        <button type="submit">Scream</button>
-                      </form>
                   </div>
               </div>
           )
@@ -206,10 +201,6 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
-                <p>{this.state.textToDisplay}</p>
-                <form onSubmit={this.handleSubmit}>
-                  <button type="submit">Scream</button>
-                </form>
               </div>
           )
       }
