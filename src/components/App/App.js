@@ -135,7 +135,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
-    console.log("Options received: " + state.botState.options)
+    console.log("Options received: " + this.state.botState.options)
   }
 
   handleEndSubmit = async e => {
