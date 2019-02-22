@@ -174,6 +174,7 @@ class App extends Component {
         },
       });
       const body = await response.json();
+      console.log(JSON.stringify(body));
       this.setState(body);
     } catch (e) {
       console.log(e.message);
