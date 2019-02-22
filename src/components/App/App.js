@@ -73,7 +73,8 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
-            this.setState({ textToDisplay: message});
+            console.log("Received broadcast: " + JSON.stringify(message));
+            this.setState(message);
           })
 
           // this.twitch.listen('broadcast',(target,contentType,body)=>{
