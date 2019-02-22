@@ -2,10 +2,13 @@ const TwitchBot = require('twitch-bot')
 const fs = require('fs')
 var os = require('os')
 
+require('dotenv').config();
+
+
 const ABot = class AcademicBot
 {
 
-  constructor(channel = "charlieparke")
+  constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
     //Suggestion Lists
     this.character  = []
@@ -25,8 +28,8 @@ const ABot = class AcademicBot
                   "!h - Prints hotkey information."]
 
     this.Bot = new TwitchBot({
-      username: 'academicpark',
-      oauth: 'oauth:2jrfodmjzcqlhlulsuwbid9dwzgqm3',
+      username: process.env.TWITCHBOT_USERNAME,
+      oauth: process.env.TWITCHBOT_OAUTH,
       channels: [channel]
     })
 
