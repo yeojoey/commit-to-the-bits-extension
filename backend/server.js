@@ -372,8 +372,7 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-
-  const currentText = channelScreams[channelId];
+  
   const body = JSON.stringify({
     content_type: 'application/json',
     message: {botState: state},
