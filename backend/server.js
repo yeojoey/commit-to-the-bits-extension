@@ -369,13 +369,15 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  console.log("Attempting to broadcast " + body);
 
   const body = JSON.stringify({
     content_type: 'application/json',
     message: {botState: state},
     targets: ['broadcast'],
   });
+
+
+  console.log("Attempting to broadcast " + body);
 
   request(
     `https://api.twitch.tv/extensions/message/${channelId}`,
