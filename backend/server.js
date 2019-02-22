@@ -293,11 +293,14 @@ function botStartVoteHandler(req)
   // Verify all requests.
   console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   // Start the vote with the bot.
   AcaBot.vote();
 
   const state = AcaBot.getState();
+
+  attemptStateBroadcast(channelId);
   return {
     botState: {
       options: state.options,
@@ -311,16 +314,15 @@ function botEndVoteHandler(req)
   // Verify all requests.
   console.log(JSON.stringify(req.headers))
   const payload = verifyAndDecode(req.headers.authorization);
+    const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   // Display the winner of the vote.
   AcaBot.displayWinner();
 
   const state = AcaBot.getState();
+  attemptStateBroadcast(channelId);
   return {
-    botState: {
-      finalWord: state.finalWord,
-      isVoting: state.isVoting
-    }
+    botState: state
   };
 }
 
@@ -372,7 +374,8 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  
+  console.log("Attempting to broadcast ")
+
   const body = JSON.stringify({
     content_type: 'application/json',
     message: {botState: state},
