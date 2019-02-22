@@ -402,7 +402,7 @@ function botVoteHandler(req)
   console.log("req.headers.vote" + req.headers.vote);
 
   // Send the vote
-  AcaBot.voteFor(vote, req.headers.userID);
+  AcaBot.voteFor(req.headers.vote, req.headers.userID);
 
   const state = AcaBot.getState();
   return {
