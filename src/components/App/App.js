@@ -193,7 +193,14 @@ class App extends Component {
                             handleEnd={this.handleEndSubmit}
                             handleClear={this.handleClear} /> : "" }
 
-                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : <b>{this.state.botState.finalWord}</b>}
+                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
+
+                    <span>
+                    <h4>Current Prompt:</h4>
+                    <h3>{this.state.botState.finalWord}</h3>
+                    </span>
+
+                  }
                   </div>
               </div>
           )

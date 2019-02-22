@@ -15,8 +15,8 @@ class Config extends Component {
       <div>
         <h3>Config Panel</h3>
         <ButtonToolbar>
-        <Button onClick={this.props.handleClear} variant="danger">Clear</Button>
-        <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>
+        <Button onClick={this.props.handleClear} variant="danger">Clear</Button>{' '}
+        <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>{' '}
         <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>
         </ButtonToolbar>
       </div>
