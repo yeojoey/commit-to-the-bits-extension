@@ -132,7 +132,6 @@ const ABot = class AcademicBot
     this.where = defaultWhere.slice()
 
     //Voting variables
-    this.voting = false
     this.votes = []
     this.options = []
     this.votedAlready = []
