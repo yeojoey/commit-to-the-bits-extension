@@ -181,13 +181,6 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/getBotState",
     handler: botQueryHandler
   })
-
-  // GET Character
-  server.route ({
-    method: 'POST',
-    path: '/api/getCharacter',
-    handler: characterQueryHandler
-  });
 */
   // Start the server.
   await server.start();
