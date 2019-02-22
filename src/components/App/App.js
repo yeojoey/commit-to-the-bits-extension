@@ -11,8 +11,10 @@ class App extends Component {
     post: "",
     responseToPost: "",
     textToDisplay: "",
-    characterSuggestion: ""
+    characterSuggestion: "",
+    botState: ""
   }
+
 
   constructor(props){
       super(props)
@@ -132,8 +134,8 @@ class App extends Component {
 
   handleCSubmit = async e => {
     e.preventDefault();
-    const response = await fetch ("/api/getCharacter", {
-      method: "GET",
+    const response = await fetch ("/api/startVote", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.Authentication.state.token
