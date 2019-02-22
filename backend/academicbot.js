@@ -375,7 +375,7 @@ const ABot = class AcademicBot
         return -1
       }
       this.finalWord = this.options[winner]
-      this.Bot.say("Winner is " + this.finalWord)
+      //this.Bot.say("Winner is " + this.finalWord)
     }
     this.voting = false
   }
@@ -388,12 +388,14 @@ const ABot = class AcademicBot
 
     this.options = this.getOptions()
 
+    /*
     this.Bot.say("Voting has begun. Options:")
     for(var i = 0; i < this.options.length; i++)
     {
       this.Bot.say(""+(i+1) + ": " + this.options[i])
     }
     this.Bot.say("Format: '!v #'")
+    */
 
     //Tabulate results
     //setTimeout(() =>
