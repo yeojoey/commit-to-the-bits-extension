@@ -12,6 +12,9 @@ class Voting extends Component {
 
   render() {
 
+    this.props.update();
+    console.log(this.state);
+
     return(
 
       <div>

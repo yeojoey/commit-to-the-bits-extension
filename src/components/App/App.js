@@ -5,6 +5,13 @@ import Voting from '../Voting/Voting'
 
 import './App.css';
 
+// DEBUG
+const testState =  {
+    isVoting: false,
+    options: ["batman", "superman", "wonder woman", "aquaman"],
+    finalWord: "No suggestions yet."
+}
+
 class App extends Component {
   state = {
     response: "",
@@ -25,13 +32,8 @@ class App extends Component {
       this.state={
           finishedLoading:false,
           theme:'light',
-          isVisible:true
-      }
-
-      this.gameState = {
-          isVoting: false,
-          options: ["batman", "superman", "wonder woman", "aquaman"],
-          finalWord: "batman"
+          isVisible:true,
+          botState: testState
       }
   }
 
@@ -145,21 +147,51 @@ class App extends Component {
     this.setState(body);
   }
 
+  // Methods to access game state
+  checkIfVoting() {
+    return this.state.botState.isVoting;
+  }
+
+  getFinalWord() {
+    return this.state.botState.finalWord;
+  }
+
+  getOptions() {
+    return this.state.botState.options;
+  }
+
+  // Methods to update child componenents
+  updateConfigComponent() {
+    console.log("UPDATING CONFIG\n" + JSON.stringify(this.state));
+    this.setState({ isVoting: this.state.botState.isVoting });
+  }
+
+  updateVotingComponent() {
+    console.log("UPDATING VOTING\n" + JSON.stringify(this.state));
+    this.setState({ options: this.state.botState.options });
+  }
+
+  // Voting Methods
+  handleOptionClicked(option) {
+    console.log("You picked " + option);
+  }
+
   render() {
+
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
               <div className="App">
                   <div className={this.state.theme === 'light' ? 'App-light' : 'App-dark'} >
 
-                  {this.Authentication.isModerator() ? <Config /> : "" }
+                  {this.Authentication.isModerator() ? <Config isVoting={this.state.botState.isVoting} /> : "" }
 
-                  {this.props.gameState.isVoting ? <Voting /> : `<h1>${this.props.gameState.finalWord}</h1>`}
+                  {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <b>{this.getFinalWord()}</b>}
 
-                      <p>Hello world!</p>
-                      <p>My token is: {this.Authentication.state.token}</p>
-                      <p>My opaque ID is {this.Authentication.getOpaqueId()}.</p>
-                      <div>{this.Authentication.isModerator() ? <p>I am currently a mod, and here's a special mod button <input value='mod button' type='button'/></p>  : 'I am currently not a mod.'}</div>
-                      <p>I have {this.Authentication.hasSharedId() ? `shared my ID, and my user_id is ${this.Authentication.getUserId()}` : 'not shared my ID'}.</p>
+                      // <p>Hello world!</p>
+                      // <p>My token is: {this.Authentication.state.token}</p>
+                      // <p>My opaque ID is {this.Authentication.getOpaqueId()}.</p>
+                      // <div>{this.Authentication.isModerator() ? <p>I am currently a mod, and here's a special mod button <input value='mod button' type='button'/></p>  : 'I am currently not a mod.'}</div>
+                      // <p>I have {this.Authentication.hasSharedId() ? `shared my ID, and my user_id is ${this.Authentication.getUserId()}` : 'not shared my ID'}.</p>
                       <p>{this.state.textToDisplay}</p>
                       <form onSubmit={this.handleSubmit}>
                         <button type="submit">Scream</button>
@@ -175,9 +207,11 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
-                <Config />
 
-                {this.props.gameState.isVoting ? <Voting /> : `<h1>${this.props.gameState.finalWord}</h1>`}
+                <Config isVoting={this.state.botState.isVoting} />
+
+                {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <p><b>{this.getFinalWord()}</b></p>}
+
                 <p>{this.state.textToDisplay}</p>
                 <form onSubmit={this.handleSubmit}>
                   <button type="submit">Scream</button>
