@@ -396,6 +396,7 @@ function botVoteHandler(req)
 
   // Get the vote
   const vote = req.vote;
+  console.log("In the server, the vote is "+vote)
 
   // Send the vote
   AcaBot.voteFor(vote, req.headers.userID);
