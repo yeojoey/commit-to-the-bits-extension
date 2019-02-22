@@ -184,7 +184,7 @@ class App extends Component {
 
                   {this.Authentication.isModerator() ? <Config isVoting={this.state.botState.isVoting} /> : "" }
 
-                  {this.checkIfVoting() ? <Voting options={this.state.botState.options} /> : <b>{this.state.botState.finalWord}</b>}
+                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} /> : <b>{this.state.botState.finalWord}</b>}
 
                       // <p>Hello world!</p>
                       // <p>My token is: {this.Authentication.state.token}</p>
