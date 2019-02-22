@@ -160,7 +160,6 @@ class App extends Component {
   }
 
   handleVoteSubmit = async (vote) => {
-    try {
       //e.preventDefault();
       const userID = this.Authentication.getOpaqueId();
       const response = await fetch ("/api/vote", {
@@ -175,14 +174,10 @@ class App extends Component {
       const body = await response.json();
       console.log(JSON.stringify(body));
       this.setState(body);
-    } catch (e) {
-      console.log(e.message);
-    }
-
   }
 
   handleVote = (a) => {
-    handleVoteSubmit(a);
+    this.handleVoteSubmit(a);
   }
 
   render() {
