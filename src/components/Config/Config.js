@@ -6,27 +6,15 @@ class Config extends Component {
     super(props)
   }
 
-  handleClear = async e => {
-
-  }
-
-  handleStartVote = async e=> {
-
-  }
-
-  handleEndVote = async e => {
-
-  }
-
   render() {
 
     return(
 
       <div>
         <p>This is the config panel.</p>
-        <input type="button" onClick={this.handleClear} value="Clear" />
-        <input type="button" onClick={this.handleStartVote} disabled={this.props.isVoting} value="Start Vote" />
-        <input type="button" onClick={this.handleEndVote} disabled={!this.props.isVoting} value="End Vote" />
+        <input type="button" onClick={this.props.handleClear} value="Clear" />
+        <input type="button" onClick={this.props.handleStart} disabled={this.props.isVoting} value="Start Vote" />
+        <input type="button" onClick={this.props.handleEnd} disabled={!this.props.isVoting} value="End Vote" />
       </div>
 
     )
