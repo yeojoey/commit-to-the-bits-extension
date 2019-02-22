@@ -134,7 +134,7 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleCSubmit = async e => {
+  handleStartSubmit = async e => {
     e.preventDefault();
     const response = await fetch ("/api/startVote", {
       method: "POST",
@@ -147,33 +147,29 @@ class App extends Component {
     this.setState(body);
   }
 
-  // Methods to access game state
-  checkIfVoting() {
-    return this.state.botState.isVoting;
-  }
-
-  getFinalWord() {
-    return this.state.botState.finalWord;
-  }
-
-  getOptions() {
-    return this.state.botState.options;
-  }
-
-  // Methods to update child componenents
-  updateConfigComponent() {
-    console.log("UPDATING CONFIG\n" + JSON.stringify(this.state));
-    this.setState({ isVoting: this.state.botState.isVoting });
-  }
-
-  updateVotingComponent() {
-    console.log("UPDATING VOTING\n" + JSON.stringify(this.state));
     this.setState({ options: this.state.botState.options });
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
   }
 
-  // Voting Methods
-  handleOptionClicked(option) {
-    console.log("You picked " + option);
+  handleVoteSubmit = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/vote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token,
+        "userID": this.Authentication.getOpaqueId()
+      },
+      vote: 3
+    });
+    const body = await response.json();
+    this.setState(body);
   }
 
   render() {
@@ -196,9 +192,14 @@ class App extends Component {
                       <form onSubmit={this.handleSubmit}>
                         <button type="submit">Scream</button>
                       </form>
-                      <p>{this.state.characterSuggestion}</p>
-                      <form onSubmit={this.handleCSubmit}>
-                        <button type="submit">Get New Character</button>
+                      <form onSubmit={this.handleStartSubmit}>
+                        <button type="submit">Start Vote</button>
+                      </form>
+                      <form onSubmit={this.handleEndSubmit}>
+                        <button type="submit">End Vote</button>
+                      </form>
+                      <form onSubmit={this.handleVoteSubmit}>
+                        <button type="submit">Vote for 3</button>
                       </form>
                   </div>
               </div>
