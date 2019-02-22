@@ -73,7 +73,8 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
-            this.setState({ textToDisplay: message});
+            console.log("Received broadcast: " + JSON.stringify(message));
+            this.setState(message);
           })
 
           // this.twitch.listen('broadcast',(target,contentType,body)=>{
@@ -194,11 +195,6 @@ class App extends Component {
                             handleClear={this.handleClear} /> : "" }
 
                   {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : <b>{this.state.botState.finalWord}</b>}
-
-                      <p>{this.state.textToDisplay}</p>
-                      <form onSubmit={this.handleSubmit}>
-                        <button type="submit">Scream</button>
-                      </form>
                   </div>
               </div>
           )
@@ -206,10 +202,6 @@ class App extends Component {
           return (
               <div className="App">
                 <p>Not authorized</p>
-                <p>{this.state.textToDisplay}</p>
-                <form onSubmit={this.handleSubmit}>
-                  <button type="submit">Scream</button>
-                </form>
               </div>
           )
       }

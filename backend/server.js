@@ -247,7 +247,7 @@ function screamAddHandler(req) {
   channelScreams[channelId] = currentText;
 
   // Broadcast the scream to all other extension instances on this channel.
-  attemptScreamBroadcast(channelId);
+  attemptStateBroadcast(channelId);
   return { textToDisplay: currentText };
 
 }
@@ -349,21 +349,21 @@ function botVoteHandler(req)
   };
 }
 
-function attemptScreamBroadcast(channelId) {
+function attemptStateBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.
   const now = Date.now();
   const cooldown = channelCooldowns[channelId];
   if (!cooldown || cooldown.time < now) {
     // It is.
-    sendScreamBroadcast(channelId);
+    sendStateBroadcast(channelId);
     channelCooldowns[channelId] = { time: now + channelCooldownMs };
   } else if (!cooldown.trigger) {
     // It isn't; schedule a delayed broadcast if we haven't already done so.
-    cooldown.trigger = setTimeout(sendScreamBroadcast, now - cooldown.time, channelId);
+    cooldown.trigger = setTimeout(sendStateBroadcast, now - cooldown.time, channelId);
   }
 }
 
-function sendScreamBroadcast(channelId) {
+function sendStateBroadcast(channelId) {
   // Set the HTTP headers required by the Twitch API.
   const headers = {
     'Client-ID': clientId,
@@ -371,10 +371,12 @@ function sendScreamBroadcast(channelId) {
     'Authorization': bearerPrefix + makeServerToken(channelId),
   };
 
+  const state = AcaBot.getState();
+
   const currentText = channelScreams[channelId];
   const body = JSON.stringify({
     content_type: 'application/json',
-    message: currentText,
+    message: {botState: state},
     targets: ['broadcast'],
   });
 
