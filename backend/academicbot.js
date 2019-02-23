@@ -226,12 +226,12 @@ const ABot = class AcademicBot
       if(this.character.length > 0)
       {
         this.usedCharacter.push(this.character[random])
-        this.character = this.character.slice(random, 1);
+        this.character = this.character.splice(random, 1);
       }
       else
       {
         this.usedDefaultCharacter.push(defaultCharacter[random])
-        defaultCharacter = defaultCharacter.slice(random, 1);
+        defaultCharacter = defaultCharacter.splice(random, 1);
       }
     }
     return chosen
@@ -267,12 +267,12 @@ const ABot = class AcademicBot
       if(this.relationship.length > 0)
       {
         this.usedRelationship.push(this.relationship[random])
-        this.relationship = this.relationship.slice(random, 1);
+        this.relationship = this.relationship.splice(random, 1);
       }
       else
       {
         this.usedDefaultRelationship.push(defaultRelationship[random])
-        defaultRelationship = defaultRelationship.slice(random, 1);
+        defaultRelationship = defaultRelationship.splice(random, 1);
       }
     }
     return chosen
@@ -308,12 +308,12 @@ const ABot = class AcademicBot
       if(this.objective.length > 0)
       {
         this.usedObjective.push(this.objective[random])
-        this.objective = this.objective.slice(random, 1);
+        this.objective = this.objective.splice(random, 1);
       }
       else
       {
         this.usedDefaultObjective.push(defaultObjective[random])
-        defaultObjective = defaultObjective.slice(random, 1);
+        defaultObjective = defaultObjective.splice(random, 1);
       }
     }
     return chosen
@@ -349,12 +349,12 @@ const ABot = class AcademicBot
       if(this.where.length > 0)
       {
         this.usedWhere.push(this.where[random])
-        this.where = this.where.slice(random, 1);
+        this.where = this.where.splice(random, 1);
       }
       else
       {
         this.usedDefaultWhere.push(defaultWhere[random])
-        defaultWhere = defaultWhere.slice(random, 1);
+        defaultWhere = defaultWhere.splice(random, 1);
       }
     }
     return chosen
