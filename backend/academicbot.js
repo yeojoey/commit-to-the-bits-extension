@@ -212,6 +212,11 @@ const ABot = class AcademicBot
 
         this.usedCharacter = []
         this.usedDefaultCharacter = []
+
+        if(this.character.length > 0)
+          var candidates = this.character.slice()
+        else if (defaultCharacter.length > 0)
+          var candidates = defaultCharacter.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
@@ -248,6 +253,11 @@ const ABot = class AcademicBot
 
         this.usedWhere = []
         this.usedDefaultWhere = []
+
+        if(this.where.length > 0)
+          var candidates = this.where.slice()
+        else if (defaultWhere.length > 0)
+          var candidates = defaultWhere.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
@@ -284,6 +294,11 @@ const ABot = class AcademicBot
 
         this.usedWhere = []
         this.usedDefaultWhere = []
+
+        if(this.where.length > 0)
+          var candidates = this.where.slice()
+        else if (defaultWhere.length > 0)
+          var candidates = defaultWhere.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
@@ -320,6 +335,11 @@ const ABot = class AcademicBot
 
         this.usedWhere = []
         this.usedDefaultWhere = []
+
+        if(this.where.length > 0)
+          var candidates = this.where.slice()
+        else if (defaultWhere.length > 0)
+          var candidates = defaultWhere.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
