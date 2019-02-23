@@ -201,7 +201,7 @@ const ABot = class AcademicBot
     if(this.character.length > 0)
       var candidates = this.character.slice()
     else
-      var candidates = this.defaultCharacter.slice()
+      var candidates = defaultCharacter.slice()
 
     var chosen = []
     for(var i = 0; i < num; i++)
@@ -218,7 +218,7 @@ const ABot = class AcademicBot
     if(this.relationship.length > 0)
       var candidates = this.relationship.slice()
     else
-      var candidates = this.defaultRelationship.slice()
+      var candidates = defaultRelationship.slice()
 
     var candidates = this.relationship.slice()
     var chosen = []
@@ -236,7 +236,7 @@ const ABot = class AcademicBot
     if(this.objective.length > 0)
       var candidates = this.objective.slice()
     else
-      var candidates = this.defaultObjective.slice()
+      var candidates = defaultObjective.slice()
 
     var candidates = this.objective.slice()
     var chosen = []
@@ -254,7 +254,7 @@ const ABot = class AcademicBot
     if(this.where.length > 0)
       var candidates = this.where.slice()
     else
-      var candidates = this.defaultWhere.slice()
+      var candidates = defaultWhere.slice()
 
     var candidates = this.where.slice()
     var chosen = []
