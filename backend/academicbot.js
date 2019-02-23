@@ -4,10 +4,10 @@ var os = require('os')
 
 require('dotenv').config();
 
-const defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
-const defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
-const defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
-const defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
+var defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
+var defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
+var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
+var defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
 
 const ABot = class AcademicBot
 {
@@ -198,51 +198,108 @@ const ABot = class AcademicBot
 
   getCharacter(num = 1)
   {
-    if(this.character.length > 0)
-      var candidates = this.character.slice()
-    else
-      var candidates = defaultCharacter.slice()
-
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.character.length > 0)
+        var candidates = this.character.slice()
+      else if (defaultCharacter.length > 0)
+        var candidates = defaultCharacter.slice()
+      else
+      {
+        this.character = this.usedCharacter.slice()
+        defaultCharacter = this.usedDefaultCharacter.slice()
+
+        this.usedCharacter = []
+        this.usedDefaultCharacter = []
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.character.length > 0)
+      {
+        this.usedCharacter.push(this.character[random])
+        this.character = this.character.slice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultCharacter.push(defaultCharacter[random])
+        defaultCharacter = defaultCharacter.slice(random, 1);
+      }
     }
     return chosen
   }
 
   getRelationship(num = 1)
   {
-    if(this.relationship.length > 0)
-      var candidates = this.relationship.slice()
-    else
-      var candidates = defaultRelationship.slice()
-
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.where.length > 0)
+        var candidates = this.where.slice()
+      else if (defaultWhere.length > 0)
+        var candidates = defaultWhere.slice()
+      else
+      {
+        this.where = this.usedWhere.slice()
+        defaultWhere = this.usedDefaultWhere.slice()
+
+        this.usedWhere = []
+        this.usedDefaultWhere = []
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.where.length > 0)
+      {
+        this.usedWhere.push(this.where[random])
+        this.where = this.where.slice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultWhere.push(defaultWhere[random])
+        defaultWhere = defaultWhere.slice(random, 1);
+      }
     }
     return chosen
   }
 
   getObjective(num = 1)
   {
-    if(this.objective.length > 0)
-      var candidates = this.objective.slice()
-    else
-      var candidates = defaultObjective.slice()
-
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.where.length > 0)
+        var candidates = this.where.slice()
+      else if (defaultWhere.length > 0)
+        var candidates = defaultWhere.slice()
+      else
+      {
+        this.where = this.usedWhere.slice()
+        defaultWhere = this.usedDefaultWhere.slice()
+
+        this.usedWhere = []
+        this.usedDefaultWhere = []
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.where.length > 0)
+      {
+        this.usedWhere.push(this.where[random])
+        this.where = this.where.slice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultWhere.push(defaultWhere[random])
+        defaultWhere = defaultWhere.slice(random, 1);
+      }
     }
     return chosen
   }
