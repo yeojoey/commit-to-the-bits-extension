@@ -194,6 +194,19 @@ class App extends Component {
     this.handleVoteSubmit(a);
   }
 
+  handleClear = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/clear", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   togglePanel = () => {
     this.setState((state) => {
       return { showPanel: !state.showPanel }
