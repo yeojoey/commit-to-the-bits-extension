@@ -249,17 +249,36 @@ const ABot = class AcademicBot
 
   getWhere(num = 1)
   {
-    if(this.where.length > 0)
-      var candidates = this.where.slice()
-    else
-      var candidates = defaultWhere.slice()
-
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.where.length > 0)
+        var candidates = this.where.slice()
+      else if (defaultWhere.length > 0)
+        var candidates = defaultWhere.slice()
+      else
+      {
+        this.where = this.usedWhere.slice()
+        defaultWhere = this.usedDefaultWhere.slice()
+
+        this.usedWhere = []
+        this.usedDefaultWhere = []
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.where.length > 0)
+      {
+        this.usedWhere.push(this.where[random])
+        this.where = this.where.slice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultWhere.push(defaultWhere[random])
+        defaultWhere = defaultWhere.slice(random, 1);
+      }
     }
     return chosen
   }
