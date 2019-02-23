@@ -7,8 +7,9 @@ import Voting from '../Voting/Voting'
 
 // Styling
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 
 import './App.css';
@@ -28,7 +29,8 @@ class App extends Component {
     textToDisplay: "",
     characterSuggestion: "",
     botState: "",
-    panelIsVisible: ""
+    showPanel: "",
+    showInstructions: ""
   }
 
 
@@ -43,7 +45,8 @@ class App extends Component {
           theme:'light',
           isVisible:true,
           botState: testState,
-          panelIsVisible: true
+          showPanel: true,
+          showInstructions: false
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -193,7 +196,13 @@ class App extends Component {
 
   togglePanel = () => {
     this.setState((state) => {
-      return { panelIsVisible: !state.panelIsVisible }
+      return { showPanel: !state.showPanel }
+    });
+  }
+
+  toggleInstructions = () => {
+    this.setState((state) => {
+      return { showInstructions: !state.showInstructions }
     });
   }
 
@@ -202,14 +211,15 @@ class App extends Component {
     return (
       <Row className="justify-content"><Col>
         <div class="float-right">
-          <Button onClick={this.togglePanel}>{ this.state.panelIsVisible ? "Hide" : "Show" }</Button>
+          <Button onClick={this.toggleInstructions}>Instructions</Button>{' '}
+          <Button onClick={this.togglePanel}>{ this.state.showPanel ? "Hide" : "Show" }</Button>
         </div>
       </Col></Row>
     )
   }
 
   renderBody = () => {
-    if (this.state.panelIsVisible) {
+    if (this.state.showPanel) {
       return (
         <React.Fragment>
         <Row className="justify-content-md-center">
@@ -235,7 +245,7 @@ class App extends Component {
   }
 
   renderDebugBody = () => {
-    if (this.state.panelIsVisible) {
+    if (this.state.showPanel) {
       return (
         <React.Fragment>
         <Row className="justify-content-md-center">
@@ -258,25 +268,58 @@ class App extends Component {
     }
   }
 
+  renderInstructions = () => {
+    if (this.state.showInstructions) {
+      return (
+        <Modal.Dialog>
+          <Modal.Header closeButton onClick={this.toggleInstructions}>
+            <Modal.Title>Instructions</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>In Freeze Tag, 2 performers act out a scene.  At a certain point, the host or other performers
+            will shout out "Freeze!" and the performers stop moving.  A new performer gets a suggestion from the
+            audience, then taps on one of the frozen performers and takes their place.  The scene then starts
+            again with the new performer tying their suggestion into the story.</p>
+
+            <p>Guests interact by typing in chat to suggest characters, relationships, objectives, and locations.
+            A character suggestion would look like "!c batman" (!r for relationship, !o for objective, and !w
+            for where). </p>
+
+            <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.toggleInstructions}>Close</Button>
+          </Modal.Footer>
+        </Modal.Dialog>
+    )}
+  }
+
   render() {
 
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
-            <div className="App">
-              <Container fluid={true}>
-                {this.renderHeader()}
-                {this.renderBody()}
-              </Container>
-            </div>
+            <React.Fragment>
+              <div className="App">
+                <Container fluid={true}>
+                  {this.renderHeader()}
+                  {this.renderBody()}
+                </Container>
+              </div>
+              {this.renderInstructions()}
+            </React.Fragment>
           )
       } else {
           return (
-            <div className="App">
-              <Container fluid={true}>
-                {this.renderHeader()}
-                {this.renderDebugBody()}
-              </Container>
-            </div>
+            <React.Fragment>
+              <div className="App">
+                <Container fluid={true}>
+                  {this.renderHeader()}
+                  {this.renderDebugBody()}
+                </Container>
+              </div>
+              {this.renderInstructions()}
+            </React.Fragment>
           )
       }
   }
