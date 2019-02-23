@@ -45,6 +45,8 @@ class App extends Component {
           botState: testState,
           panelIsVisible: true
       }
+
+      this.togglePanel = this.togglePanel.bind(this);
   }
 
   contextUpdate(context, delta){
@@ -190,7 +192,70 @@ class App extends Component {
   }
 
   togglePanel = () => {
-    this.setState( { panelIsVisible: !this.state.panelIsVisible });
+    this.setState((state) => {
+      return { panelIsVisible: !state.panelIsVisible }
+    });
+  }
+
+  // Helper functions for rendering
+   renderHeader = () => {
+    return (
+      <Row className="justify-content"><Col>
+        <div class="float-right">
+          <Button onClick={this.togglePanel}>{ this.state.panelIsVisible ? "Hide" : "Show" }</Button>
+        </div>
+      </Col></Row>
+    )
+  }
+
+  renderBody = () => {
+    if (this.state.panelIsVisible) {
+      return (
+        <React.Fragment>
+        <Row className="justify-content-md-center">
+          {this.Authentication.isModerator() ?
+            <Config isVoting={this.state.botState.isVoting}
+                    handleStart={this.handleStartSubmit}
+                    handleEnd={this.handleEndSubmit}
+                    handleClear={this.handleClear} /> : "" }
+        </Row>
+        <Row className="justify-content-md-center">
+          <div>
+            {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
+              <span>
+                <h4>Current Prompt:</h4>
+                <h3>{this.state.botState.finalWord}</h3>
+              </span>
+            }
+          </div>
+        </Row>
+        </React.Fragment>
+      )
+    }
+  }
+
+  renderDebugBody = () => {
+    if (this.state.panelIsVisible) {
+      return (
+        <React.Fragment>
+        <Row className="justify-content-md-center">
+            <Config isVoting={this.state.botState.isVoting}
+                    handleStart={this.handleStartSubmit}
+                    handleEnd={this.handleEndSubmit}
+                    handleClear={this.handleClear} />
+        </Row>
+        <Row className="justify-content-md-center">
+          <div>
+            <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} />
+              <span>
+                <h4>Current Prompt:</h4>
+                <h3>{this.state.botState.finalWord}</h3>
+              </span>
+          </div>
+        </Row>
+        </React.Fragment>
+      )
+    }
   }
 
   render() {
@@ -198,62 +263,18 @@ class App extends Component {
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
             <div className="App">
-              <Container>
-                <Row className="justify-content-md-right"><Col>
-                  <div>
-                    <Button onClick={() => this.togglePanel}>{ this.state.panelIsVisible ? "Hide" : "Show" }</Button>
-                  </div>
-                </Col></Row>
-
-                { this.state.panelIsVisible ?
-                  <Row className="justify-content-md-center">
-                    {this.Authentication.isModerator() ?
-                      <Config isVoting={this.state.botState.isVoting}
-                              handleStart={this.handleStartSubmit}
-                              handleEnd={this.handleEndSubmit}
-                              handleClear={this.handleClear} /> : "" }
-                  </Row>
-                  :
-                  {/* Nothing */}
-                }
-
-                { this.state.panelIsVisible ?
-                  <Row className="justify-content-md-center">
-                    <div>
-                      {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
-                        <span>
-                          <h4>Current Prompt:</h4>
-                          <h3>{this.state.botState.finalWord}</h3>
-                        </span>
-                      }
-                    </div>
-                  </Row>
-                  :
-                  {/* Nothing */}
-                }
-
+              <Container fluid={true}>
+                {this.renderHeader()}
+                {this.renderBody()}
               </Container>
             </div>
           )
       } else {
           return (
             <div className="App">
-              <Container>
-                <Row className="justify-content-md-center">
-                    <Config isVoting={this.state.botState.isVoting}
-                            handleStart={this.handleStartSubmit}
-                            handleEnd={this.handleEndSubmit}
-                            handleClear={this.handleClear} />
-                </Row>
-                <Row className="justify-content-md-center">
-                  <div>
-                    <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} />
-                      <span>
-                        <h4>Current Prompt:</h4>
-                        <h3>{this.state.botState.finalWord}</h3>
-                      </span>
-                  </div>
-                </Row>
+              <Container fluid={true}>
+                {this.renderHeader()}
+                {this.renderDebugBody()}
               </Container>
             </div>
           )
