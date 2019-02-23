@@ -226,10 +226,16 @@ const ABot = class AcademicBot
       chosen.push(candidates[random])
       candidates.slice(random, 1)
 
-      if(this.character.length > 0)
+      if(this.character.length == 1)
+      {
+        this.usedCharacter.push(this.character[0])
+        this.character = []
+      }
+      else if(this.character.length > 0)
       {
         console.log("Character Before Downsize: "+this.character)
         this.usedCharacter.push(this.character[random])
+        console.log("Removing element " + random +" from "+this.character)
         this.character = this.character.splice(random, 1);
         console.log("Character After Downsize: "+this.character)
       }
