@@ -242,37 +242,37 @@ const ABot = class AcademicBot
     var chosen = []
     for(var i = 0; i < num; i++)
     {
-      if(this.where.length > 0)
-        var candidates = this.where.slice()
-      else if (defaultWhere.length > 0)
-        var candidates = defaultWhere.slice()
+      if(this.relationship.length > 0)
+        var candidates = this.relationship.slice()
+      else if (defaultRelationship.length > 0)
+        var candidates = defaultRelationship.slice()
       else
       {
-        this.where = this.usedWhere.slice()
-        defaultWhere = this.usedDefaultWhere.slice()
+        this.relationship = this.usedRelationship.slice()
+        defaultRelationship = this.usedRelationship.slice()
 
-        this.usedWhere = []
-        this.usedDefaultWhere = []
+        this.usedRelationship = []
+        this.usedDefaultRelationship = []
 
         if(this.where.length > 0)
-          var candidates = this.where.slice()
+          var candidates = this.relationship.slice()
         else if (defaultWhere.length > 0)
-          var candidates = defaultWhere.slice()
+          var candidates = defaultRelationship.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
 
-      if(this.where.length > 0)
+      if(this.relationship.length > 0)
       {
-        this.usedWhere.push(this.where[random])
-        this.where = this.where.slice(random, 1);
+        this.usedRelationship.push(this.relationship[random])
+        this.relationship = this.relationship.slice(random, 1);
       }
       else
       {
-        this.usedDefaultWhere.push(defaultWhere[random])
-        defaultWhere = defaultWhere.slice(random, 1);
+        this.usedDefaultRelationship.push(defaultRelationship[random])
+        defaultRelationship = defaultRelationship.slice(random, 1);
       }
     }
     return chosen
@@ -283,37 +283,37 @@ const ABot = class AcademicBot
     var chosen = []
     for(var i = 0; i < num; i++)
     {
-      if(this.where.length > 0)
-        var candidates = this.where.slice()
-      else if (defaultWhere.length > 0)
-        var candidates = defaultWhere.slice()
+      if(this.objective.length > 0)
+        var candidates = this.objective.slice()
+      else if (defaultObjective.length > 0)
+        var candidates = defaultObjective.slice()
       else
       {
-        this.where = this.usedWhere.slice()
-        defaultWhere = this.usedDefaultWhere.slice()
+        this.objective = this.usedObjective.slice()
+        defaultObjective = this.usedDefaultObjective.slice()
 
-        this.usedWhere = []
-        this.usedDefaultWhere = []
+        this.usedObjective = []
+        this.usedDefaultObjective = []
 
-        if(this.where.length > 0)
-          var candidates = this.where.slice()
-        else if (defaultWhere.length > 0)
-          var candidates = defaultWhere.slice()
+        if(this.objective.length > 0)
+          var candidates = this.objective.slice()
+        else if (defaultObjective.length > 0)
+          var candidates = defaultObjective.slice()
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
 
-      if(this.where.length > 0)
+      if(this.objective.length > 0)
       {
-        this.usedWhere.push(this.where[random])
-        this.where = this.where.slice(random, 1);
+        this.usedObjective.push(this.objective[random])
+        this.objective = this.objective.slice(random, 1);
       }
       else
       {
-        this.usedDefaultWhere.push(defaultWhere[random])
-        defaultWhere = defaultWhere.slice(random, 1);
+        this.usedDefaultObjective.push(defaultObjective[random])
+        defaultObjective = defaultObjective.slice(random, 1);
       }
     }
     return chosen
