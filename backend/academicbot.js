@@ -249,7 +249,7 @@ const ABot = class AcademicBot
       else
       {
         this.relationship = this.usedRelationship.slice()
-        defaultRelationship = this.usedRelationship.slice()
+        defaultRelationship = this.usedDefaultRelationship.slice()
 
         this.usedRelationship = []
         this.usedDefaultRelationship = []
