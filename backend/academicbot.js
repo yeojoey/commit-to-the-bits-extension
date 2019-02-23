@@ -15,10 +15,10 @@ const ABot = class AcademicBot
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
     //Suggestion Lists
-    this.character  = defaultCharacter.slice()
-    this.relationship = defaultRelationship.slice()
-    this.objective = defaultObjective.slice()
-    this.where = defaultWhere.slice()
+    this.character  = []
+    this.relationship = []
+    this.objective = []
+    this.where = []
 
     //Voting variables
     this.voting = false
@@ -126,10 +126,10 @@ const ABot = class AcademicBot
   clear()
   {
     //Suggestion Lists
-    this.character  = defaultCharacter.slice()
-    this.relationship = defaultRelationship.slice()
-    this.objective = defaultObjective.slice()
-    this.where = defaultWhere.slice()
+    this.character  = []
+    this.relationship = []
+    this.objective = []
+    this.where = []
 
     //Voting variables
     this.votes = []
@@ -186,10 +186,11 @@ const ABot = class AcademicBot
 
   getCharacter(num = 1)
   {
-    if(this.character.length == 0)
-      return 0
+    if(this.character.length > 0)
+      var candidates = this.character.slice()
+    else
+      var candidates = this.defaultCharacter.slice()
 
-    var candidates = this.character.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
@@ -202,8 +203,10 @@ const ABot = class AcademicBot
 
   getRelationship(num = 1)
   {
-    if(this.relationship.length == 0)
-      return 0
+    if(this.relationship.length > 0)
+      var candidates = this.relationship.slice()
+    else
+      var candidates = this.defaultRelationship.slice()
 
     var candidates = this.relationship.slice()
     var chosen = []
@@ -218,8 +221,10 @@ const ABot = class AcademicBot
 
   getObjective(num = 1)
   {
-    if(this.objective.length == 0)
-      return 0
+    if(this.objective.length > 0)
+      var candidates = this.objective.slice()
+    else
+      var candidates = this.defaultObjective.slice()
 
     var candidates = this.objective.slice()
     var chosen = []
@@ -234,8 +239,10 @@ const ABot = class AcademicBot
 
   getWhere(num = 1)
   {
-    if(this.where.legnth == 0)
-      return 0
+    if(this.where.length > 0)
+      var candidates = this.where.slice()
+    else
+      var candidates = this.defaultWhere.slice()
 
     var candidates = this.where.slice()
     var chosen = []
