@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+
+// Components
 import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Voting from '../Voting/Voting'
+
+// Styling
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import './App.css';
 
@@ -20,7 +27,8 @@ class App extends Component {
     responseToPost: "",
     textToDisplay: "",
     characterSuggestion: "",
-    botState: ""
+    botState: "",
+    panelIsVisible: ""
   }
 
 
@@ -34,7 +42,8 @@ class App extends Component {
           finishedLoading:false,
           theme:'light',
           isVisible:true,
-          botState: testState
+          botState: testState,
+          panelIsVisible: true
       }
   }
 
@@ -180,36 +189,73 @@ class App extends Component {
     this.handleVoteSubmit(a);
   }
 
+  togglePanel = () => {
+    this.setState( { panelIsVisible: !this.state.panelIsVisible });
+  }
+
   render() {
 
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
-              <div className="App">
-                  <div className={this.state.theme === 'light' ? 'App-light' : 'App-dark'} >
-
-                  {this.Authentication.isModerator() ?
-                    <Config isVoting={this.state.botState.isVoting}
-                            handleStart={this.handleStartSubmit}
-                            handleEnd={this.handleEndSubmit}
-                            handleClear={this.handleClear} /> : "" }
-
-                  {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
-
-                    <span>
-                    <h4>Current Prompt:</h4>
-                    <h3>{this.state.botState.finalWord}</h3>
-                    </span>
-
-                  }
+            <div className="App">
+              <Container>
+                <Row className="justify-content-md-right"><Col>
+                  <div>
+                    <Button onClick={() => this.togglePanel}>{ this.state.panelIsVisible ? "Hide" : "Show" }</Button>
                   </div>
-              </div>
+                </Col></Row>
+
+                { this.state.panelIsVisible ?
+                  <Row className="justify-content-md-center">
+                    {this.Authentication.isModerator() ?
+                      <Config isVoting={this.state.botState.isVoting}
+                              handleStart={this.handleStartSubmit}
+                              handleEnd={this.handleEndSubmit}
+                              handleClear={this.handleClear} /> : "" }
+                  </Row>
+                  :
+                  {/* Nothing */}
+                }
+
+                { this.state.panelIsVisible ?
+                  <Row className="justify-content-md-center">
+                    <div>
+                      {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
+                        <span>
+                          <h4>Current Prompt:</h4>
+                          <h3>{this.state.botState.finalWord}</h3>
+                        </span>
+                      }
+                    </div>
+                  </Row>
+                  :
+                  {/* Nothing */}
+                }
+
+              </Container>
+            </div>
           )
       } else {
           return (
-              <div className="App">
-                <p>Not authorized</p>
-                <Voting />
-              </div>
+            <div className="App">
+              <Container>
+                <Row className="justify-content-md-center">
+                    <Config isVoting={this.state.botState.isVoting}
+                            handleStart={this.handleStartSubmit}
+                            handleEnd={this.handleEndSubmit}
+                            handleClear={this.handleClear} />
+                </Row>
+                <Row className="justify-content-md-center">
+                  <div>
+                    <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} />
+                      <span>
+                        <h4>Current Prompt:</h4>
+                        <h3>{this.state.botState.finalWord}</h3>
+                      </span>
+                  </div>
+                </Row>
+              </Container>
+            </div>
           )
       }
   }
