@@ -220,13 +220,16 @@ const ABot = class AcademicBot
       }
 
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
+      console.log("Random Number: "+random)
       chosen.push(candidates[random])
       candidates.slice(random, 1)
 
       if(this.character.length > 0)
       {
+        console.log("Size of Character Before Downsize: "+this.character.length)
         this.usedCharacter.push(this.character[random])
         this.character = this.character.splice(random, 1);
+        console.log("Size of Character After Downsize: "+this.character.length)
       }
       else
       {
