@@ -220,7 +220,6 @@ const ABot = class AcademicBot
     else
       var candidates = defaultRelationship.slice()
 
-    var candidates = this.relationship.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
@@ -238,7 +237,6 @@ const ABot = class AcademicBot
     else
       var candidates = defaultObjective.slice()
 
-    var candidates = this.objective.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
@@ -256,7 +254,6 @@ const ABot = class AcademicBot
     else
       var candidates = defaultWhere.slice()
 
-    var candidates = this.where.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
