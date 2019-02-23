@@ -219,20 +219,14 @@ const ABot = class AcademicBot
           var candidates = defaultCharacter.slice()
       }
 
-      console.log("Candidates: "+candidates)
-
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
-      console.log("Random Number: "+random)
       chosen.push(candidates[random])
       candidates.slice(random, 1)
 
       if(this.character.length > 0)
       {
-        console.log("Character Before Downsize: "+this.character)
         this.usedCharacter.push(this.character[random])
-        console.log("Removing element " + random +" from "+this.character)
         this.character.splice(random, 1);
-        console.log("Character After Downsize: "+this.character)
       }
       else
       {
@@ -260,9 +254,9 @@ const ABot = class AcademicBot
         this.usedRelationship = []
         this.usedDefaultRelationship = []
 
-        if(this.where.length > 0)
+        if(this.relationship.length > 0)
           var candidates = this.relationship.slice()
-        else if (defaultWhere.length > 0)
+        else if (defaultRelationship.length > 0)
           var candidates = defaultRelationship.slice()
       }
 
