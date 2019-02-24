@@ -355,6 +355,7 @@ function changeToTSAHandler(req) {
     // Verify all requests.
     const payload = verifyAndDecode(req.headers.authorization);
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
     const state = AcaBot.getState();
     currentGame = "TSA";
 
@@ -408,6 +409,7 @@ function sendStateBroadcast(channelId) {
 
   const state = AcaBot.getState();
   const obj = JSON.stringify({botState: state, currentGame: this.currentGame});
+  console.log(obj);
 
   const body = JSON.stringify({
     content_type: 'application/json',
