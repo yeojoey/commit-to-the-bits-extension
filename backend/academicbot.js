@@ -4,22 +4,42 @@ var os = require('os')
 
 require('dotenv').config();
 
-const defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
-const defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
-const defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
-const defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
+var defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
+var defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
+var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
+var defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
 
 const ABot = class AcademicBot
 {
 
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
+<<<<<<< HEAD
     
     //Suggestion Lists
     this.character  = defaultCharacter.slice()
     this.relationship = defaultRelationship.slice()
     this.objective = defaultObjective.slice()
     this.where = defaultWhere.slice()
+=======
+    // Suggestion Lists
+    this.character  = []
+    this.relationship = []
+    this.objective = []
+    this.where = []
+
+    // Used Suggestion Lists
+    this.usedCharacter  = []
+    this.usedRelationship = []
+    this.usedObjective = []
+    this.usedWhere = []
+
+    // Used Default Suggestion Lists
+    this.usedDefaultCharacter  = []
+    this.usedDefaultRelationship = []
+    this.usedDefaultObjective = []
+    this.usedDefaultWhere = []
+>>>>>>> d9b48dd52e44dd8e14d1427f4b85ccc1c347ab21
 
     //Voting variables
     this.voting = false
@@ -127,10 +147,10 @@ const ABot = class AcademicBot
   clear()
   {
     //Suggestion Lists
-    this.character  = defaultCharacter.slice()
-    this.relationship = defaultRelationship.slice()
-    this.objective = defaultObjective.slice()
-    this.where = defaultWhere.slice()
+    this.character  = []
+    this.relationship = []
+    this.objective = []
+    this.where = []
 
     //Voting variables
     this.votes = []
@@ -187,64 +207,164 @@ const ABot = class AcademicBot
 
   getCharacter(num = 1)
   {
-    if(this.character.length == 0)
-      return 0
-
-    var candidates = this.character.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.character.length > 0)
+        var candidates = this.character.slice()
+      else if (defaultCharacter.length > 0)
+        var candidates = defaultCharacter.slice()
+      else
+      {
+        this.character = this.usedCharacter.slice()
+        defaultCharacter = this.usedDefaultCharacter.slice()
+
+        this.usedCharacter = []
+        this.usedDefaultCharacter = []
+
+        if(this.character.length > 0)
+          var candidates = this.character.slice()
+        else if (defaultCharacter.length > 0)
+          var candidates = defaultCharacter.slice()
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.character.length > 0)
+      {
+        this.usedCharacter.push(this.character[random])
+        this.character.splice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultCharacter.push(defaultCharacter[random])
+        defaultCharacter.splice(random, 1);
+      }
     }
     return chosen
   }
 
   getRelationship(num = 1)
   {
-    if(this.relationship.length == 0)
-      return 0
-
-    var candidates = this.relationship.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.relationship.length > 0)
+        var candidates = this.relationship.slice()
+      else if (defaultRelationship.length > 0)
+        var candidates = defaultRelationship.slice()
+      else
+      {
+        this.relationship = this.usedRelationship.slice()
+        defaultRelationship = this.usedDefaultRelationship.slice()
+
+        this.usedRelationship = []
+        this.usedDefaultRelationship = []
+
+        if(this.relationship.length > 0)
+          var candidates = this.relationship.slice()
+        else if (defaultRelationship.length > 0)
+          var candidates = defaultRelationship.slice()
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.relationship.length > 0)
+      {
+        this.usedRelationship.push(this.relationship[random])
+        this.relationship.splice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultRelationship.push(defaultRelationship[random])
+        defaultRelationship.splice(random, 1);
+      }
     }
     return chosen
   }
 
   getObjective(num = 1)
   {
-    if(this.objective.length == 0)
-      return 0
-
-    var candidates = this.objective.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.objective.length > 0)
+        var candidates = this.objective.slice()
+      else if (defaultObjective.length > 0)
+        var candidates = defaultObjective.slice()
+      else
+      {
+        this.objective = this.usedObjective.slice()
+        defaultObjective = this.usedDefaultObjective.slice()
+
+        this.usedObjective = []
+        this.usedDefaultObjective = []
+
+        if(this.objective.length > 0)
+          var candidates = this.objective.slice()
+        else if (defaultObjective.length > 0)
+          var candidates = defaultObjective.slice()
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.objective.length > 0)
+      {
+        this.usedObjective.push(this.objective[random])
+        this.objective.splice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultObjective.push(defaultObjective[random])
+        defaultObjective.splice(random, 1);
+      }
     }
     return chosen
   }
 
   getWhere(num = 1)
   {
-    if(this.where.legnth == 0)
-      return 0
-
-    var candidates = this.where.slice()
     var chosen = []
     for(var i = 0; i < num; i++)
     {
+      if(this.where.length > 0)
+        var candidates = this.where.slice()
+      else if (defaultWhere.length > 0)
+        var candidates = defaultWhere.slice()
+      else
+      {
+        this.where = this.usedWhere.slice()
+        defaultWhere = this.usedDefaultWhere.slice()
+
+        this.usedWhere = []
+        this.usedDefaultWhere = []
+
+        if(this.where.length > 0)
+          var candidates = this.where.slice()
+        else if (defaultWhere.length > 0)
+          var candidates = defaultWhere.slice()
+      }
+
       var random = Math.floor(Math.random() * (+candidates.length - +0)) + +0;
       chosen.push(candidates[random])
       candidates.slice(random, 1)
+
+      if(this.where.length > 0)
+      {
+        this.usedWhere.push(this.where[random])
+        this.where.splice(random, 1);
+      }
+      else
+      {
+        this.usedDefaultWhere.push(defaultWhere[random])
+        defaultWhere.splice(random, 1);
+      }
     }
     return chosen
   }
