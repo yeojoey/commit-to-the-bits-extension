@@ -408,7 +408,8 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  const obj = JSON.stringify({botState: state, currentGame: this.currentGame});
+  const obj = JSON.stringify( { botState: state,
+                                currentGame: this.currentGame });
   console.log(obj);
 
   const body = JSON.stringify({

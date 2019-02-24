@@ -207,6 +207,7 @@ class App extends Component {
       }
     });
     const body = await response.json();
+    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -220,6 +221,7 @@ class App extends Component {
       }
     });
     const body = await response.json();
+    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
