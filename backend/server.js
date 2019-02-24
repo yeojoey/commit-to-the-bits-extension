@@ -157,13 +157,13 @@ var gameState = "";
   })
 
   server.route ({
-    method: "GET",
+    method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
   })
 
   server.route ({
-    method: "GET",
+    method: "POST",
     path: "/api/changeToFreezeTag",
     handler: changeToFreezeTagHandler
   })
