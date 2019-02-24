@@ -128,7 +128,7 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
-    console.log(body.gameState);
+    console.log(body);
     return body;
   }
 
@@ -300,8 +300,9 @@ class App extends Component {
   renderTSA = () => {
     return (
       <Row className="justify-content-md-center">
-        <div>
-        <Button href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</Button>
+        <div><h3>
+        <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</a></h3>
+        <h5>(Right-click and open link in new window)</h5>
         </div>
       </Row>
     )
