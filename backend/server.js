@@ -102,6 +102,7 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 const AcaBot = new AcademicBot()
 const server = new Hapi.Server(serverOptions);
 
+// Game State
 var gameState = "";
 
 (async () => {
@@ -158,7 +159,7 @@ var gameState = "";
   server.route ({
     method: "GET",
     path: "/api/changeToTSA",
-    handler: changeToTSAhandler
+    handler: changeToTSAHandler
   })
 
   server.route ({
@@ -173,7 +174,7 @@ var gameState = "";
 
   // Start game state with freeze tag
   gameState = "Freeze Tag"
-  
+
   console.log(STRINGS.serverStarted, server.info.uri);
 
   // Periodically clear cool-down tracking to prevent unbounded growth due to
@@ -353,22 +354,35 @@ function botVoteHandler(req)
 function changeToTSAHandler(req) {
     // Verify all requests.
     const payload = verifyAndDecode(req.headers.authorization);
-
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
     const state = AcaBot.getState();
+    gameState = "TSA";
 
     attemptStateBroadcast(channelId);
 
     return {
-      botState: state
+      botState: state,
+      gameState: "TSA"
     }
-
 }
 
 function changeToFreezeTagHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
 
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const state = AcaBot.getState();
+  gameState = "Freeze Tag";
+
+  attemptStateBroadcast(channelId);
+
+  return {
+    botState: state,
+    gameState: "Freeze Tag"
+  }
 }
+
 
 function attemptStateBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.
@@ -393,7 +407,7 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  const obj = JSON.stringify({botState: state});
+  const obj = JSON.stringify({botState: state, gameState: this.gameState});
 
   const body = JSON.stringify({
     content_type: 'application/json',

@@ -271,6 +271,7 @@ class App extends Component {
                     handleClear={this.handleClear}
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag} />
+          : ""}
         </Row>
         { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
         </React.Fragment>
@@ -297,7 +298,7 @@ class App extends Component {
     return (
       <Row className="justify-content-md-center">
         <div>
-
+        <Button href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</Button>
         </div>
       </Row>
     )

@@ -14,14 +14,6 @@ const ABot = class AcademicBot
 
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
-<<<<<<< HEAD
-    
-    //Suggestion Lists
-    this.character  = defaultCharacter.slice()
-    this.relationship = defaultRelationship.slice()
-    this.objective = defaultObjective.slice()
-    this.where = defaultWhere.slice()
-=======
     // Suggestion Lists
     this.character  = []
     this.relationship = []
@@ -39,7 +31,6 @@ const ABot = class AcademicBot
     this.usedDefaultRelationship = []
     this.usedDefaultObjective = []
     this.usedDefaultWhere = []
->>>>>>> d9b48dd52e44dd8e14d1427f4b85ccc1c347ab21
 
     //Voting variables
     this.voting = false
