@@ -329,7 +329,7 @@ class App extends Component {
           <Modal.Header closeButton onClick={this.toggleInstructions}>
             <Modal.Title>Instructions</Modal.Title>
           </Modal.Header>
-          { this.state.curentGame == "Freeze Tag" ?
+          { this.state.currentGame == "Freeze Tag" ?
           <Modal.Body>
             <p>In Freeze Tag, 2 performers act out a scene.  At a certain point, the host or other performers
             will shout out "Freeze!" and the performers stop moving.  A new performer gets a suggestion from the
@@ -348,7 +348,7 @@ class App extends Component {
             Agent will interrogate the traveller as they try to justify increasingly random security X-Rays.</p>
 
             <p>You will be submitting these pictures.  Please open up MS Paint and draw whatever comes to mind.  Submit
-            it by simply dropping it in this <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Google
+            it by simply dropping it in this <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing" target="_blank">Google
             Drive folder</a>.</p>
 
             <p>Have fun making this traveller's day more difficult!</p>
