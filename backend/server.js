@@ -103,7 +103,7 @@ const AcaBot = new AcademicBot()
 const server = new Hapi.Server(serverOptions);
 
 // Game State
-var gameState = "";
+var currentGame = "";
 
 (async () => {
 
@@ -173,7 +173,7 @@ var gameState = "";
   await server.start();
 
   // Start game state with freeze tag
-  gameState = "Freeze Tag"
+  currentGame = "Freeze Tag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -356,13 +356,13 @@ function changeToTSAHandler(req) {
     const payload = verifyAndDecode(req.headers.authorization);
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
     const state = AcaBot.getState();
-    gameState = "TSA";
+    currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
 
     return {
       botState: state,
-      gameState: "TSA"
+      currentGame: "TSA"
     }
 }
 
@@ -373,13 +373,13 @@ function changeToFreezeTagHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
-  gameState = "Freeze Tag";
+  currentGame = "Freeze Tag";
 
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    gameState: "Freeze Tag"
+    currentGame: "Freeze Tag"
   }
 }
 
@@ -407,7 +407,7 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = AcaBot.getState();
-  const obj = JSON.stringify({botState: state, gameState: this.gameState});
+  const obj = JSON.stringify({botState: state, currentGame: this.currentGame});
 
   const body = JSON.stringify({
     content_type: 'application/json',
