@@ -14,6 +14,7 @@ const ABot = class AcademicBot
 
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
+    
     //Suggestion Lists
     this.character  = defaultCharacter.slice()
     this.relationship = defaultRelationship.slice()

@@ -30,7 +30,8 @@ class App extends Component {
     characterSuggestion: "",
     botState: "",
     showPanel: "",
-    showInstructions: ""
+    showInstructions: "",
+    currentGame: ""
   }
 
 
@@ -46,7 +47,8 @@ class App extends Component {
           isVisible:true,
           botState: testState,
           showPanel: true,
-          showInstructions: false
+          showInstructions: false,
+          currentGame: "Freeze Tag"
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -81,7 +83,7 @@ class App extends Component {
                   })
               }
 
-              this.callApi()
+              this.getInitialState()
                 .then()
                 .catch(err => console.log(err));
 
@@ -110,13 +112,13 @@ class App extends Component {
 
       }
 
-      // this.callApi()
+      // this.getInitialState()
       //   .then(console.log("Auth: " + this.Authentication.state.token))
       //   .catch(err => console.log(err));
 
   }
 
-  callApi = async () => {
+  getInitialState = async () => {
     const response = await fetch("/api/getBotState", {
       method: "GET",
       headers: {
@@ -194,6 +196,32 @@ class App extends Component {
     this.handleVoteSubmit(a);
   }
 
+  handleChangeToTSA = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/changeToTSA", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
+  handleChangeToFreezeTag = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/changeToFreezeTag", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   togglePanel = () => {
     this.setState((state) => {
       return { showPanel: !state.showPanel }
@@ -227,21 +255,39 @@ class App extends Component {
             <Config isVoting={this.state.botState.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
-                    handleClear={this.handleClear} /> : "" }
+                    handleClear={this.handleClear}
+                    handleChangeToTSA={this.handleChangeToTSA}
+                    handleChangeToFreezeTag={this.handleChangeToFreezeTag} />
         </Row>
-        <Row className="justify-content-md-center">
-          <div>
-            {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
-              <span>
-                <h4>Current Prompt:</h4>
-                <h3>{this.state.botState.finalWord}</h3>
-              </span>
-            }
-          </div>
-        </Row>
+        { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
         </React.Fragment>
       )
     }
+  }
+
+  renderFreezeTag = () => {
+    return (
+      <Row className="justify-content-md-center">
+        <div>
+          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
+            <span>
+              <h4>Current Prompt:</h4>
+              <h3>{this.state.botState.finalWord}</h3>
+            </span>
+          }
+        </div>
+      </Row>
+    )
+  }
+
+  renderTSA = () => {
+    return (
+      <Row className="justify-content-md-center">
+        <div>
+
+        </div>
+      </Row>
+    )
   }
 
   renderDebugBody = () => {
@@ -252,17 +298,10 @@ class App extends Component {
             <Config isVoting={this.state.botState.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
-                    handleClear={this.handleClear} />
+                    handleClear={this.handleClear}
+                    handleChangeToTSA={this.handleChangeToTSA} />
         </Row>
-        <Row className="justify-content-md-center">
-          <div>
-            <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} />
-              <span>
-                <h4>Current Prompt:</h4>
-                <h3>{this.state.botState.finalWord}</h3>
-              </span>
-          </div>
-        </Row>
+        { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
         </React.Fragment>
       )
     }
@@ -275,6 +314,7 @@ class App extends Component {
           <Modal.Header closeButton onClick={this.toggleInstructions}>
             <Modal.Title>Instructions</Modal.Title>
           </Modal.Header>
+          { this.state.curentGame == "Freeze Tag" ?
           <Modal.Body>
             <p>In Freeze Tag, 2 performers act out a scene.  At a certain point, the host or other performers
             will shout out "Freeze!" and the performers stop moving.  A new performer gets a suggestion from the
@@ -287,7 +327,18 @@ class App extends Component {
 
             <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
           </Modal.Body>
+          :
+          <Modal.Body>
+            <p>In TSA, audience members submit drawings of the contents of a traveller's bag.  One performer as a TSA
+            Agent will interrogate the traveller as they try to justify increasingly random security X-Rays.</p>
 
+            <p>You will be submitting these pictures.  Please open up MS Paint and draw whatever comes to mind.  Submit
+            it by simply dropping it in this <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Google
+            Drive folder</a>.</p>
+
+            <p>Have fun making this traveller's day more difficult!</p>
+          </Modal.Body>
+          }
           <Modal.Footer>
             <Button variant="secondary" onClick={this.toggleInstructions}>Close</Button>
           </Modal.Footer>

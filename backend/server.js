@@ -102,6 +102,8 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 const AcaBot = new AcademicBot()
 const server = new Hapi.Server(serverOptions);
 
+var gameState = "";
+
 (async () => {
 
   await server.register(require('inert'));
@@ -152,8 +154,26 @@ const server = new Hapi.Server(serverOptions);
     path: "/api/getBotState",
     handler: botQueryHandler
   })
+
+  server.route ({
+    method: "GET",
+    path: "/api/changeToTSA",
+    handler: changeToTSAhandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/changeToFreezeTag",
+    handler: changeToFreezeTagHandler
+  })
+
+
   // Start the server.
   await server.start();
+
+  // Start game state with freeze tag
+  gameState = "Freeze Tag"
+  
   console.log(STRINGS.serverStarted, server.info.uri);
 
   // Periodically clear cool-down tracking to prevent unbounded growth due to
@@ -251,7 +271,8 @@ function botQueryHandler(req)
       options: state.options,
       votedAlready: state.votedAlready,
       finalWord: state.finalWord
-    }
+    },
+
   };
 }
 
@@ -327,6 +348,26 @@ function botVoteHandler(req)
       isVoting: state.isVoting
     }
   };
+}
+
+function changeToTSAHandler(req) {
+    // Verify all requests.
+    const payload = verifyAndDecode(req.headers.authorization);
+
+    const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+    const state = AcaBot.getState();
+
+    attemptStateBroadcast(channelId);
+
+    return {
+      botState: state
+    }
+
+}
+
+function changeToFreezeTagHandler(req) {
+
 }
 
 function attemptStateBroadcast(channelId) {
