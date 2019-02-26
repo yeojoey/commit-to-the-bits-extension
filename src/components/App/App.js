@@ -385,7 +385,7 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   {this.renderBody()}
-                  <Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>
+                  //<Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>
                 </Container>
               </div>
               {this.renderInstructions()}
