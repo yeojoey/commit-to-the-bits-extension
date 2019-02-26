@@ -300,9 +300,6 @@ class App extends Component {
         <div>
           <h4>Current Prompt:</h4>
           <h3>{this.state.botState.finalWord}</h3>
-          {this.captain == "" ?
-            ""
-          : <p>{this.captain}</p>}
         </div>
         <div>
           {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : ""
