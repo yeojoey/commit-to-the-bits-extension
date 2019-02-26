@@ -156,11 +156,11 @@ var currentGame = "";
     handler: botQueryHandler
   })
 
-  server.route ({
-    method: "GET",
-    path: "/api/getCaptain",
-    handler: captainQueryHandler
-  })
+  // server.route ({
+  //   method: "GET",
+  //   path: "/api/getCaptain",
+  //   handler: captainQueryHandler
+  // })
 
   server.route ({
     method: "POST",
@@ -357,20 +357,20 @@ function botVoteHandler(req)
   };
 }
 
-function captainQueryHandler(req)
-{
-  // Verify all requests.
-  const payload = verifyAndDecode(req.headers.authorization);
-
-  const cap = AcaBot.getCaptain();
-  console.log("Got captain: "+cap)
-
-  return {
-    botState: {
-      captain: cap
-    }
-  };
-}
+// function captainQueryHandler(req)
+// {
+//   // Verify all requests.
+//   const payload = verifyAndDecode(req.headers.authorization);
+//
+//   const cap = AcaBot.getCaptain();
+//   console.log("Got captain: "+cap)
+//
+//   return {
+//     botState: {
+//       captain: cap
+//     }
+//   };
+// }
 
 function changeToTSAHandler(req) {
     // Verify all requests.
