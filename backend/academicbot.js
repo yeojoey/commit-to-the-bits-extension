@@ -189,6 +189,7 @@ const ABot = class AcademicBot
     {
       if(!error && response.statusCode === 200)
       {
+        console.log("Chatters in " + process.env.CHANNEL_TO_SCRAPE + ": "+body.chatters.viewers)
         return body.chatters.viewers;
       }
     })
