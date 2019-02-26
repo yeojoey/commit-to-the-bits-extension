@@ -24,7 +24,7 @@ const color = require('color');
 const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
-const rp = require('rp');
+const rp = require('request-promise');
 
 const AcademicBot = require('./academicbot.js')
 
