@@ -18,6 +18,7 @@
     "react-dom": "^16.8.2",
     "react-scripts": "2.1.5",
     "request": "^2.85.0",
+    "request-promise": "^4.2.4",
     "selfsigned": "^1.10.2",
     "twitch-bot": "^1.2.5"
   },

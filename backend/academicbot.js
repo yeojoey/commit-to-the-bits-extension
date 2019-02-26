@@ -176,7 +176,6 @@ const ABot = class AcademicBot
   setCaptain(cap)
   {
     this.captain = cap;
-    console.log("Captain set to "+this.captain)
   }
 
   //SUGGESTION ADDITION

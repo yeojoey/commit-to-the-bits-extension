@@ -24,6 +24,7 @@ const color = require('color');
 const ext = require('commander');
 const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
+const rp = require('rp');
 
 const AcademicBot = require('./academicbot.js')
 
@@ -366,14 +367,33 @@ function captainQueryHandler(req)
   var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
   var semaphore = 0;
   var toReturn = "";
-  request(
-  {
-    url: url,
-    json: true
-  }, function(error, response, body)
-  {
-    semaphore = 1;
-    if(!error && response.statusCode === 200)
+  // request(
+  // {
+  //   url: url,
+  //   json: true
+  // }, function(error, response, body)
+  // {
+  //   semaphore = 1;
+  //   if(!error && response.statusCode === 200)
+  //   {
+  //     const chatters = body.chatters.viewers;
+  //     var rando = Math.floor(Math.random() * Math.floor(chatters.length));
+  //     cap = chatters[rando];
+  //     toReturn = {
+  //       captain: cap
+  //     };
+  //
+  //     AcaBot.setCaptain(cap);
+  //   }
+  //   else {
+  //     toReturn = {
+  //       captain: ""
+  //     };
+  //   }
+  //   semaphore = 0;
+  // })
+  rp(url)
+    .then(function(body)
     {
       const chatters = body.chatters.viewers;
       var rando = Math.floor(Math.random() * Math.floor(chatters.length));
@@ -381,16 +401,12 @@ function captainQueryHandler(req)
       toReturn = {
         captain: cap
       };
-
       AcaBot.setCaptain(cap);
-    }
-    else {
-      toReturn = {
-        captain: ""
-      };
-    }
-    semaphore = 0;
-  })
+    })
+    .catch(function(err)
+    {
+      console.log("Error getting viewers.")
+    })
   return toReturn;
 }
 
