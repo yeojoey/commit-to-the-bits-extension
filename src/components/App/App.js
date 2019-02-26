@@ -379,6 +379,7 @@ class App extends Component {
 
   render() {
       console.log("Captain is "+this.captain)
+      this.getInitialState();
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
             <React.Fragment>

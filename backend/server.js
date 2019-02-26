@@ -279,7 +279,7 @@ function botQueryHandler(req)
       votedAlready: state.votedAlready,
       finalWord: state.finalWord
     },
-
+    captain: state.captain
   };
 }
 
@@ -375,7 +375,6 @@ function captainQueryHandler(req)
     semaphore = 1;
     if(!error && response.statusCode === 200)
     {
-      console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
       const chatters = body.chatters.viewers;
       var rando = Math.floor(Math.random() * Math.floor(chatters.length));
       cap = chatters[rando];
@@ -392,8 +391,7 @@ function captainQueryHandler(req)
     }
     semaphore = 0;
   })
-  if(semaphore == 0)
-    return toReturn
+  return toReturn;
 }
 
 function changeToTSAHandler(req) {
