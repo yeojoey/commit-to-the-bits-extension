@@ -180,7 +180,7 @@ const ABot = class AcademicBot
   // Test get current chatters
   getChatters()
   {
-    var url = "https://tmi.twitch.tv/group/user/" + process.env.CHANNEL_TO_SCRAPE + "/chatters"
+    var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
     request(
     {
       url: url,
