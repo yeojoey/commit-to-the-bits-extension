@@ -222,6 +222,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+    console.log(this.state.captain)
   }
 
   handleChangeToFreezeTag = async e => {

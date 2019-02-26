@@ -380,16 +380,14 @@ function captainQueryHandler(req)
       var rando = Math.floor(Math.random() * Math.floor(chatters.length));
       cap = chatters[rando];
       toReturn = {
-        botState: {
-          captain: cap
-        }
+        captain: cap
       };
+
+      AcaBot.setCaptain(cap);
     }
     else {
       toReturn = {
-        botState: {
-          captain: ""
-        }
+        captain: ""
       };
     }
     semaphore = 0;
