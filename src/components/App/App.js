@@ -301,8 +301,7 @@ class App extends Component {
           <h3>{this.state.botState.finalWord}</h3>
         </div>
         <div>
-          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
-            {/* Nothing */}
+          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : ""
           }
         </div>
       </Row>
@@ -385,7 +384,7 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   {this.renderBody()}
-                  //<Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>
+                  {/*<Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>*/}
                 </Container>
               </div>
               {this.renderInstructions()}
