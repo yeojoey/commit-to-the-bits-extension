@@ -364,32 +364,38 @@ function captainQueryHandler(req)
 
   var cap = "undefined";
   var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
+  var semaphore = 0;
+  var toReturn = "";
   request(
   {
     url: url,
     json: true
   }, function(error, response, body)
   {
+    semaphore = 1;
     if(!error && response.statusCode === 200)
     {
       console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
       const chatters = body.chatters.viewers;
       var rando = Math.floor(Math.random() * Math.floor(chatters.length));
       cap = chatters[rando];
-      return {
+      toReturn = {
         botState: {
           captain: cap
         }
       };
     }
     else {
-      return {
+      toReturn = {
         botState: {
           captain: ""
         }
       };
     }
+    semaphore = 0;
   })
+  if(semaphore == 0)
+    return toReturn
 }
 
 function changeToTSAHandler(req) {
