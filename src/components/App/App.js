@@ -128,7 +128,6 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
-    console.log(body);
     return body;
   }
 
@@ -221,7 +220,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -235,7 +233,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -300,11 +297,12 @@ class App extends Component {
     return (
       <Row className="justify-content-md-center">
         <div>
+          <h4>Current Prompt:</h4>
+          <h3>{this.state.botState.finalWord}</h3>
+        </div>
+        <div>
           {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> :
-            <span>
-              <h4>Current Prompt:</h4>
-              <h3>{this.state.botState.finalWord}</h3>
-            </span>
+            {/* Nothing */}
           }
         </div>
       </Row>

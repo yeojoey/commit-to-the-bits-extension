@@ -406,7 +406,7 @@ const ABot = class AcademicBot
 
   printLegalDoc()
   {
-    this.Bot.say("A legal consent form or disclaimer would go here. ;)")
+    //this.Bot.say("A legal consent form or disclaimer would go here. ;)")
   }
 
   //LOGGING
