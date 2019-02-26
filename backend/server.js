@@ -362,7 +362,7 @@ function captainQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
-  const cap = AcaBot.getCaptain();
+  const cap = AcaBot.getChatters();
   console.log("Got captain: "+cap)
 
   return {
