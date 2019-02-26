@@ -376,14 +376,20 @@ function captainQueryHandler(req)
       const chatters = body.chatters.viewers;
       var rando = Math.floor(Math.random() * Math.floor(chatters.length));
       cap = chatters[rando];
+      return {
+        botState: {
+          captain: cap
+        }
+      };
+    }
+    else {
+      return {
+        botState: {
+          captain: ""
+        }
+      };
     }
   })
-
-  return {
-    botState: {
-      captain: cap
-    }
-  };
 }
 
 function changeToTSAHandler(req) {
