@@ -1,4 +1,5 @@
 const TwitchBot = require('twitch-bot')
+const request = require('request');
 const fs = require('fs')
 var os = require('os')
 
@@ -149,6 +150,7 @@ const ABot = class AcademicBot
     this.votedAlready = []
   }
 
+  // Returns the bot state to the Server and Frontend
   getState()
   {
     return {
@@ -162,6 +164,33 @@ const ABot = class AcademicBot
       votedAlready: this.votedAlready,
       finalWord: this.finalWord
     };
+  }
+
+  // Retrieves a user to act as Captain
+  getCaptain()
+  {
+    var captain;
+    var chatters = getChatters()
+    var rando = Math.floor(Math.random() * Math.floor(body.chatters.viewers.length));
+
+    console.log("Captain is " + chatters[rando])
+  }
+
+  // Test get current chatters
+  getChatters()
+  {
+    var url = "https://tmi.twitch.tv/group/user/" + process.env.CHANNEL_TO_SCRAPE + "/chatters"
+    request(
+    {
+      url: url,
+      json: true
+    }, function(error, response, body)
+    {
+      if(!error && response.statusCode === 200)
+      {
+        return body.chatters.viewers;
+      }
+    })
   }
 
   //SUGGESTION ADDITION

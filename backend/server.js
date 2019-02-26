@@ -157,6 +157,12 @@ var currentGame = "";
   })
 
   server.route ({
+    method: "GET",
+    path: "/api/getCaptain",
+    handler: captainQueryHandler
+  })
+
+  server.route ({
     method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
@@ -347,6 +353,21 @@ function botVoteHandler(req)
     botState: {
       options: state.options,
       isVoting: state.isVoting
+    }
+  };
+}
+
+function captainQueryHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  const cap = AcaBot.getCaptain();
+  console.log("Got captain: "+cap)
+
+  return {
+    botState: {
+      captain: cap
     }
   };
 }

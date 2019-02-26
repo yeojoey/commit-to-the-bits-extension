@@ -197,6 +197,20 @@ class App extends Component {
     this.handleVoteSubmit(a);
   }
 
+  handleCaptain = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/getCaptain", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    console.log(JSON.stringify(body));
+    this.setState(body);
+  }
+
   handleChangeToTSA = async e => {
     e.preventDefault();
     const response = await fetch ("/api/changeToTSA", {
@@ -373,6 +387,7 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   {this.renderBody()}
+                  <Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>
                 </Container>
               </div>
               {this.renderInstructions()}
