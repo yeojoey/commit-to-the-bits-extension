@@ -380,7 +380,9 @@ function captainQueryHandler(req)
   })
 
   return {
-    captain: cap
+    botState: {
+      captain: cap
+    }
   }
   };
 }

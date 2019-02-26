@@ -41,6 +41,9 @@ const ABot = class AcademicBot
 
     this.finalWord = ""
 
+    // Captain is the chosen one of the audience.
+    this.captain = "";
+
     //Hotkey Explanations
     this.hotkeys = ["!v - Initiates voting. This will grab a random suggestion from each of C, R, O, and W (if one exists) and post them in chat. It accepts votes for 15 seconds, or until it is manually stopped, and then posts the results.",
                   "!# - Manually selects a winner. This hotkey will only work while voting is in progress. It allows the user to select the suggestion they wish to win, denoted by its number. Voting ends immediately.",
@@ -148,6 +151,8 @@ const ABot = class AcademicBot
     this.votes = []
     this.options = []
     this.votedAlready = []
+
+    this.captain = ""
   }
 
   // Returns the bot state to the Server and Frontend
@@ -162,37 +167,15 @@ const ABot = class AcademicBot
       votes: this.votes,
       options: this.options,
       votedAlready: this.votedAlready,
-      finalWord: this.finalWord
+      finalWord: this.finalWord,
+      captain: this.captain
     };
   }
 
   // Retrieves a user to act as Captain
-  getCaptain()
+  setCaptain(cap)
   {
-    var captain;
-    var chatters = this.getChatters()
-    console.log("Got chatters: " +chatters)
-    var rando = Math.floor(Math.random() * Math.floor(chatters.length));
-
-    console.log("Captain is " + chatters[rando])
-  }
-
-  // Test get current chatters
-  getChatters()
-  {
-    var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
-    request(
-    {
-      url: url,
-      json: true
-    }, function(error, response, body)
-    {
-      if(!error && response.statusCode === 200)
-      {
-        console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
-        return body.chatters.viewers;
-      }
-    })
+    this.captain = cap;
   }
 
   //SUGGESTION ADDITION
