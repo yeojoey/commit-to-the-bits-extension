@@ -187,11 +187,12 @@ const ABot = class AcademicBot
       if(!error && response.statusCode === 200)
       {
         console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
+        var chatters = body.chatters.viewers;
         var rando = Math.floor(Math.random() * Math.floor(chatters.length));
 
         console.log("Captain is " + chatters[rando])
 
-        return body.chatters.viewers;
+        return chatters[rando];
       }
     })
   }
