@@ -288,6 +288,7 @@ class App extends Component {
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag} />
           : ""}
+          <h1>{this.state.captain}</h1>
         </Row>
         { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
         </React.Fragment>
