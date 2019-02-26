@@ -362,13 +362,26 @@ function captainQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
-  const cap = AcaBot.getChatters();
-  console.log("Got captain: "+cap)
+  var cap = "undefined";
+  var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
+  request(
+  {
+    url: url,
+    json: true
+  }, function(error, response, body)
+  {
+    if(!error && response.statusCode === 200)
+    {
+      console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
+      const chatters = body.chatters.viewers;
+      var rando = Math.floor(Math.random() * Math.floor(chatters.length));
+      cap = chatters[rando];
+    }
+  })
 
   return {
-    botState: {
-      captain: cap
-    }
+    captain: cap
+  }
   };
 }
 

@@ -172,6 +172,9 @@ const ABot = class AcademicBot
     var captain;
     var chatters = this.getChatters()
     console.log("Got chatters: " +chatters)
+    var rando = Math.floor(Math.random() * Math.floor(chatters.length));
+
+    console.log("Captain is " + chatters[rando])
   }
 
   // Test get current chatters
@@ -187,12 +190,7 @@ const ABot = class AcademicBot
       if(!error && response.statusCode === 200)
       {
         console.log("Chatters in " + "charlieparke" + ": "+body.chatters.viewers)
-        var chatters = body.chatters.viewers;
-        var rando = Math.floor(Math.random() * Math.floor(chatters.length));
-
-        console.log("Captain is " + chatters[rando])
-
-        return chatters[rando];
+        return body.chatters.viewers;
       }
     })
   }
