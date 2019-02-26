@@ -383,7 +383,6 @@ function captainQueryHandler(req)
     botState: {
       captain: cap
     }
-  }
   };
 }
 
