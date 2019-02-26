@@ -170,7 +170,7 @@ const ABot = class AcademicBot
   getCaptain()
   {
     var captain;
-    var chatters = this.getChatters()
+    var chatters = await this.getChatters()
     console.log("Got chatters: " +chatters)
     var rando = Math.floor(Math.random() * Math.floor(chatters.length));
 
