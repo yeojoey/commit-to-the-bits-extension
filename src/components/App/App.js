@@ -253,12 +253,8 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleChangeGame = async (e, game) => {
-    console.log("test test test");
-    console.log(e);
-    console.log(game);
-    e.preventDefault();
-    const response = await fetch ("/api/" + game, {
+  handleChangeGame = async (game) => {
+    const response = await fetch ("/api/changeTo" + game, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
