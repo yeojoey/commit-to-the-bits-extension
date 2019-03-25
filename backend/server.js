@@ -189,12 +189,18 @@ var currentGame = "";
     handler: dequeueAudienceMemberHandler
   })
 
+  server.route ({
+    method: "GET",
+    path: "/api/getQueuePosition",
+    handler: getQueuePositionHandler
+  })
+
 
   // Start the server.
   await server.start();
 
   // Start game state with freeze tag
-  currentGame = "FreezeTag"
+  currentGame = "Freeze Tag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -240,6 +246,44 @@ function verifyAndDecode(header) {
     throw Boom.unauthorized(STRINGS.invalidJwt);
   }
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
+}
+
+
+
+function screamQueryHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the scream for the channel from the payload and return it.
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const currentText = (channelScreams[channelId] || initialText);
+  return { textToDisplay: currentText };
+
+}
+
+function screamAddHandler(req) {
+
+  //Verify request
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  // Store the text for the channel.
+  let currentText = channelScreams[channelId] || initialText;
+
+  // Bot abuse prevention:  don't allow a user to spam the button.
+  if (userIsInCooldown(opaqueUserId)) {
+    throw Boom.tooManyRequests(STRINGS.cooldown);
+  }
+
+  // Append A
+  currentText = [currentText, "A"].join("");
+
+  channelScreams[channelId] = currentText;
+
+  // Broadcast the scream to all other extension instances on this channel.
+  attemptStateBroadcast(channelId);
+  return { textToDisplay: currentText };
+
 }
 
 function botQueryHandler(req)
@@ -410,13 +454,13 @@ function changeToFreezeTagHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
-  currentGame = "FreezeTag";
+  currentGame = "Freeze Tag";
 
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "FreezeTag"
+    currentGame: "Freeze Tag"
   }
 }
 
@@ -429,9 +473,29 @@ function enqueueAudienceMemberHandler(req)
 
   //Get mystical input via frontend consisting of Discord tag#12345 called discordTag
   var discordTag = "charlieParker#43545";
-  var userIDWithDiscordTag = opaqueUserId +":"+discordTag;
-  queue[queue.length] = userIDWithDiscordTag;
-  console.log(queue);
+  var queueObj = {
+    uID: opaqueUserId,
+    discordTag: discordTag
+  }
+
+  var newEntrant = true;
+  for(int i = 0; i < queue.length; i++)
+  {
+    if(queue[i].uID == queueObj.uID)
+    {
+      newEntrant = false;
+      break;
+    }
+  }
+  if(newEntrant)
+  {
+    queue[queue.length] = queueObj;
+    console.log(queue);
+  }
+
+  return {
+    queue: queue
+  }
 }
 
 function dequeueAudienceMemberHandler(req)
@@ -443,6 +507,32 @@ function dequeueAudienceMemberHandler(req)
 
   var userToReturn = queue.shift();
   console.log(userToReturn);
+
+  return {
+    queue: queue
+  }
+}
+
+function getQueuePositionHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  var pos = -1;
+
+  for(int i = 0; i < queue.length; i++)
+  {
+    if(queue[i].uID == opaqueUserId)
+    {
+      pos = i;
+    }
+  }
+
+  return {
+    pos: pos
+  }
 }
 
 function attemptStateBroadcast(channelId) {
