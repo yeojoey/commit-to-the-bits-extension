@@ -51,7 +51,7 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "Freeze Tag"
+          currentGame: "FreezeTag"
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -337,12 +337,14 @@ class App extends Component {
 
       default:
       case "FreezeTag":
+        console.log(111);
         this.renderFreezeTag();
         break;
     }
   }
 
   renderFreezeTag = () => {
+    console.log(222);
     return (
       <Row className="justify-content-md-center">
         <div>
@@ -390,9 +392,10 @@ class App extends Component {
                     handleClear={this.handleClear}
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag}
-                    handleChangeToCourtroom={this.handleChangeToCourtroom}/>
+                    handleChangeToCourtroom={this.handleChangeToCourtroom}
+                    handleChangeGame={this.handleChangeGame}/>
         </Row>
-        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.renderTSA() }
+        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.state.currentGame === "TSA" ? this.renderTSA() : this.renderCourtroom() }
         </React.Fragment>
       )
     }
