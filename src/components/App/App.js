@@ -327,14 +327,14 @@ class App extends Component {
   renderGame = () => {
 
     if (this.state.currentGame === "FreezeTag") {
-      return ( {this.renderFreezeTag() });
+      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
     }
 
     else if (this.state.currentGame === "TSA") {
-      return ( {this.renderTSA() });
+      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment>);
 
     } else {
-      return ( {this.renderCourtroom() });
+      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment>);
     }
 
   }
