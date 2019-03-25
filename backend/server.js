@@ -48,6 +48,8 @@ const channelColors = {};
 const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
+const queue = [];
+
 const channelScreams = {};
 const initialText = "Scream with me: ";
 
@@ -173,6 +175,18 @@ var currentGame = "";
     method: "POST",
     path: "/api/changeToFreezeTag",
     handler: changeToFreezeTagHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/enqueueAudienceMember",
+    handler: enqueueAudienceMemberHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/dequeueAudienceMember",
+    handler: dequeueAudienceMemberHandler
   })
 
 
@@ -444,6 +458,30 @@ function changeToFreezeTagHandler(req) {
   }
 }
 
+function enqueueAudienceMemberHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  //Get mystical input via frontend consisting of Discord tag#12345 called discordTag
+  var discordTag = "charlieParker#43545";
+  var userIDWithDiscordTag = opaqueUserId +":"+discordTag;
+  queue[queue.length] = userIDWithDiscordTag;
+  console.log(queue);
+}
+
+function dequeueAudienceMemberHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  var userToReturn = queue.shift();
+  console.log(userToReturn);
+}
 
 function attemptStateBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.

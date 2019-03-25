@@ -1,19 +1,20 @@
-const rp = require('request-promise')
+const queue = [];
 
-var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
-rp(url)
-  .then(function(body)
-  {
-    // const chatters = body.chatters.viewers;
-    // var rando = Math.floor(Math.random() * Math.floor(chatters.length));
-    // cap = chatters[rando];
-    // toReturn = {
-    //   captain: cap
-    // };
-    // AcaBot.setCaptain(cap);
-    console.log(body)
-  })
-  .catch(function(err)
-  {
-    console.log(err)
-  })
+
+queue[queue.length] = "parker";
+queue[queue.length] = "zachary";
+console.log(queue);
+
+var userToReturn = queue.shift();
+
+console.log(userToReturn);
+
+var userToReturn = queue.shift();
+
+console.log(userToReturn);
+
+console.log(queue);
+
+queue["charlieparke#454"] = "dkfadfkjaf";
+
+console.log(queue["charlieparke#454"]);
