@@ -479,7 +479,7 @@ function enqueueAudienceMemberHandler(req)
   }
 
   var newEntrant = true;
-  for(int i = 0; i < queue.length; i++)
+  for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == queueObj.uID)
     {
@@ -522,7 +522,7 @@ function getQueuePositionHandler(req)
 
   var pos = -1;
 
-  for(int i = 0; i < queue.length; i++)
+  for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == opaqueUserId)
     {
