@@ -386,7 +386,7 @@ class App extends Component {
                     handleClear={this.handleClear}
                     handleChangeGame={this.handleChangeGame}/>
         </Row>
-        { this.state.renderCourtroom() }
+        { this.renderCourtroom() }
         </React.Fragment>
       )
     }
