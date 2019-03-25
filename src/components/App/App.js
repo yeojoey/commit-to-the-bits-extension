@@ -49,7 +49,7 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "Freeze Tag"
+          currentGame: "FreezeTag"
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -323,6 +323,7 @@ class App extends Component {
   }
 
   renderGame = () => {
+    console.log(this.state.currentGame);
     switch (this.state.currentGame) {
 
       case "Courtroom":
@@ -388,9 +389,10 @@ class App extends Component {
                     handleClear={this.handleClear}
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag}
-                    handleChangeToCourtroom={this.handleChangeToCourtroom}/>
+                    handleChangeToCourtroom={this.handleChangeToCourtroom}
+                    handleChangeGame={this.handleChangeGame}/>
         </Row>
-        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.renderTSA() }
+        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.state.currentGame === "TSA" ? this.renderTSA() : this.renderCourtroom() }
         </React.Fragment>
       )
     }
