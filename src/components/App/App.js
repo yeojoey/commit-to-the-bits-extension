@@ -30,6 +30,8 @@ class App extends Component {
     characterSuggestion: "",
     botState: "",
     captain: "",
+    queue: "",
+    pos: "",
     showPanel: "",
     showInstructions: "",
     currentGame: ""
