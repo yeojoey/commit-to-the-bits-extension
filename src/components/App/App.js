@@ -325,7 +325,6 @@ class App extends Component {
   }
 
   renderGame = () => {
-    console.log(this.state.currentGame);
     switch (this.state.currentGame) {
 
       case "Courtroom":
@@ -338,12 +337,14 @@ class App extends Component {
 
       default:
       case "FreezeTag":
+        console.log(111);
         this.renderFreezeTag();
         break;
     }
   }
 
   renderFreezeTag = () => {
+    console.log(222);
     return (
       <Row className="justify-content-md-center">
         <div>
