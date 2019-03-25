@@ -325,26 +325,21 @@ class App extends Component {
   }
 
   renderGame = () => {
-    switch (this.state.currentGame) {
 
-      case "Courtroom":
-        this.renderCourtroom();
-        break;
-
-      case "TSA":
-        this.renderTSA();
-        break;
-
-      default:
-      case "FreezeTag":
-        console.log(111);
-        this.renderFreezeTag();
-        break;
+    if (this.state.currentGame === "FreezeTag") {
+      this.renderCourtroom();
     }
+
+    else if (this.state.currentGame === "TSA") {
+      this.renderTSA();
+
+    } else {
+      this.renderCourtroom();
+    }
+    
   }
 
   renderFreezeTag = () => {
-    console.log(222);
     return (
       <Row className="justify-content-md-center">
         <div>
