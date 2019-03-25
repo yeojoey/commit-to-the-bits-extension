@@ -472,12 +472,16 @@ function enqueueAudienceMemberHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get mystical input via frontend consisting of Discord tag#12345 called discordTag
-  var discordTag = "charlieParker#43545";
+  //Assumes discordTag is given under req.headers
+  var discordTag = req.headers.discordTag;
+
+  //Create object containing user ID and user Discord tag
   var queueObj = {
     uID: opaqueUserId,
     discordTag: discordTag
   }
 
+  //Verify user is not already in the queue
   var newEntrant = true;
   for(var i = 0; i < queue.length; i++)
   {
@@ -487,14 +491,18 @@ function enqueueAudienceMemberHandler(req)
       break;
     }
   }
+
+  //Put user object in queue
   if(newEntrant)
   {
     queue[queue.length] = queueObj;
     console.log(queue);
   }
 
+  //Return queue and user's queue position
   return {
-    queue: queue
+    queue: queue,
+    pos: queue.length
   }
 }
 
@@ -503,13 +511,13 @@ function dequeueAudienceMemberHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
+  //Pop, or 'shift', the earliest element from the array.
   var userToReturn = queue.shift();
   console.log(userToReturn);
 
   return {
-    queue: queue
+    queue: queue,
+    guestStar: userToReturn
   }
 }
 
@@ -518,13 +526,15 @@ function getQueuePositionHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  //Gets user ID for position. Assums uID is in req.headers
+  const uID = req.headers.userID;
 
+  //If -1 is returned that means that the queried user is not in the queue
   var pos = -1;
 
   for(var i = 0; i < queue.length; i++)
   {
-    if(queue[i].uID == opaqueUserId)
+    if(queue[i].uID == uID)
     {
       pos = i;
     }
