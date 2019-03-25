@@ -327,16 +327,16 @@ class App extends Component {
   renderGame = () => {
 
     if (this.state.currentGame === "FreezeTag") {
-      this.renderCourtroom();
+      return ( {this.renderFreezeTag() });
     }
 
     else if (this.state.currentGame === "TSA") {
-      this.renderTSA();
+      return ( {this.renderTSA() });
 
     } else {
-      this.renderCourtroom();
+      return ( {this.renderCourtroom() });
     }
-    
+
   }
 
   renderFreezeTag = () => {
