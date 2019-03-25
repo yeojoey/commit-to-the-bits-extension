@@ -194,7 +194,7 @@ var currentGame = "";
   await server.start();
 
   // Start game state with freeze tag
-  currentGame = "Freeze Tag"
+  currentGame = "FreezeTag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -240,44 +240,6 @@ function verifyAndDecode(header) {
     throw Boom.unauthorized(STRINGS.invalidJwt);
   }
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
-}
-
-
-
-function screamQueryHandler(req) {
-  // Verify all requests.
-  const payload = verifyAndDecode(req.headers.authorization);
-
-  // Get the scream for the channel from the payload and return it.
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  const currentText = (channelScreams[channelId] || initialText);
-  return { textToDisplay: currentText };
-
-}
-
-function screamAddHandler(req) {
-
-  //Verify request
-  const payload = verifyAndDecode(req.headers.authorization);
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
-  // Store the text for the channel.
-  let currentText = channelScreams[channelId] || initialText;
-
-  // Bot abuse prevention:  don't allow a user to spam the button.
-  if (userIsInCooldown(opaqueUserId)) {
-    throw Boom.tooManyRequests(STRINGS.cooldown);
-  }
-
-  // Append A
-  currentText = [currentText, "A"].join("");
-
-  channelScreams[channelId] = currentText;
-
-  // Broadcast the scream to all other extension instances on this channel.
-  attemptStateBroadcast(channelId);
-  return { textToDisplay: currentText };
-
 }
 
 function botQueryHandler(req)
@@ -448,13 +410,13 @@ function changeToFreezeTagHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
-  currentGame = "Freeze Tag";
+  currentGame = "FreezeTag";
 
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Freeze Tag"
+    currentGame: "FreezeTag"
   }
 }
 

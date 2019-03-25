@@ -238,6 +238,35 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleChangeToCourtroom = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/changeToCourtroom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
+  handleChangeGame = async (e, game) => {
+    console.log("test test test");
+    console.log(e);
+    console.log(game);
+    e.preventDefault();
+    const response = await fetch ("/api/" + game, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   handleClear = async e => {
     e.preventDefault();
     const response = await fetch ("/api/clear", {
@@ -286,12 +315,32 @@ class App extends Component {
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
                     handleChangeToTSA={this.handleChangeToTSA}
-                    handleChangeToFreezeTag={this.handleChangeToFreezeTag} />
+                    handleChangeToFreezeTag={this.handleChangeToFreezeTag}
+                    handleChangeToCourtroom={this.handleChangeToCourtroom}
+                    handleChangeGame={this.handleChangeGame}/>
           : ""}
         </Row>
-        { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
+        { this.renderGame() }
         </React.Fragment>
       )
+    }
+  }
+
+  renderGame = () => {
+    switch (this.state.currentGame) {
+
+      case "Courtroom":
+        this.renderCourtroom();
+        break;
+
+      case "TSA":
+        this.renderTSA();
+        break;
+
+      default:
+      case "FreezeTag":
+        this.renderFreezeTag();
+        break;
     }
   }
 
@@ -321,6 +370,17 @@ class App extends Component {
     )
   }
 
+  renderCourtroom = () => {
+    return (
+      <Row className="justify-content-md-center">
+        <div>
+        <h3>Courtroom Game</h3>
+        <Button>Join Queue</Button>
+        </div>
+      </Row>
+    )
+  }
+
   renderDebugBody = () => {
     if (this.state.showPanel) {
       return (
@@ -330,9 +390,11 @@ class App extends Component {
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
-                    handleChangeToTSA={this.handleChangeToTSA} />
+                    handleChangeToTSA={this.handleChangeToTSA}
+                    handleChangeToFreezeTag={this.handleChangeToFreezeTag}
+                    handleChangeToCourtroom={this.handleChangeToCourtroom}/>
         </Row>
-        { this.state.currentGame == "Freeze Tag" ?  this.renderFreezeTag() : this.renderTSA() }
+        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.renderTSA() }
         </React.Fragment>
       )
     }
@@ -345,7 +407,7 @@ class App extends Component {
           <Modal.Header closeButton onClick={this.toggleInstructions}>
             <Modal.Title>Instructions</Modal.Title>
           </Modal.Header>
-          { this.state.currentGame == "Freeze Tag" ?
+          { this.state.currentGame === "FreezeTag" ?
           <Modal.Body>
             <p>In Freeze Tag, 2 performers act out a scene.  At a certain point, the host or other performers
             will shout out "Freeze!" and the performers stop moving.  A new performer gets a suggestion from the
@@ -359,6 +421,7 @@ class App extends Component {
             <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
           </Modal.Body>
           :
+          this.state.currentGame === "TSA" ?
           <Modal.Body>
             <p>In TSA, audience members submit drawings of the contents of a traveller's bag.  One performer as a TSA
             Agent will interrogate the traveller as they try to justify increasingly random security X-Rays.</p>
@@ -368,6 +431,10 @@ class App extends Component {
             Drive folder</a>.</p>
 
             <p>Have fun making this traveller's day more difficult!</p>
+          </Modal.Body>
+          :
+          <Modal.Body>
+            <p>Courtroom game instructions go here</p>
           </Modal.Body>
           }
           <Modal.Footer>
