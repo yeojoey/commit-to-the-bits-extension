@@ -252,7 +252,7 @@ class App extends Component {
   }
 
   handleChangeGame = async (game) => {
-    const response = await fetch ("/api/" + game, {
+    const response = await fetch ("/api/changeTo" + game, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
