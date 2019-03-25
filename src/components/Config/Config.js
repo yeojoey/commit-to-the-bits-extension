@@ -20,8 +20,9 @@ class Config extends Component {
         <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>{' '}
         <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>{' '}
         <br /><br />
-        <Button onClick={this.props.handleChangeToTSA}>Start TSA Game</Button>{' '}
-        <Button onClick={this.props.handleChangeToFreezeTag}>Start Freeze Tag</Button>
+        <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+        <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+        <Button onClick={() => this.props.handleChangeGame("Courtroom")}>Start Courtroom</Button>
       </Col>
       </React.Fragment>
     )

@@ -180,7 +180,7 @@ var currentGame = "";
   await server.start();
 
   // Start game state with freeze tag
-  currentGame = "Freeze Tag"
+  currentGame = "FreezeTag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -396,13 +396,13 @@ function changeToFreezeTagHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
-  currentGame = "Freeze Tag";
+  currentGame = "FreezeTag";
 
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Freeze Tag"
+    currentGame: "FreezeTag"
   }
 }
 
