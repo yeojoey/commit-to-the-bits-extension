@@ -252,6 +252,9 @@ class App extends Component {
   }
 
   handleChangeGame = async (e, game) => {
+    console.log("test test test");
+    console.log(e);
+    console.log(game);
     e.preventDefault();
     const response = await fetch ("/api/" + game, {
       method: "POST",
