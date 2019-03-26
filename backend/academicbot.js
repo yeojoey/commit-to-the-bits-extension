@@ -55,6 +55,8 @@ const ABot = class AcademicBot
       channels: [channel]
     })
 
+    console.log("USERNAME" + process.env.TWITCHBOT_USERNAME);
+
     this.startup()
   }
 
