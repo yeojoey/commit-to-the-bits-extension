@@ -217,7 +217,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -231,7 +230,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -388,7 +386,7 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Courtroom queue={this.state.queue} pos={this.state.pos} handleEnqueue={this.handleEnqueue}/>
+      <Courtroom inQueue={this.state.inQueue} handleEnqueue={this.handleEnqueue}/>
     )
   }
 

@@ -490,11 +490,9 @@ function enqueueAudienceMemberHandler(req)
     }
   }
 
-
 }
 
 function checkIfInQueue (userId) {
-  console.log(JSON.stringify(queue));
   for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == userId)
