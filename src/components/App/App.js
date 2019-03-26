@@ -341,7 +341,6 @@ class App extends Component {
   }
 
   renderGame = () => {
-    console.log("Current Game:" + this.state.currentGame);
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
     }

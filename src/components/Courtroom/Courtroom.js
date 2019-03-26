@@ -32,7 +32,7 @@ class Courtroom extends Component {
           <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234" value={this.state.discordTag} onChange={this.handleChange}>
           </FormControl>
             <InputGroup.Append>
-              <Button onClick={this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
+              <Button onClick={() => this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
             </InputGroup.Append>
           </InputGroup>
         </Col>
