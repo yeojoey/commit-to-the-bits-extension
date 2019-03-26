@@ -469,7 +469,7 @@ function enqueueAudienceMemberHandler(req)
   //Verify user is not already in the queue
   var newEntrant = checkIfInQueue(opaqueUserId)
 
-  //Put user object in queue
+  //Put user if queue if they are not already in the queue
   if(newEntrant)
   {
     queue[queue.length] = queueObj;
@@ -480,6 +480,13 @@ function enqueueAudienceMemberHandler(req)
       queue: queue,
       pos: queue.length,
       inQueue: true
+    }
+
+  // user already in queue
+  } else {
+    return {
+      queue: queue,
+      pos: queue.length
     }
   }
 
