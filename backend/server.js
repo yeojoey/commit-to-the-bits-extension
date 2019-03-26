@@ -260,7 +260,7 @@ function botQueryHandler(req)
       finalWord: state.finalWord
     },
     captain: state.captain,
-    currentGame: currentGame;
+    currentGame: currentGame
   };
 }
 
