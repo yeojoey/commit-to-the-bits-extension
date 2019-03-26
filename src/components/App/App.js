@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // Components
 import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
+import Courtroom from '../Courtroom/Courtroom'
 import Voting from '../Voting/Voting'
 
 // Styling
@@ -37,7 +38,8 @@ class App extends Component {
     pos: "",
     showPanel: "",
     showInstructions: "",
-    currentGame: ""
+    currentGame: "",
+    votedBefore: false
   }
 
 
@@ -193,6 +195,7 @@ class App extends Component {
       });
       const body = await response.json();
       this.setState(body);
+      this.setState({votedBefore: true});
   }
 
   handleVote = (a) => {
@@ -213,6 +216,19 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleEnqueue = async (discordTag) => {
+    const response = await fetch ("/api/enqueueAudienceMember", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token,
+        "discordTag": discordTag
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   handleChangeToTSA = async e => {
     e.preventDefault();
     const response = await fetch ("/api/changeToTSA", {
@@ -224,7 +240,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
-    console.log(this.state.captain)
+    console.log(this.state.captain);
   }
 
   handleChangeToFreezeTag = async e => {
@@ -347,7 +363,7 @@ class App extends Component {
           <h3>{this.state.botState.finalWord}</h3>
         </div>
         <div>
-          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} handleVoteSubmit={this.handleVote} /> : ""
+          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""
           }
         </div>
       </Row>
@@ -367,16 +383,7 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Row className="justify-content-md-center mx-5">
-        <h3>Courtroom Game</h3>
-        <InputGroup>
-        <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234">
-        </FormControl>
-        <InputGroup.Append>
-          <Button>Join Queue</Button>
-        </InputGroup.Append>
-        </InputGroup>
-      </Row>
+      <Courtroom queue={this.state.queue} pos={this.state.pos} handleEnqueue={this.handleEnqueue}/>
     )
   }
 
