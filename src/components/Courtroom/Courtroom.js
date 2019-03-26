@@ -27,7 +27,7 @@ class Courtroom extends Component {
       <Row className="justify-content-md-center mx-5">
         <Col>
           <h3>Courtroom Game</h3>
-          <h5>{this.props.queue === "" ? "You are not in line." : "You are in line."}</h5>
+          <h5>{this.props.inQueue ? "You are in line." : "You are not in line."}</h5>
           <InputGroup>
           <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234" value={this.state.discordTag} onChange={this.handleChange}>
           </FormControl>

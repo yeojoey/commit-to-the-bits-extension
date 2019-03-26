@@ -474,13 +474,16 @@ function enqueueAudienceMemberHandler(req)
   {
     queue[queue.length] = queueObj;
     console.log(queue);
+
+    //Return queue and user's queue position
+    return {
+      queue: queue,
+      pos: queue.length,
+      inQueue: true
+    }
   }
 
-  //Return queue and user's queue position
-  return {
-    queue: queue,
-    pos: queue.length
-  }
+
 }
 
 function checkIfInQueue (userId) {
