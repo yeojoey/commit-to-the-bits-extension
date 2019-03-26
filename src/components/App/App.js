@@ -56,7 +56,12 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "FreezeTag"
+          currentGame: "FreezeTag",
+          votedBefore: false,
+          botState: "",
+          captain: "",
+          queue: "",
+          pos: "",
       }
 
       this.togglePanel = this.togglePanel.bind(this);
