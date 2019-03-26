@@ -16,13 +16,7 @@ const GoogSheet = class GoogleSheetHandler
 
   constructor()
   {
-    // Load client secrets from a local file.
-    // fs.readFile('credentials.json', (err, content) => {
-    //   if (err) return console.log('Error loading client secret file:', err);
-    //   // Authorize a client with credentials, then call the Google Sheets API.
-    //   authorize(JSON.parse(content), writeStuff);
-    //   authorize(JSON.parse(content), listMajors);
-    // });
+    this.whiteList = [];
     this.getWhiteListedUsers();
   }
 
@@ -32,17 +26,15 @@ const GoogSheet = class GoogleSheetHandler
    * @param {Object} credentials The authorization client credentials.
    * @param {function} callback The callback to call with the authorized client.
    */
-  authorize(credentials, callback) {
+  authorize(credentials) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
 
-    // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, (err, token) => {
-      if (err) return getNewToken(oAuth2Client, callback);
-      oAuth2Client.setCredentials(JSON.parse(token));
-      callback(oAuth2Client);
-    });
+    var token = fs.readFileSync(TOKEN_PATH);
+    //if (err) return getNewToken(oAuth2Client, callback);
+    oAuth2Client.setCredentials(JSON.parse(token));
+    return oAuth2Client;
   }
 
   /**
@@ -76,63 +68,14 @@ const GoogSheet = class GoogleSheetHandler
     });
   }
 
-  /**
-   * Prints the names and majors of students in a sample spreadsheet:
-   * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-   * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
-   */
-  // listMajors(auth) {
-  //   const sheets = google.sheets({version: 'v4', auth});
-  //   sheets.spreadsheets.values.get({
-  //     spreadsheetId: '17y7JlRe-F8rl2wrZkrjUe9zrddfEtwTBghrhKFp3EoA',
-  //     range: 'Form Responses 1!B2:C',
-  //   }, (err, res) => {
-  //     if (err) return console.log('The API returned an error: ' + err);
-  //     const rows = res.data.values;
-  //     if (rows.length) {
-  //       console.log('Username:');
-  //       rows.map((row) => {
-  //         console.log(`${row[0]}`);
-  //       });
-  //     } else {
-  //       console.log('No data found.');
-  //     }
-  //   });
-  // }
-  //
-  // writeStuff(auth)
-  // {
-  //   const sheets = google.sheets({version: 'v4', auth});
-  //   let values =
-  //   [
-  //     ["not now", "Parker'stest", "committothebits.research@gmail.com"]
-  //   ];
-  //   const resource = {values};
-  //   sheets.spreadsheets.values.update
-  //   ({
-  //     spreadsheetId: process.env.WHITELISTED_USERS_SHEET,
-  //     range: 'Form Responses 1!A19:C19',
-  //     valueInputOption: 'RAW',
-  //     resource: resource
-  //   }, (err, res) =>
-  //   {
-  //     if(err)
-  //       console.log(err);
-  //     else {
-  //       console.log(""+res.updatedCells+" cells updated.");
-  //     }
-  //   });
-  // }
-
-  readWhiteListedUsers(auth)
+  readWhiteListedUsers(auth, self)
   {
     const sheets = google.sheets({version: 'v4', auth});
-    const users = [];
-    var spreadsheetId = process.env.WHITELISTED_USERS_SHEET;
-    console.log("SPID = "+spreadsheetId);
+    var spreadsheetId = '17y7JlRe-F8rl2wrZkrjUe9zrddfEtwTBghrhKFp3EoA';
+
     let inArray = false;
     sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.WHITELISTED_USERS_SHEET,
+      spreadsheetId: spreadsheetId,
       range: 'Form Responses 1!B2:C',
     }, (err, res) =>
     {
@@ -141,40 +84,101 @@ const GoogSheet = class GoogleSheetHandler
       const rows = res.data.values;
       if (rows.length)
       {
-        console.log('Username:');
+        //console.log('Username:');
         rows.map((row) =>
         {
-          for(var i = 0; i < users.length; i++)
+          inArray = false;
+          //console.log(row[0]);
+          for(var i = 0; i < self.whiteList.length; i++)
           {
-            if(row[0] == users[i])
+            if(row[0] == self.whiteList[i])
             {
+              //console.log("Breaking from loop due to duplicate.");
               inArray = true;
               break;
             }
           }
           if(!inArray)
-            users[users.length] = row[0];
+          {
+            self.whiteList[self.whiteList.length] = row[0];
+            //console.log("USERS: "+users);
+          }
         });
       }
       else
       {
         console.log('No data found.');
-        users[0] = -1;
+        self.whiteList[0] = -1;
       }
+      console.log("FINAL USERS: "+self.whiteList);
     });
-
-    console.log(users);
+    console.log("RETURN READING");
   }
 
   //Begin stuff written by Parker, not by Google.
   getWhiteListedUsers()
   {
-    var test = [];
-    fs.readFile('credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      // Authorize a client with credentials, then call the Google Sheets API.
-      this.authorize(JSON.parse(content), this.readWhiteListedUsers);
-    });
+    var content = fs.readFileSync('credentials.json');
+    var auth = this.authorize(JSON.parse(content), this.readWhiteListedUsers);
+    this.readWhiteListedUsers(auth, this);
+    return this.whiteList;
+  }
+
+  appendData(auth, chatter)
+  {
+    const whiteListedUsers = this.getWhiteListedUsers();
+    var listed = false;
+    for(var i = 0; i < whiteListedUsers.length; i++)
+    {
+      if(whiteListedUsers[i] == chatter.username)
+      {
+        listed = true;
+        break;
+      }
+    }
+
+    if(listed)
+    {
+      //For some reason the bot marks some things that should logically be false as undefined. I am shifting them here for the purposes of logging. Will do research before changing the actual bot in case of functionality I'm unaware of.
+      if(chatter.emote_only === undefined)
+        chatter.emote_only = false
+      if(chatter.mod === undefined)
+        chatter.mod = false
+      if(chatter.sub === undefined)
+        chatter.sub = false
+
+      //Append data here
+      var spreadsheetId = process.env.CHATLOG;
+      let values = [
+        [
+          new Date(), chatter.username, chatter.message, chatter.emote_only, chatter.mod, chatter.sub, chatter.turbo, chatter.channel
+        ],
+        // Additional rows ...
+      ];
+      let resource = {
+        values,
+      };
+      const sheets = google.sheets({version: 'v4', auth});
+      sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        valueInputOption: "RAW",
+        resource: resource,
+      }, (err, result) => {
+        if (err) {
+          // Handle error.
+          console.log(err);
+        } else {
+          console.log(`${result.updates.updatedCells} cells appended.`);
+        }
+      });
+    }
+  }
+
+  writeToChatLog(chatter)
+  {
+    var content = fs.readFileSync('credentials.json');
+    var auth = this.authorize(JSON.parse(content));
+    this.appendData(auth, chatter);
   }
 }
 
