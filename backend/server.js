@@ -275,7 +275,8 @@ function botStateQueryHandler(req)
     captain: state.captain,
     currentGame: currentGame,
     inQueue: userInQueue,
-    queuePosition: pos
+    queuePosition: pos,
+    headOfQueue: queue[0].discordTag
   };
 }
 
