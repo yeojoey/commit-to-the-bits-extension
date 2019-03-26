@@ -31,7 +31,7 @@ const GoogSheet = class GoogleSheetHandler
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
 
-    var token = fs.readFileSync(TOKEN_PATH);
+    var token = process.env.GOOGLE_SHEETS_TOKEN;//fs.readFileSync(TOKEN_PATH);
     //if (err) return getNewToken(oAuth2Client, callback);
     oAuth2Client.setCredentials(JSON.parse(token));
     return oAuth2Client;
@@ -119,7 +119,7 @@ const GoogSheet = class GoogleSheetHandler
   getWhiteListedUsers()
   {
     try{
-    var content = fs.readFileSync('credentials.json');
+    var content = process.env.GOOGLE_SHEETS_CREDENTIALS;//fs.readFileSync('credentials.json');
     var auth = this.authorize(JSON.parse(content), this.readWhiteListedUsers);
     this.readWhiteListedUsers(auth, this);
     return this.whiteList;
@@ -182,7 +182,7 @@ const GoogSheet = class GoogleSheetHandler
   writeToChatLog(chatter)
   {
     try{
-      var content = fs.readFileSync('credentials.json');
+      var content = process.env.GOOGLE_SHEETS_CREDENTIALS;//fs.readFileSync('credentials.json');
       var auth = this.authorize(JSON.parse(content));
       this.appendData(auth, chatter);}
     catch(err){
