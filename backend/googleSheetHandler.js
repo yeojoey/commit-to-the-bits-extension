@@ -175,7 +175,6 @@ const GoogSheet = class GoogleSheetHandler
       // Authorize a client with credentials, then call the Google Sheets API.
       this.authorize(JSON.parse(content), this.readWhiteListedUsers);
     });
-    console.log("TEST"+test);
   }
 }
 
