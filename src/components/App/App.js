@@ -34,8 +34,8 @@ class App extends Component {
     characterSuggestion: "",
     botState: "",
     captain: "",
-    queue: "",
-    pos: "",
+    inQueue: false,
+    queuePosition: "",
     showPanel: "",
     showInstructions: "",
     currentGame: "",
@@ -60,8 +60,8 @@ class App extends Component {
           votedBefore: false,
           botState: "",
           captain: "",
-          queue: "",
-          pos: "",
+          inQueue: false,
+          queuePosition: "",
       }
 
       this.togglePanel = this.togglePanel.bind(this);
