@@ -263,6 +263,7 @@ function botStateQueryHandler(req)
 
   const state = AcaBot.getState();
   userInQueue = checkIfInQueue(opaqueUserId);
+  pos = getQueuePosition(opaqueUserId);
   return {
     botState: {
       isVoting: state.voting,
@@ -273,7 +274,8 @@ function botStateQueryHandler(req)
     },
     captain: state.captain,
     currentGame: currentGame,
-    inQueue: userInQueue
+    inQueue: userInQueue,
+    queuePosition: pos
   };
 }
 
@@ -434,7 +436,6 @@ function changeToFreezeTagHandler(req) {
   }
 }
 
-
 function changeToCourtroomHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
@@ -449,8 +450,7 @@ function changeToCourtroomHandler(req) {
   }
 }
 
-function enqueueAudienceMemberHandler(req)
-{
+function enqueueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
@@ -493,16 +493,24 @@ function enqueueAudienceMemberHandler(req)
 }
 
 function checkIfInQueue (userId) {
+  for(var i = 0; i < queue.length; i++) {
+    if(queue[i].uID == userId) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getQueuePosition (userId) {
   for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == userId)
     {
-      console.log("User " + userId + "is in queue");
-      return true;
+      return i;
+    } else {
+      return -1;
     }
   }
-  console.log("User " + userId + "is not in queue");
-  return false;
 }
 
 function dequeueAudienceMemberHandler(req)
@@ -529,15 +537,7 @@ function getQueuePositionHandler(req)
   const uID = req.headers.userID;
 
   //If -1 is returned that means that the queried user is not in the queue
-  var pos = -1;
-
-  for(var i = 0; i < queue.length; i++)
-  {
-    if(queue[i].uID == uID)
-    {
-      pos = i;
-    }
-  }
+  var pos = getQueuePosition(uID);
 
   return {
     pos: pos

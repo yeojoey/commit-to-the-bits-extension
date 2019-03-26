@@ -58,7 +58,7 @@ class App extends Component {
           showInstructions: false,
           currentGame: "FreezeTag",
           votedBefore: false,
-          botState: "",
+          botState: "", 
           captain: "",
           inQueue: false,
           queuePosition: "",
@@ -386,7 +386,7 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Courtroom inQueue={this.state.inQueue} handleEnqueue={this.handleEnqueue}/>
+      <Courtroom queuePosition={this.state.queuePosition} inQueue={this.state.inQueue} handleEnqueue={this.handleEnqueue}/>
     )
   }
 
@@ -461,7 +461,6 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   {this.renderBody()}
-                  <Button variant="secondary" onClick={this.handleCaptain}>Get Cap</Button>
                 </Container>
               </div>
               {this.renderInstructions()}
