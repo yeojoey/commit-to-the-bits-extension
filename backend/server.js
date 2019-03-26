@@ -107,7 +107,7 @@ const GoogSheet = new GoogleSheetHandler();
 const server = new Hapi.Server(serverOptions);
 
 // Game State
-var currentGame = "";
+var currentGame = "FreezeTag";
 
 (async () => {
 
@@ -206,8 +206,6 @@ var currentGame = "";
   // Start the server.
   await server.start();
 
-  // Start game state with freeze tag
-  currentGame = "FreezeTag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -417,7 +415,7 @@ function changeToTSAHandler(req) {
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
     const state = AcaBot.getState();
-    currentGame = "TSA";
+    this.currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
 
@@ -432,7 +430,7 @@ function changeToFreezeTagHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  currentGame = "FreezeTag";
+  this.currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
   return {
@@ -446,7 +444,7 @@ function changeToCourtroomHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  currentGame = "Courtroom";
+  this.currentGame = "Courtroom";
   attemptStateBroadcast(channelId);
 
   return {

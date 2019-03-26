@@ -57,7 +57,7 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "FreezeTag",
+          currentGame: "",
           votedBefore: false,
           botState: "",
           captain: "",
