@@ -50,9 +50,6 @@ let userCooldowns = {};                     // spam prevention
 
 const queue = [];
 
-const channelScreams = {};
-const initialText = "Scream with me: ";
-
 const STRINGS = {
   secretEnv: usingValue('secret'),
   clientIdEnv: usingValue('client-id'),
@@ -262,7 +259,8 @@ function botQueryHandler(req)
       votedAlready: state.votedAlready,
       finalWord: state.finalWord
     },
-    captain: state.captain
+    captain: state.captain,
+    currentGame: currentGame;
   };
 }
 
