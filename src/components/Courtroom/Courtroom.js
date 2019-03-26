@@ -26,7 +26,7 @@ class Courtroom extends Component {
       <Row className="justify-content-md-center mx-5">
         <Col>
           <h3>Courtroom Game</h3>
-          <h5>{this.props.inQueue ? "You are in line. There are " + this.props.pos + " people ahead of you." : "You are not in line."}</h5>
+          <h5>{this.props.inQueue ? "You are in line. There are " + this.props.queuePosition + " people ahead of you." : "You are not in line."}</h5>
           {this.props.inQueue ? "" : this.renderInput() }
         </Col>
       </Row>

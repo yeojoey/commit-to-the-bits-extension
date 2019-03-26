@@ -260,8 +260,11 @@ function botStateQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  return getBotState(opaqueUserId);
+}
 
-  const state = AcaBot.getState();
+function getState(userId) {
+  const botState = AcaBot.getState();
   userInQueue = checkIfInQueue(opaqueUserId);
   pos = getQueuePosition(opaqueUserId);
   return {
@@ -278,6 +281,7 @@ function botStateQueryHandler(req)
     queuePosition: pos,
     headOfQueue: queue[0].discordTag
   };
+
 }
 
 function botClearHandler(req)
@@ -514,15 +518,14 @@ function getQueuePosition (userId) {
   }
 }
 
-function dequeueAudienceMemberHandler(req)
-{
+function dequeueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
+  const { channel_id: channelId } = payload;
   //Pop, or 'shift', the earliest element from the array.
-  var userToReturn = queue.shift();
+  var userToReturn = queue.shift().discordTag;
   console.log(userToReturn);
-
+  attemptStateBroadcast(channelId);
   return {
     queue: queue,
     guestStar: userToReturn

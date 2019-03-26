@@ -49,11 +49,11 @@ class Config extends Component {
   renderCourtroom () {
     return (
       <React.Fragment>
-      <p>Head of queue: {this.props.headOfQueue}</p>
-      <Button>Next</Button>
-        <br /> <br />
-        <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-        <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>
+      Head of queue: {this.props.guestStar}
+      <Button>Get Next Guest Star</Button>
+      <br /> <br />
+      <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+      <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>
       </React.Fragment>
     )
   }
