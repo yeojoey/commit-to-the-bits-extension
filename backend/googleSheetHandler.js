@@ -71,7 +71,7 @@ const GoogSheet = class GoogleSheetHandler
   readWhiteListedUsers(auth, self)
   {
     const sheets = google.sheets({version: 'v4', auth});
-    var spreadsheetId = '17y7JlRe-F8rl2wrZkrjUe9zrddfEtwTBghrhKFp3EoA';
+    var spreadsheetId = process.env.WHITELISTED_USERS_SHEET;
 
     let inArray = false;
     sheets.spreadsheets.values.get({
@@ -118,10 +118,15 @@ const GoogSheet = class GoogleSheetHandler
   //Begin stuff written by Parker, not by Google.
   getWhiteListedUsers()
   {
-    var content = fs.readFileSync('./credentials.json');
+    try{
+    var content = fs.readFileSync('credentials.json');
     var auth = this.authorize(JSON.parse(content), this.readWhiteListedUsers);
     this.readWhiteListedUsers(auth, this);
     return this.whiteList;
+    }
+    catch{
+      console.log("OHNO");
+    }
   }
 
   appendData(auth, chatter)
@@ -176,9 +181,13 @@ const GoogSheet = class GoogleSheetHandler
 
   writeToChatLog(chatter)
   {
-    var content = fs.readFileSync('./credentials.json');
-    var auth = this.authorize(JSON.parse(content));
-    this.appendData(auth, chatter);
+    try{
+      var content = fs.readFileSync('credentials.json');
+      var auth = this.authorize(JSON.parse(content));
+      this.appendData(auth, chatter);}
+    catch(err){
+      console.log('ohno');
+    }
   }
 }
 
