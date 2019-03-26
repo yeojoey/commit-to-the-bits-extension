@@ -118,7 +118,7 @@ const GoogSheet = class GoogleSheetHandler
   //Begin stuff written by Parker, not by Google.
   getWhiteListedUsers()
   {
-    var content = fs.readFileSync('credentials.json');
+    var content = fs.readFileSync('./credentials.json');
     var auth = this.authorize(JSON.parse(content), this.readWhiteListedUsers);
     this.readWhiteListedUsers(auth, this);
     return this.whiteList;
@@ -176,7 +176,7 @@ const GoogSheet = class GoogleSheetHandler
 
   writeToChatLog(chatter)
   {
-    var content = fs.readFileSync('credentials.json');
+    var content = fs.readFileSync('./credentials.json');
     var auth = this.authorize(JSON.parse(content));
     this.appendData(auth, chatter);
   }
