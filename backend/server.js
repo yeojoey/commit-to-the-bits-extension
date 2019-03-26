@@ -176,6 +176,12 @@ var currentGame = "";
 
   server.route ({
     method: "POST",
+    path: "/api/changeToCourtroom",
+    handler: changeToCourtroomHandler
+  })
+
+  server.route ({
+    method: "POST",
     path: "/api/enqueueAudienceMember",
     handler: enqueueAudienceMemberHandler
   })
@@ -410,17 +416,29 @@ function changeToTSAHandler(req) {
 function changeToFreezeTagHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
   const state = AcaBot.getState();
   currentGame = "FreezeTag";
-
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
     currentGame: "FreezeTag"
+  }
+}
+
+
+function changeToCourtroomHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const state = AcaBot.getState();
+  currentGame = "Courtroom";
+  attemptStateBroadcast(channelId);
+
+  return {
+    botState: state,
+    currentGame: "Courtroom"
   }
 }
 

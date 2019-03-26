@@ -9,6 +9,7 @@ import Voting from '../Voting/Voting'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
@@ -366,11 +367,15 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Row className="justify-content-md-center">
-        <div>
+      <Row className="justify-content-md-center mx-5">
         <h3>Courtroom Game</h3>
-        <Button>Join Queue</Button>
-        </div>
+        <InputGroup>
+        <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234">
+        </FormControl>
+        <InputGroup.Append>
+          <Button>Join Queue</Button>
+        </InputGroup.Append>
+        </InputGroup>
       </Row>
     )
   }
