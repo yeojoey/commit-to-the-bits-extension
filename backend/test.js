@@ -1,4 +1,12 @@
-const GoogleSheetHandler = require('./googleSheetHandler.js');
-const AcademicBot = require('./academicbot.js');
-const Goo = new GoogleSheetHandler();
-const AcaBot = new AcademicBot();
+require('dotenv').config();
+
+const fs = require('fs');
+const Hapi = require('hapi');
+const path = require('path');
+const Boom = require('boom');
+const color = require('color');
+const ext = require('commander');
+const jsonwebtoken = require('jsonwebtoken');
+const request = require('request');
+const rp = require('request-promise');
+console.log(process.env.USERNAME);
