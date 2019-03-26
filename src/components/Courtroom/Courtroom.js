@@ -21,21 +21,27 @@ class Courtroom extends Component {
     this.setState( { discordTag: event.target.value } );
   }
 
-  render () {
+  render() {
     return (
       <Row className="justify-content-md-center mx-5">
         <Col>
           <h3>Courtroom Game</h3>
-          <h5>{this.props.inQueue ? "You are in line." : "You are not in line."}</h5>
-          <InputGroup>
-          <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234" value={this.state.discordTag} onChange={this.handleChange}>
-          </FormControl>
-            <InputGroup.Append>
-              <Button onClick={() => this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
-            </InputGroup.Append>
-          </InputGroup>
+          <h5>{this.props.inQueue ? "You are in line. There are " + this.props.pos + " people ahead of you." : "You are not in line."}</h5>
+          {this.props.inQueue ? "" : this.renderInput() }
         </Col>
       </Row>
+    )
+  }
+
+  renderInput() {
+    return (
+      <InputGroup>
+        <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234" value={this.state.discordTag} onChange={this.handleChange}>
+        </FormControl>
+        <InputGroup.Append>
+          <Button onClick={() => this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
+        </InputGroup.Append>
+      </InputGroup>
     )
   }
 
