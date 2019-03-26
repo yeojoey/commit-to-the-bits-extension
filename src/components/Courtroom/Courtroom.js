@@ -15,7 +15,6 @@ class Courtroom extends Component {
       discordTag: ""
     }
     this.handleChange = this.handleChange.bind(this);
-    console.log(this.props.queue + " " + this.props.pos);
   }
 
   handleChange(event) {
