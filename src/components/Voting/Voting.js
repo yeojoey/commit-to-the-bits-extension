@@ -9,15 +9,9 @@ class Voting extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      votedBefore: false
-    }
   }
 
   handleVote(i) {
-
-    this.setState({votedBefore: true});
-
     this.props.handleVoteSubmit(i);
   }
 
@@ -26,7 +20,7 @@ class Voting extends Component {
     return(
       <Col md="auto">
       <h3>Voting Period</h3>
-      {this.state.votedBefore ?
+      {this.props.votedBefore ?
         <h4>Thanks for voting!</h4> :
         <div>
           <h4>Vote on a suggestion:</h4>
