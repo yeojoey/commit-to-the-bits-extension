@@ -51,9 +51,6 @@ let userCooldowns = {};                     // spam prevention
 
 const queue = [];
 
-const channelScreams = {};
-const initialText = "Scream with me: ";
-
 const STRINGS = {
   secretEnv: usingValue('secret'),
   clientIdEnv: usingValue('client-id'),
@@ -183,6 +180,12 @@ var currentGame = "";
 
   server.route ({
     method: "POST",
+    path: "/api/changeToCourtroom",
+    handler: changeToCourtroomHandler
+  })
+
+  server.route ({
+    method: "POST",
     path: "/api/enqueueAudienceMember",
     handler: enqueueAudienceMemberHandler
   })
@@ -204,7 +207,7 @@ var currentGame = "";
   await server.start();
 
   // Start game state with freeze tag
-  currentGame = "Freeze Tag"
+  currentGame = "FreezeTag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -252,44 +255,6 @@ function verifyAndDecode(header) {
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
-
-
-function screamQueryHandler(req) {
-  // Verify all requests.
-  const payload = verifyAndDecode(req.headers.authorization);
-
-  // Get the scream for the channel from the payload and return it.
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  const currentText = (channelScreams[channelId] || initialText);
-  return { textToDisplay: currentText };
-
-}
-
-function screamAddHandler(req) {
-
-  //Verify request
-  const payload = verifyAndDecode(req.headers.authorization);
-  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
-  // Store the text for the channel.
-  let currentText = channelScreams[channelId] || initialText;
-
-  // Bot abuse prevention:  don't allow a user to spam the button.
-  if (userIsInCooldown(opaqueUserId)) {
-    throw Boom.tooManyRequests(STRINGS.cooldown);
-  }
-
-  // Append A
-  currentText = [currentText, "A"].join("");
-
-  channelScreams[channelId] = currentText;
-
-  // Broadcast the scream to all other extension instances on this channel.
-  attemptStateBroadcast(channelId);
-  return { textToDisplay: currentText };
-
-}
-
 function botQueryHandler(req)
 {
   // Verify all requests.
@@ -304,7 +269,8 @@ function botQueryHandler(req)
       votedAlready: state.votedAlready,
       finalWord: state.finalWord
     },
-    captain: state.captain
+    captain: state.captain,
+    currentGame: currentGame
   };
 }
 
@@ -454,17 +420,29 @@ function changeToTSAHandler(req) {
 function changeToFreezeTagHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-
   const state = AcaBot.getState();
-  currentGame = "Freeze Tag";
-
+  currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Freeze Tag"
+    currentGame: "FreezeTag"
+  }
+}
+
+
+function changeToCourtroomHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const state = AcaBot.getState();
+  currentGame = "Courtroom";
+  attemptStateBroadcast(channelId);
+
+  return {
+    botState: state,
+    currentGame: "Courtroom"
   }
 }
 

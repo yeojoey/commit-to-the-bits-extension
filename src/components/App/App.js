@@ -9,8 +9,11 @@ import Voting from '../Voting/Voting'
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import FormControl from 'react-bootstrap/FormControl';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
+
 
 import './App.css';
 
@@ -115,10 +118,6 @@ class App extends Component {
 
       }
 
-      // this.getInitialState()
-      //   .then(console.log("Auth: " + this.Authentication.state.token))
-      //   .catch(err => console.log(err));
-
   }
 
   getInitialState = async () => {
@@ -130,6 +129,7 @@ class App extends Component {
     });
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
+    console.log(JSON.stringify(body));
     this.setState(body);
     return body;
   }
@@ -325,26 +325,21 @@ class App extends Component {
   }
 
   renderGame = () => {
-    switch (this.state.currentGame) {
-
-      case "Courtroom":
-        this.renderCourtroom();
-        break;
-
-      case "TSA":
-        this.renderTSA();
-        break;
-
-      default:
-      case "FreezeTag":
-        console.log(111);
-        this.renderFreezeTag();
-        break;
+    console.log("Current Game:" + this.state.currentGame);
+    if (this.state.currentGame === "FreezeTag") {
+      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
     }
+
+    else if (this.state.currentGame === "TSA") {
+      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment>);
+
+    } else {
+      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment>);
+    }
+
   }
 
   renderFreezeTag = () => {
-    console.log(222);
     return (
       <Row className="justify-content-md-center">
         <div>
@@ -372,11 +367,15 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Row className="justify-content-md-center">
-        <div>
+      <Row className="justify-content-md-center mx-5">
         <h3>Courtroom Game</h3>
-        <Button>Join Queue</Button>
-        </div>
+        <InputGroup>
+        <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234">
+        </FormControl>
+        <InputGroup.Append>
+          <Button>Join Queue</Button>
+        </InputGroup.Append>
+        </InputGroup>
       </Row>
     )
   }
@@ -390,12 +389,9 @@ class App extends Component {
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
-                    handleChangeToTSA={this.handleChangeToTSA}
-                    handleChangeToFreezeTag={this.handleChangeToFreezeTag}
-                    handleChangeToCourtroom={this.handleChangeToCourtroom}
                     handleChangeGame={this.handleChangeGame}/>
         </Row>
-        { this.state.currentGame === "FreezeTag" ?  this.renderFreezeTag() : this.state.currentGame === "TSA" ? this.renderTSA() : this.renderCourtroom() }
+        { this.renderCourtroom() }
         </React.Fragment>
       )
     }
