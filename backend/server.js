@@ -195,7 +195,7 @@ var currentGame = "";
     handler: getQueuePositionHandler
   })
 
-  
+
   // Start the server.
   await server.start();
 
@@ -416,13 +416,13 @@ function changeToFreezeTagHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
-  currentGame = "Freeze Tag";
+  currentGame = "FreezeTag";
 
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Freeze Tag"
+    currentGame: "FreezeTag"
   }
 }
 
