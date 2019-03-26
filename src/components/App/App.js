@@ -39,7 +39,8 @@ class App extends Component {
     showPanel: "",
     showInstructions: "",
     currentGame: "",
-    votedBefore: false
+    votedBefore: false,
+    headOfQueue: ""
   }
 
 
@@ -58,10 +59,11 @@ class App extends Component {
           showInstructions: false,
           currentGame: "FreezeTag",
           votedBefore: false,
-          botState: "", 
+          botState: "",
           captain: "",
           inQueue: false,
           queuePosition: "",
+          headOfQueue: ""
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -328,7 +330,8 @@ class App extends Component {
         <React.Fragment>
         <Row className="justify-content-md-center">
           {this.Authentication.isModerator() ?
-            <Config isVoting={this.state.botState.isVoting}
+            <Config currentGame = {this.state.currentGame}
+                    isVoting={this.state.botState.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
@@ -395,7 +398,8 @@ class App extends Component {
       return (
         <React.Fragment>
         <Row className="justify-content-md-center">
-            <Config isVoting={this.state.botState.isVoting}
+            <Config currentGame = {this.state.currentGame}
+                    isVoting={this.state.botState.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
