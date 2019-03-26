@@ -174,7 +174,7 @@ const GoogSheet = class GoogleSheetHandler
           // Handle error.
           console.log(err);
         } else {
-          console.log(`${result.updates.updatedCells} cells appended.`);
+          //console.log(`${result.updates.updatedCells} cells appended.`);
         }
       });
     }
