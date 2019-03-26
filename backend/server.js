@@ -26,7 +26,8 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
-const AcademicBot = require('./academicbot.js')
+const AcademicBot = require('./academicbot.js');
+//const GoogleSheetHandler = require('./googleSheetHandler.js');
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
@@ -103,6 +104,9 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 }
 //Create a bot to listen and interact with chat.
 const AcaBot = new AcademicBot()
+//Create a GoogleSheetHandler to read/write from various google sheets. For chatlogging and verifying whitelisted users.
+//const GoogSheet = new GoogleSheetHandler();
+
 const server = new Hapi.Server(serverOptions);
 
 // Game State
