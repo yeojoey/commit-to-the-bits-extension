@@ -110,9 +110,7 @@ const GoogSheet = class GoogleSheetHandler
         console.log('No data found.');
         self.whiteList[0] = -1;
       }
-      console.log("FINAL USERS: "+self.whiteList);
     });
-    console.log("RETURN READING");
   }
 
   //Begin stuff written by Parker, not by Google.
