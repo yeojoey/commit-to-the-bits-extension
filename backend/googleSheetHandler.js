@@ -168,6 +168,7 @@ const GoogSheet = class GoogleSheetHandler
         spreadsheetId: spreadsheetId,
         valueInputOption: "RAW",
         resource: resource,
+        range: 'A1',
       }, (err, result) => {
         if (err) {
           // Handle error.
