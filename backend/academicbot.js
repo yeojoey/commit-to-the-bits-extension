@@ -2,6 +2,7 @@ const TwitchBot = require('twitch-bot')
 const request = require('request');
 const fs = require('fs')
 var os = require('os')
+const GoogleSheetHandler = require('./googleSheetHandler.js');
 
 require('dotenv').config();
 
@@ -9,6 +10,8 @@ var defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"
 var defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
 var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
 var defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
+
+const GoogSheet = new GoogleSheetHandler();
 
 const ABot = class AcademicBot
 {
@@ -398,42 +401,44 @@ const ABot = class AcademicBot
 
   writeToLog(chatter)
   {
-    //For some reason the bot marks some things that should logically be false as undefined. I am shifting them here for the purposes of logging. Will do research before changing the actual bot in case of functionality I'm unaware of.
-    if(chatter.emote_only === undefined)
-      chatter.emote_only = false
-    if(chatter.mod === undefined)
-      chatter.mod = false
-    if(chatter.sub === undefined)
-      chatter.sub = false
+    // //For some reason the bot marks some things that should logically be false as undefined. I am shifting them here for the purposes of logging. Will do research before changing the actual bot in case of functionality I'm unaware of.
+    // if(chatter.emote_only === undefined)
+    //   chatter.emote_only = false
+    // if(chatter.mod === undefined)
+    //   chatter.mod = false
+    // if(chatter.sub === undefined)
+    //   chatter.sub = false
+    //
+    // var filename = "./" + new Date().toDateString() + ".csv"
+    // var toFile
+    // if(!fs.existsSync(filename))
+    // {
+    //   toFile = "Timestamp,Username,Message,Emote Only,Mod,Sub,Prime,Channel" + "\r\n"
+    //   fs.appendFile(filename, toFile, (err) =>
+    //   {
+    //     if(err)
+    //     {
+    //       throw err;
+    //       console.log("Failed to write")
+    //     }
+    //     else
+    //       console.log("Created new log file.")
+    //   })
+    // }
+    //
+    // toFile =  new Date() + "," + chatter.username + "," + chatter.message + "," + chatter.emote_only + "," + chatter.mod + "," + chatter.sub + "," + chatter.turbo + "," + chatter.channel + "\r\n"
+    // fs.appendFile(filename, toFile, (err) =>
+    // {
+    //   if(err)
+    //   {
+    //     throw err;
+    //     console.log("Failed to write")
+    //   }
+    //   else
+    //     console.log("Wrote to file.")
+    // })
 
-    var filename = "./" + new Date().toDateString() + ".csv"
-    var toFile
-    if(!fs.existsSync(filename))
-    {
-      toFile = "Timestamp,Username,Message,Emote Only,Mod,Sub,Prime,Channel" + "\r\n"
-      fs.appendFile(filename, toFile, (err) =>
-      {
-        if(err)
-        {
-          throw err;
-          console.log("Failed to write")
-        }
-        else
-          console.log("Created new log file.")
-      })
-    }
-
-    toFile =  new Date() + "," + chatter.username + "," + chatter.message + "," + chatter.emote_only + "," + chatter.mod + "," + chatter.sub + "," + chatter.turbo + "," + chatter.channel + "\r\n"
-    fs.appendFile(filename, toFile, (err) =>
-    {
-      if(err)
-      {
-        throw err;
-        console.log("Failed to write")
-      }
-      else
-        console.log("Wrote to file.")
-    })
+    GoogSheet.writeToChatLog(chatter);
   }
 
   //VOTING
