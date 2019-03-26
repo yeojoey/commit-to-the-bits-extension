@@ -15,7 +15,6 @@ class Courtroom extends Component {
       discordTag: ""
     }
     this.handleChange = this.handleChange.bind(this);
-    console.log(this.props.queue + " " + this.props.pos);
   }
 
   handleChange(event) {
@@ -27,12 +26,12 @@ class Courtroom extends Component {
       <Row className="justify-content-md-center mx-5">
         <Col>
           <h3>Courtroom Game</h3>
-          <h5>{this.props.queue === "" ? "You are not in line." : "You are in line."}</h5>
+          <h5>{this.props.inQueue ? "You are in line." : "You are not in line."}</h5>
           <InputGroup>
           <FormControl placeholder="Discord tag e.g. CommitToTheBits#1234" value={this.state.discordTag} onChange={this.handleChange}>
           </FormControl>
             <InputGroup.Append>
-              <Button onClick={this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
+              <Button onClick={() => this.props.handleEnqueue(this.state.discordTag)}>Join Queue</Button>
             </InputGroup.Append>
           </InputGroup>
         </Col>

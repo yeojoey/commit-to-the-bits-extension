@@ -34,8 +34,8 @@ class App extends Component {
     characterSuggestion: "",
     botState: "",
     captain: "",
-    queue: "",
-    pos: "",
+    inQueue: false,
+    queuePosition: "",
     showPanel: "",
     showInstructions: "",
     currentGame: "",
@@ -56,7 +56,12 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "FreezeTag"
+          currentGame: "FreezeTag",
+          votedBefore: false,
+          botState: "",
+          captain: "",
+          inQueue: false,
+          queuePosition: "",
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -212,7 +217,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log(JSON.stringify(body));
     this.setState(body);
   }
 
@@ -341,7 +345,6 @@ class App extends Component {
   }
 
   renderGame = () => {
-    console.log("Current Game:" + this.state.currentGame);
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
     }
@@ -383,7 +386,7 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Courtroom queue={this.state.queue} pos={this.state.pos} handleEnqueue={this.handleEnqueue}/>
+      <Courtroom inQueue={this.state.inQueue} handleEnqueue={this.handleEnqueue}/>
     )
   }
 

@@ -157,7 +157,7 @@ var currentGame = "";
   server.route ({
     method: "GET",
     path: "/api/getBotState",
-    handler: botQueryHandler
+    handler: botStateQueryHandler
   })
 
   server.route ({
@@ -255,12 +255,14 @@ function verifyAndDecode(header) {
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
-function botQueryHandler(req)
+function botStateQueryHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const state = AcaBot.getState();
+  userInQueue = checkIfInQueue(opaqueUserId);
   return {
     botState: {
       isVoting: state.voting,
@@ -270,7 +272,8 @@ function botQueryHandler(req)
       finalWord: state.finalWord
     },
     captain: state.captain,
-    currentGame: currentGame
+    currentGame: currentGame,
+    inQueue: userInQueue
   };
 }
 
@@ -464,28 +467,42 @@ function enqueueAudienceMemberHandler(req)
   }
 
   //Verify user is not already in the queue
-  var newEntrant = true;
-  for(var i = 0; i < queue.length; i++)
-  {
-    if(queue[i].uID == queueObj.uID)
-    {
-      newEntrant = false;
-      break;
-    }
-  }
+  var newEntrant = !checkIfInQueue(opaqueUserId)
 
-  //Put user object in queue
+  //Put user if queue if they are not already in the queue
   if(newEntrant)
   {
     queue[queue.length] = queueObj;
     console.log(queue);
+
+    //Return queue and user's queue position
+    return {
+      queue: queue,
+      pos: queue.length,
+      inQueue: true
+    }
+
+  // user already in queue
+  } else {
+    return {
+      queue: queue,
+      pos: queue.length
+    }
   }
 
-  //Return queue and user's queue position
-  return {
-    queue: queue,
-    pos: queue.length
+}
+
+function checkIfInQueue (userId) {
+  for(var i = 0; i < queue.length; i++)
+  {
+    if(queue[i].uID == userId)
+    {
+      console.log("User " + userId + "is in queue");
+      return true;
+    }
   }
+  console.log("User " + userId + "is not in queue");
+  return false;
 }
 
 function dequeueAudienceMemberHandler(req)

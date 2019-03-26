@@ -27,6 +27,20 @@ class Config extends Component {
       </React.Fragment>
     )
   }
+
+  renderFreezeTag () {
+
+  }
+
+  renderTSA () {
+
+
+  }
+
+  renderCourtroom () {
+
+  }
+  
 }
 
 export default Config
