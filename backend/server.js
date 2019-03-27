@@ -263,8 +263,8 @@ function botStateQueryHandler(req)
 
 function getState(userId) {
   const botState = AcaBot.getState();
-  userInQueue = checkIfInQueue(opaqueUserId);
-  pos = getQueuePosition(opaqueUserId);
+  userInQueue = checkIfInQueue(userId);
+  pos = getQueuePosition(userId);
   return {
     botState: {
       isVoting: state.voting,
