@@ -499,7 +499,6 @@ function changeToCourtroomHandler(req) {
 function getHeadOfQueueHandler (req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  console.log("IS THIS EVEN FIRING??? " + JSON.stringify(queue));
   if (queue[0]) {
     console.log(queue[0].discordTag + "is at head of queue");
     return {
