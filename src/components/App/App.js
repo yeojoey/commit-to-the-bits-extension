@@ -182,7 +182,6 @@ class App extends Component {
   }
 
   handleVoteSubmit = async (vote) => {
-      //e.preventDefault();
       const userID = this.Authentication.getOpaqueId();
       const response = await fetch ("/api/vote", {
         method: "POST",
@@ -215,8 +214,7 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleEnqueue = async (discordTag) => {
-    console.log(discordTag);
+  handleEnqueueSubmit = async (discordTag) => {
     const response = await fetch ("/api/enqueueAudienceMember", {
       method: "POST",
       headers: {
@@ -227,6 +225,10 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+  }
+
+  handleEnqueue = (discordTag) => {
+    this.handleEnqueue(discordTag);
   }
 
   handleGetGuestStar = async e => {
