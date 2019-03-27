@@ -283,6 +283,7 @@ function verifyUserExists(userID)
       discordTag: "",
       queuePosition: -1,
     }
+    getQueuePosition(userStates[userID]);
   }
 }
 
@@ -537,7 +538,8 @@ function enqueueAudienceMemberHandler(req) {
     verifyUserExists(opaqueUserId);
     console.log("Done adding new member.");
     userStates[opaqueUserId].inQueue = true;
-    userStates[opaqueUserId].discordTag = queueObj.discordTag;
+    userStates[opaqueUserId].discordTag = queueObj.discordTag
+    userStates[opaqueUserId].queuePosition = getQueuePosition(opaqueUserId);
 
     console.log(userStates[opaqueUserId]);
     console.log(queue);
