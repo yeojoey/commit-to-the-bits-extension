@@ -14,6 +14,8 @@ class Config extends Component {
     this.state = {
       queue: ""
     }
+
+    console.log(this.props);
   }
 
   handleGetQueue = async e => {

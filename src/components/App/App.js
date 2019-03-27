@@ -130,7 +130,6 @@ class App extends Component {
     });
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
-    console.log(JSON.stringify(body));
     this.setState(body);
     return body;
   }
@@ -238,46 +237,6 @@ class App extends Component {
     });
     const body = await response.json();
     console.log("Guest Star: " + body.guestStar);
-    this.setState(body);
-  }
-
-  handleChangeToTSA = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/changeToTSA", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-    console.log(this.state.captain);
-  }
-
-  handleChangeToFreezeTag = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/changeToFreezeTag", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-  }
-
-  handleChangeToCourtroom = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/changeToCourtroom", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
     this.setState(body);
   }
 
