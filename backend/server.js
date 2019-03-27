@@ -275,7 +275,7 @@ function botStateQueryHandler(req)
 
 function verifyUserExists(userID)
 {
-  if(!userID in userStates)
+  if(!(userStates.hasOwnProperty(userID)))
   {
     userStates[userID] = {
       votedBefore: false,
