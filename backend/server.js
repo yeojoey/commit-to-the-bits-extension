@@ -267,13 +267,13 @@ function getState(userId) {
   pos = getQueuePosition(userId);
   return {
     botState: {
-      isVoting: state.voting,
-      votes: state.votes,
-      options: state.options,
-      votedAlready: state.votedAlready,
-      finalWord: state.finalWord
+      isVoting: botState.voting,
+      votes: botState.votes,
+      options: botState.options,
+      votedAlready: botState.votedAlready,
+      finalWord: botState.finalWord
     },
-    captain: state.captain,
+    captain: botState.captain,
     currentGame: currentGame,
     inQueue: userInQueue,
     queuePosition: pos,
