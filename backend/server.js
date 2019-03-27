@@ -167,6 +167,12 @@ var currentGame = "FreezeTag";
   })
 
   server.route ({
+    method: "GET",
+    path: "/api/getHeadOfQueue",
+    handler: getHeadOfQueueHandler
+  })
+
+  server.route ({
     method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
@@ -453,10 +459,27 @@ function changeToCourtroomHandler(req) {
   }
 }
 
+/*******************
+*   QUEUE RELATED
+********************/
+
+function getHeadOfQueueHandler (req) {
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  if (queue[0]) {
+    return {
+      guestStar: queue[0].discordTag
+    }
+  } else {
+    return {
+      guestStar: "None"
+    }
+  }
+}
+
 function enqueueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get mystical input via frontend consisting of Discord tag#12345 called discordTag

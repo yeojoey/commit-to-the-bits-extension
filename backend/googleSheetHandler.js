@@ -122,7 +122,7 @@ const GoogSheet = class GoogleSheetHandler
     this.readWhiteListedUsers(auth, this);
     return this.whiteList;
     }
-    catch{
+    catch (err) {
       console.log("OHNO");
     }
   }

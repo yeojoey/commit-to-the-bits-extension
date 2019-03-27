@@ -228,6 +228,20 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleGetGuestStar = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/getHeadOfQueue", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    console.log("Guest Star: " + body.guestStar);
+    this.setState(body);
+  }
+
   handleChangeToTSA = async e => {
     e.preventDefault();
     const response = await fetch ("/api/changeToTSA", {
@@ -283,19 +297,6 @@ class App extends Component {
   handleClear = async e => {
     e.preventDefault();
     const response = await fetch ("/api/clear", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-  }
-
-  handleGetGuestStar = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/dequeueAudienceMember", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
