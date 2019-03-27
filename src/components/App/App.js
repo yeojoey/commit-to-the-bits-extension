@@ -40,7 +40,7 @@ class App extends Component {
     showInstructions: "",
     currentGame: "",
     votedBefore: false,
-    headOfQueue: ""
+    guestStar: ""
   }
 
 
@@ -57,13 +57,13 @@ class App extends Component {
           botState: testState,
           showPanel: true,
           showInstructions: false,
-          currentGame: "FreezeTag",
+          currentGame: "",
           votedBefore: false,
           botState: "",
           captain: "",
           inQueue: false,
           queuePosition: "",
-          headOfQueue: ""
+          guestStar: ""
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -98,7 +98,7 @@ class App extends Component {
                   })
               }
 
-              this.getInitialState()
+              this.getState()
                 .then()
                 .catch(err => console.log(err));
 
@@ -106,15 +106,8 @@ class App extends Component {
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
             this.setState(JSON.parse(message));
+            this.getState();
           })
-
-          // this.twitch.listen('broadcast',(target,contentType,body)=>{
-          //     this.twitch.rig.log(`New PubSub message!\n${target}\n${contentType}\n${body}`)
-          //     // now that you've got a listener, do something with the result...
-          //
-          //     // do something...
-          //
-          // })
 
           this.twitch.onVisibilityChanged((isVisible,_c)=>{
               this.visibilityChanged(isVisible)
@@ -129,7 +122,7 @@ class App extends Component {
 
   }
 
-  getInitialState = async () => {
+  getState = async () => {
     const response = await fetch("/api/getBotState", {
       method: "GET",
       headers: {
@@ -300,6 +293,19 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleGetGuestStar = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/dequeueAudienceMember", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
+  }
+
   togglePanel = () => {
     this.setState((state) => {
       return { showPanel: !state.showPanel }
@@ -338,7 +344,9 @@ class App extends Component {
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag}
                     handleChangeToCourtroom={this.handleChangeToCourtroom}
-                    handleChangeGame={this.handleChangeGame}/>
+                    handleChangeGame={this.handleChangeGame}
+                    handleGetGuestStar={this.handleGetGuestStar}
+                    guestStar={this.state.guestStar}/>
           : ""}
         </Row>
         { this.renderGame() }
@@ -456,8 +464,6 @@ class App extends Component {
   }
 
   render() {
-      //console.log("Captain is "+this.captain)
-      //this.getInitialState();
       if (this.state.finishedLoading && this.state.isVisible) {
           return (
             <React.Fragment>

@@ -1,5 +1,18 @@
 Code base for [Commit to the Bits Helper](https://www.twitch.tv/ext/tndhpyr8a9l40u3m5cw5wpnrbievij-0.0.1).
 
+## Actual process
+
+Do this on a new pull:
+### `yarn install`
+
+If you're changing front-end stuff
+### `npm run build`
+### `npm start`
+
+Then go to localhost:8081 to preview changes
+
+## Real readme for real people
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

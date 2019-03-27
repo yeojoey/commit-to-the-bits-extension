@@ -107,7 +107,7 @@ const GoogSheet = new GoogleSheetHandler();
 const server = new Hapi.Server(serverOptions);
 
 // Game State
-var currentGame = "";
+var currentGame = "FreezeTag";
 
 (async () => {
 
@@ -206,8 +206,6 @@ var currentGame = "";
   // Start the server.
   await server.start();
 
-  // Start game state with freeze tag
-  currentGame = "FreezeTag"
 
   console.log(STRINGS.serverStarted, server.info.uri);
 
@@ -260,24 +258,28 @@ function botStateQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  return getState(opaqueUserId);
+}
 
-  const state = AcaBot.getState();
-  userInQueue = checkIfInQueue(opaqueUserId);
-  pos = getQueuePosition(opaqueUserId);
+function getState(userId) {
+  const botState = AcaBot.getState();
+  userInQueue = checkIfInQueue(userId);
+  pos = getQueuePosition(userId);
   return {
     botState: {
-      isVoting: state.voting,
-      votes: state.votes,
-      options: state.options,
-      votedAlready: state.votedAlready,
-      finalWord: state.finalWord
+      isVoting: botState.voting,
+      votes: botState.votes,
+      options: botState.options,
+      votedAlready: botState.votedAlready,
+      finalWord: botState.finalWord
     },
-    captain: state.captain,
+    captain: botState.captain,
     currentGame: currentGame,
     inQueue: userInQueue,
     queuePosition: pos,
-    headOfQueue: queue[0].discordTag
+    headOfQueue: queue[0]
   };
+
 }
 
 function botClearHandler(req)
@@ -413,7 +415,7 @@ function changeToTSAHandler(req) {
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
     const state = AcaBot.getState();
-    currentGame = "TSA";
+    this.currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
 
@@ -428,7 +430,7 @@ function changeToFreezeTagHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  currentGame = "FreezeTag";
+  this.currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
   return {
@@ -442,7 +444,7 @@ function changeToCourtroomHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  currentGame = "Courtroom";
+  this.currentGame = "Courtroom";
   attemptStateBroadcast(channelId);
 
   return {
@@ -514,15 +516,14 @@ function getQueuePosition (userId) {
   }
 }
 
-function dequeueAudienceMemberHandler(req)
-{
+function dequeueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
+  const { channel_id: channelId } = payload;
   //Pop, or 'shift', the earliest element from the array.
-  var userToReturn = queue.shift();
+  var userToReturn = queue.shift().discordTag;
   console.log(userToReturn);
-
+  attemptStateBroadcast(channelId);
   return {
     queue: queue,
     guestStar: userToReturn
