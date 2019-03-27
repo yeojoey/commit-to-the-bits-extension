@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/backend/credentials.json
+/backend/token.json
 
 # production
 /build
