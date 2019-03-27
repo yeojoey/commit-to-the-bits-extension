@@ -9,6 +9,7 @@
 /coverage
 /backend/credentials.json
 /backend/token.json
+/backend/test.js
 
 # production
 /build
