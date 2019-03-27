@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-// Components
-import Authentication from '../../util/Authentication/Authentication'
-
 // Styling
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -14,8 +11,14 @@ class Config extends Component {
     this.state = {
       queue: ""
     }
+  }
 
-    console.log(this.props);
+  stringifyQueue(queue) {
+    var str = "";
+    for (var i = 0; i < queue.length; i ++) {
+      str += queue[i].discordTag + ", ";
+    }
+    return str;
   }
 
   handleGetQueue = async e => {
@@ -28,8 +31,11 @@ class Config extends Component {
       }
     });
     const body = await response.json();
-    this.setState(body);
+    this.setState({
+      queue: this.stringifyQueue(body.queue)
+    });
   }
+
 
   render() {
     return(
