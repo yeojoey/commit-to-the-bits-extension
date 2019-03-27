@@ -212,6 +212,12 @@ var currentGame = "FreezeTag";
     handler: getQueuePositionHandler
   })
 
+  server.route ({
+    method: "GET",
+    path: "/api/getQueue",
+    handler: getQueueHandler
+  })
+
 
   // Start the server.
   await server.start();
@@ -516,8 +522,15 @@ function getHeadOfQueueHandler (req) {
   }
 }
 
-function enqueueAudienceMemberHandler(req)
-{
+function getQueueHandler (req) {
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  return ({
+    queue: queue
+  })
+}
+
+function enqueueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
