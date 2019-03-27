@@ -398,7 +398,9 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Courtroom queuePosition={this.state.queuePosition} inQueue={this.state.inQueue} handleEnqueue={this.handleEnqueue}/>
+      <Courtroom queuePosition={this.state.queuePosition}
+                  inQueue={this.state.inQueue}
+                  handleEnqueue={this.handleEnqueue}/>
     )
   }
 
