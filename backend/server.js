@@ -283,14 +283,6 @@ function verifyUserExists(userID)
       discordTag: "",
       queuePosition: -1,
     }
-
-    console.log("Created User "+userID+" is User States.");
-    console.log(userStates[userID]);
-  }
-  else
-  {
-    console.log("This user already exists.");
-    console.log(userStates[userID]);
   }
 }
 
