@@ -18,6 +18,7 @@ class Config extends Component {
     for (var i = 0; i < queue.length; i ++) {
       str += queue[i].discordTag + ", ";
     }
+    console.log(str);
     return str;
   }
 
@@ -31,6 +32,7 @@ class Config extends Component {
       }
     });
     const body = await response.json();
+    console.log(body);
     this.setState({
       queue: this.stringifyQueue(body.queue)
     });
