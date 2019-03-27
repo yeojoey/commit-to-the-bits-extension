@@ -228,6 +228,20 @@ class App extends Component {
     this.setState(body);
   }
 
+  handleDequeue = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/dequeueAudienceMember", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    console.log("Guest Star: " + body.guestStar);
+    this.setState(body);
+  }
+
   handleGetGuestStar = async e => {
     e.preventDefault();
     const response = await fetch ("/api/getHeadOfQueue", {
