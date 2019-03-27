@@ -516,6 +516,7 @@ function enqueueAudienceMemberHandler(req) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   //Get mystical input via frontend consisting of Discord tag#12345 called discordTag
   //Assumes discordTag is given under req.headers
+  console.log(req.headers);
   var discordTag = req.headers.discordTag;
   //Create object containing user ID and user Discord tag
   var queueObj = {
