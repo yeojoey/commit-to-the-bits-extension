@@ -15,7 +15,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Modal from 'react-bootstrap/Modal';
 import Row from 'react-bootstrap/Row';
 
-
 import './App.css';
 
 // DEBUG
@@ -32,7 +31,6 @@ class App extends Component {
     responseToPost: "",
     textToDisplay: "",
     characterSuggestion: "",
-    botState: "",
     captain: "",
     inQueue: false,
     queuePosition: "",
@@ -40,7 +38,10 @@ class App extends Component {
     showInstructions: "",
     currentGame: "",
     votedBefore: false,
-    guestStar: ""
+    guestStar: "",
+    isVoting: false,
+    finalWord: "",
+    options: ""
   }
 
 
@@ -54,12 +55,10 @@ class App extends Component {
           finishedLoading:false,
           theme:'light',
           isVisible:true,
-          botState: testState,
           showPanel: true,
           showInstructions: false,
           currentGame: "",
           votedBefore: false,
-          botState: "",
           captain: "",
           inQueue: false,
           queuePosition: "",
@@ -338,7 +337,7 @@ class App extends Component {
         <Row className="justify-content-md-center">
           {this.Authentication.isModerator() ?
             <Config currentGame = {this.state.currentGame}
-                    isVoting={this.state.botState.isVoting}
+                    isVoting={this.state.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
@@ -375,10 +374,10 @@ class App extends Component {
       <Row className="justify-content-md-center">
         <div>
           <h4>Current Prompt:</h4>
-          <h3>{this.state.botState.finalWord}</h3>
+          <h3>{this.state.finalWord}</h3>
         </div>
         <div>
-          {this.state.botState.isVoting ? <Voting options={this.state.botState.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""
+          {this.state.isVoting ? <Voting options={this.state.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""
           }
         </div>
       </Row>
@@ -410,7 +409,7 @@ class App extends Component {
         <React.Fragment>
         <Row className="justify-content-md-center">
             <Config currentGame = {this.state.currentGame}
-                    isVoting={this.state.botState.isVoting}
+                    isVoting={this.state.isVoting}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}

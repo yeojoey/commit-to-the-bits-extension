@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// Components
+import Authentication from '../../util/Authentication/Authentication'
+
 // Styling
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -8,10 +11,25 @@ class Config extends Component {
 
   constructor(props) {
     super(props)
+    this.state = {
+      queue: ""
+    }
+  }
+
+  handleGetQueue = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/getQueue", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.Authentication.state.token
+      }
+    });
+    const body = await response.json();
+    this.setState(body);
   }
 
   render() {
-
     return(
       <React.Fragment>
         <Col md="auto">
@@ -49,8 +67,9 @@ class Config extends Component {
   renderCourtroom () {
     return (
       <React.Fragment>
-      Head of queue: {this.props.guestStar}
-      <Button onClick={this.props.handleGetGuestStar}>Get Next Guest Star</Button>
+      {this.props.queue}
+      <br /><br />
+      <Button onClick={this.handleGetQueue}>Get Next Guest Star</Button>
       <br /> <br />
       <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
       <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>
