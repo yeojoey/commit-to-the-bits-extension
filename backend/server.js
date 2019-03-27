@@ -283,6 +283,9 @@ function verifyUserExists(userID)
       discordTag: "",
       queuePosition: -1,
     }
+
+    console.log("Created User "+userID+" is User States.");
+    console.log(userStates[userID]);
   }
 }
 
@@ -532,6 +535,8 @@ function enqueueAudienceMemberHandler(req) {
   {
     queue[queue.length] = queueObj;
     verifyUserExists(opaqueUserId);
+    console.log("Done adding new member.");
+    console.log(userStates[opaqueUserId]);
     userStates[opaqueUserId].inQueue = true;
     userStates[opaqueUserId].discordTag = queueObj.discordTag;
     console.log(queue);
