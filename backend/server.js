@@ -634,7 +634,7 @@ function getQueuePositionHandler(req)
   }
 }
 
-updateQueuePositions()
+function updateQueuePositions()
 {
   for(user in userStates)
   {
