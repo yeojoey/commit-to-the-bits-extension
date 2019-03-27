@@ -500,6 +500,7 @@ function getHeadOfQueueHandler (req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   if (queue[0]) {
+    console.log(queue[0].discordTag + "is at head of queue");
     return {
       guestStar: queue[0].discordTag
     }
@@ -535,9 +536,10 @@ function enqueueAudienceMemberHandler(req) {
     console.log("Attempt user creation");
     verifyUserExists(opaqueUserId);
     console.log("Done adding new member.");
-    console.log(userStates[opaqueUserId]);
     userStates[opaqueUserId].inQueue = true;
     userStates[opaqueUserId].discordTag = queueObj.discordTag;
+
+    console.log(userStates[opaqueUserId]);
     console.log(queue);
 
     //Return queue and user's queue position
