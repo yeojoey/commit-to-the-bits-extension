@@ -258,7 +258,7 @@ function botStateQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  return getBotState(opaqueUserId);
+  return getState(opaqueUserId);
 }
 
 function getState(userId) {
