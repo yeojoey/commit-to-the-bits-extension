@@ -215,6 +215,7 @@ class App extends Component {
   }
 
   handleEnqueue = async (discordTag) => {
+    console.log("attempting to enqueue " + discordTag);
     const response = await fetch ("/api/enqueueAudienceMember", {
       method: "POST",
       headers: {
