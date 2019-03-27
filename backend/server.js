@@ -541,20 +541,12 @@ function enqueueAudienceMemberHandler(req) {
 
     console.log(userStates[opaqueUserId]);
     console.log(queue);
+  }
 
-    //Return queue and user's queue position
-    return {
-      queue: queue,
-      pos: queue.length,
-      inQueue: true
-    }
-
-  // user already in queue
-  } else {
-    return {
-      queue: queue,
-      pos: queue.length
-    }
+  return {
+    queue: queue,
+    queuePosition: userStates[opaqueUserId].queuePosition,
+    inQueue: true,
   }
 
 }
@@ -568,15 +560,18 @@ function checkIfInQueue (userId) {
   return false;
 }
 
-function getQueuePosition (userId) {
+function getQueuePosition (userId)
+{
+  var index = -1;
   for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == userId)
     {
-      return i;
+      index = i;
+      break;
     }
   }
-  return -1;
+  return index;
 }
 
 function dequeueAudienceMemberHandler(req) {
