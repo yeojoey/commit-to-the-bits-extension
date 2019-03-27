@@ -171,6 +171,12 @@ var currentGame = "FreezeTag";
   })
 
   server.route ({
+    method: "GET",
+    path: "/api/getHeadOfQueue",
+    handler: getHeadOfQueueHandler
+  })
+
+  server.route ({
     method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
@@ -447,13 +453,13 @@ function changeToTSAHandler(req) {
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
     const state = AcaBot.getState();
-    this.currentGame = "TSA";
+    currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
 
     return {
       botState: state,
-      currentGame: "TSA"
+      currentGame: currentGame
     }
 }
 
@@ -462,12 +468,12 @@ function changeToFreezeTagHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  this.currentGame = "FreezeTag";
+  currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "FreezeTag"
+    currentGame: currentGame
   }
 }
 
@@ -476,19 +482,36 @@ function changeToCourtroomHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  this.currentGame = "Courtroom";
+  currentGame = "Courtroom";
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Courtroom"
+    currentGame: currentGame
+  }
+}
+
+/*******************
+*   QUEUE RELATED
+********************/
+
+function getHeadOfQueueHandler (req) {
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  if (queue[0]) {
+    return {
+      guestStar: queue[0].discordTag
+    }
+  } else {
+    return {
+      guestStar: "None"
+    }
   }
 }
 
 function enqueueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
-
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get mystical input via frontend consisting of Discord tag#12345 called discordTag
