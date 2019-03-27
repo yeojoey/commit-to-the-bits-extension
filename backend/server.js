@@ -567,16 +567,18 @@ function checkIfInQueue (userId) {
   return false;
 }
 
-function getQueuePosition (userId) {
+function getQueuePosition (userId)
+{
+  var index = -1;
   for(var i = 0; i < queue.length; i++)
   {
     if(queue[i].uID == userId)
     {
-      return i;
-    } else {
-      return -1;
+      index = i;
+      break;
     }
   }
+  return index;
 }
 
 function dequeueAudienceMemberHandler(req) {
