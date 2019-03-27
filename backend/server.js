@@ -541,20 +541,12 @@ function enqueueAudienceMemberHandler(req) {
 
     console.log(userStates[opaqueUserId]);
     console.log(queue);
+  }
 
-    //Return queue and user's queue position
-    return {
-      queue: queue,
-      pos: queue.length,
-      inQueue: true
-    }
-
-  // user already in queue
-  } else {
-    return {
-      queue: queue,
-      pos: queue.length
-    }
+  return {
+    queue: queue,
+    queuePosition: userStates[opaqueUserId].queuePosition,
+    inQueue: true,
   }
 
 }
