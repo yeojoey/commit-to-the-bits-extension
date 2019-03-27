@@ -24,7 +24,7 @@ class Config extends Component {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.props.Authentication.state.token
+        "authorization": this.props.authToken
       }
     });
     const body = await response.json();

@@ -297,7 +297,7 @@ class App extends Component {
           {this.Authentication.isModerator() ?
             <Config currentGame = {this.state.currentGame}
                     isVoting={this.state.isVoting}
-                    Authentication={this.state.Authentication}
+                    authToken ={this.Authentication.state.token}
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
