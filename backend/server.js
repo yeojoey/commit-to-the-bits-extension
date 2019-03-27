@@ -574,10 +574,9 @@ function getQueuePosition (userId) {
     if(queue[i].uID == userId)
     {
       return i;
-    } else {
-      return -1;
     }
   }
+  return -1;
 }
 
 function dequeueAudienceMemberHandler(req) {
