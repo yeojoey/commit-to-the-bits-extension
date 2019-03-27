@@ -214,7 +214,7 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleEnqueueSubmit = async (discordTag) => {
+  handleEnqueue = async (discordTag) => {
     const response = await fetch ("/api/enqueueAudienceMember", {
       method: "POST",
       headers: {
@@ -225,10 +225,6 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
-  }
-
-  handleEnqueue = (discordTag) => {
-    this.handleEnqueue(discordTag);
   }
 
   handleGetGuestStar = async e => {
