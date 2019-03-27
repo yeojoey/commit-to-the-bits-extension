@@ -287,6 +287,11 @@ function verifyUserExists(userID)
     console.log("Created User "+userID+" is User States.");
     console.log(userStates[userID]);
   }
+  else
+  {
+    console.log("This user already exists.");
+    console.log(userStates[userID]);
+  }
 }
 
 function clearUserVotes()
@@ -299,6 +304,7 @@ function clearUserVotes()
 
 function getState(userId) {
   const botState = AcaBot.getState();
+  verifyUserExists(userId);
   pos = getQueuePosition(userId);
   return {
     botState: {
@@ -527,6 +533,8 @@ function enqueueAudienceMemberHandler(req) {
     discordTag: discordTag
   }
 
+  console.log(queueObj.discordTag + " has reached the server");
+
   //Verify user is not already in the queue
   var newEntrant = !checkIfInQueue(opaqueUserId)
 
@@ -534,6 +542,7 @@ function enqueueAudienceMemberHandler(req) {
   if(newEntrant)
   {
     queue[queue.length] = queueObj;
+    console.log("Attempt user creation");
     verifyUserExists(opaqueUserId);
     console.log("Done adding new member.");
     console.log(userStates[opaqueUserId]);

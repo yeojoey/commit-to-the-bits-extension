@@ -216,7 +216,6 @@ class App extends Component {
   }
 
   handleEnqueue = async (discordTag) => {
-    console.log("We got "+discordTag+" for the dTag");
     const response = await fetch ("/api/enqueueAudienceMember", {
       method: "POST",
       headers: {
