@@ -315,6 +315,7 @@ class App extends Component {
                     handleStart={this.handleStartSubmit}
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
+                    handleDequeue={this.handleDequeue}
                     handleChangeToTSA={this.handleChangeToTSA}
                     handleChangeToFreezeTag={this.handleChangeToFreezeTag}
                     handleChangeToCourtroom={this.handleChangeToCourtroom}
