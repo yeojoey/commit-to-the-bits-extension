@@ -77,7 +77,7 @@ class Config extends Component {
       <React.Fragment>
       {this.state.queue}
       <br /><br />
-      <Button onClick={this.handleGetQueue}>Get Next Guest Star</Button>
+      <Button onClick={this.handleDequeue}>Get Next Guest Star</Button>
       <br /> <br />
       <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
       <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>

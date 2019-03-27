@@ -563,6 +563,8 @@ function enqueueAudienceMemberHandler(req) {
     console.log(queue);
   }
 
+  updateQueuePositions();
+
   return {
     queue: queue,
     queuePosition: userStates[opaqueUserId].queuePosition,
@@ -606,11 +608,12 @@ function dequeueAudienceMemberHandler(req) {
 
   userStates[name].inQueue = false;
 
-  console.log(userToReturn);
+  updateQueuePositions();
+
   attemptStateBroadcast(channelId);
   return {
     queue: queue,
-    guestStar: userToReturn
+    guestStar: tag
   }
 }
 
@@ -628,6 +631,14 @@ function getQueuePositionHandler(req)
 
   return {
     pos: pos
+  }
+}
+
+function updateQueuePositions()
+{
+  for(user in userStates)
+  {
+    userStates[user].queuePosition = getQueuePosition(user);
   }
 }
 
