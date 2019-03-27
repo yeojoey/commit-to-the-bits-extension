@@ -99,10 +99,14 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
     key: fs.readFileSync(serverPathRoot + '.key'),
   };
 }
+
 //Create a bot to listen and interact with chat.
 const AcaBot = new AcademicBot()
 //Create a GoogleSheetHandler to read/write from various google sheets. For chatlogging and verifying whitelisted users.
 const GoogSheet = new GoogleSheetHandler();
+
+//Map of User ID's to User States
+const userStates = [];
 
 const server = new Hapi.Server(serverOptions);
 
@@ -261,9 +265,31 @@ function botStateQueryHandler(req)
   return getState(opaqueUserId);
 }
 
+//UserState Handling
+
+function verifyUserExists(userID)
+{
+  if(!userID in userStates)
+  {
+    userStates[userID] = {
+      votedBefore: false,
+      inQueue: false,
+      discordTag: "",
+      queuePosition: -1,
+    }
+  }
+}
+
+function clearUserVotes()
+{
+  for(var key in userStates)
+  {
+    userStates[key].votedBefore = false;
+  }
+}
+
 function getState(userId) {
   const botState = AcaBot.getState();
-  userInQueue = checkIfInQueue(userId);
   pos = getQueuePosition(userId);
   return {
     botState: {
@@ -275,7 +301,9 @@ function getState(userId) {
     },
     captain: botState.captain,
     currentGame: currentGame,
-    inQueue: userInQueue,
+    votedBefore: userStates[userId].votedBefore,
+    inQueue: userStates[userId].inQueue,
+    discordTag: userStates[userId].discordTag,
     queuePosition: pos,
     headOfQueue: queue[0]
   };
@@ -346,6 +374,10 @@ function botVoteHandler(req)
 
   // Send the vote
   AcaBot.voteFor(req.headers.vote, opaqueUserId);
+
+  //Update User State
+  verifyUserExists(userID);
+  userStates[userID].votedBefore = true;
 
   const state = AcaBot.getState();
   return {
@@ -476,6 +508,9 @@ function enqueueAudienceMemberHandler(req) {
   if(newEntrant)
   {
     queue[queue.length] = queueObj;
+    verifyUserExists(opaqueUserId);
+    userStates[opaqueUserId].inQueue = true;
+    userStates[opaqueUserId].discordTag = queueObj.discordTag;
     console.log(queue);
 
     //Return queue and user's queue position
@@ -520,8 +555,14 @@ function dequeueAudienceMemberHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId } = payload;
+
   //Pop, or 'shift', the earliest element from the array.
-  var userToReturn = queue.shift().discordTag;
+  var user = queue.shift();
+  var name = user.uID;
+  var tag = user.discordTag;
+
+  userStates[name].inQueue = false;
+
   console.log(userToReturn);
   attemptStateBroadcast(channelId);
   return {
@@ -534,9 +575,10 @@ function getQueuePositionHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Gets user ID for position. Assums uID is in req.headers
-  const uID = req.headers.userID;
+  const uID = opaqueUserId;
 
   //If -1 is returned that means that the queried user is not in the queue
   var pos = getQueuePosition(uID);
