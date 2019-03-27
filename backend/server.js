@@ -277,7 +277,7 @@ function getState(userId) {
     currentGame: currentGame,
     inQueue: userInQueue,
     queuePosition: pos,
-    headOfQueue: queue[0].discordTag
+    headOfQueue: queue[0]
   };
 
 }
