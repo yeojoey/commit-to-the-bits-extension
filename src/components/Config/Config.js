@@ -22,7 +22,7 @@ class Config extends Component {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
+        "authorization": this.props.Authentication.state.token
       }
     });
     const body = await response.json();
@@ -67,7 +67,7 @@ class Config extends Component {
   renderCourtroom () {
     return (
       <React.Fragment>
-      {this.props.queue}
+      {this.state.queue}
       <br /><br />
       <Button onClick={this.handleGetQueue}>Get Next Guest Star</Button>
       <br /> <br />
