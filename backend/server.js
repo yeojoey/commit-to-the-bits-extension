@@ -492,7 +492,7 @@ function changeToCourtroomHandler(req) {
     isVoting: botState.voting,
     votes: botState.votes,
     options: botState.options,
-    finalWord: botState.finalWord,,
+    finalWord: botState.finalWord,
     currentGame: currentGame
   }
 }
