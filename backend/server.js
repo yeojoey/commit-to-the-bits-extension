@@ -415,13 +415,13 @@ function changeToTSAHandler(req) {
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
     const state = AcaBot.getState();
-    this.currentGame = "TSA";
+    currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
 
     return {
       botState: state,
-      currentGame: "TSA"
+      currentGame: currentGame
     }
 }
 
@@ -430,12 +430,12 @@ function changeToFreezeTagHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  this.currentGame = "FreezeTag";
+  currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "FreezeTag"
+    currentGame: currentGame
   }
 }
 
@@ -444,12 +444,12 @@ function changeToCourtroomHandler(req) {
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = AcaBot.getState();
-  this.currentGame = "Courtroom";
+  currentGame = "Courtroom";
   attemptStateBroadcast(channelId);
 
   return {
     botState: state,
-    currentGame: "Courtroom"
+    currentGame: currentGame
   }
 }
 
