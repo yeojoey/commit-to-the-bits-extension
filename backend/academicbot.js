@@ -7,11 +7,6 @@ const VoteHandler = require('./voteHandler.js');
 
 require('dotenv').config();
 
-var defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
-var defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
-var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
-var defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
-
 const GoogSheet = new GoogleSheetHandler();
 var Voter;
 
@@ -89,40 +84,34 @@ const ABot = class AcademicBot
           case "v":
             if(!this.voting)
             {
-              //this.vote()
               Voter.vote();
             }
             break
           case "1":
             if(this.voting)
             {
-              //this.displayWinner(0)
               Voter.displayWinner(0);
             }
             break
           case "2":
             if(this.voting)
             {
-              //this.displayWinner(1)
               Voter.displayWinner(1);
             }
             break
           case "3":
             if(this.voting)
             {
-              //this.displayWinner(2)
               Voter.displayWinner(2);
             }
             break
           case "4":
             if(this.voting)
             {
-              //this.displayWinner(3)
               Voter.displayWinner(3);
             }
             break
           case "r":
-            //this.getRandomSuggestion()
             Voter.getRandomSuggestion();
             break
           case "h":
