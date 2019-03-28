@@ -163,24 +163,6 @@ var currentGame = "FreezeTag";
   });
 
   server.route ({
-    method: "GET",
-    path: "/api/getBotState",
-    handler: botStateQueryHandler
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getCaptain",
-    handler: captainQueryHandler
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getHeadOfQueue",
-    handler: getHeadOfQueueHandler
-  })
-
-  server.route ({
     method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
@@ -205,6 +187,12 @@ var currentGame = "FreezeTag";
   })
 
   server.route ({
+    method: "POST",
+    path: "/api/submitSuggestion",
+    handler: submitSuggestionHandler
+  })
+
+  server.route ({
     method: "GET",
     path: "/api/dequeueAudienceMember",
     handler: dequeueAudienceMemberHandler
@@ -220,6 +208,24 @@ var currentGame = "FreezeTag";
     method: "GET",
     path: "/api/getQueue",
     handler: getQueueHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getBotState",
+    handler: botStateQueryHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getCaptain",
+    handler: captainQueryHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getHeadOfQueue",
+    handler: getHeadOfQueueHandler
   })
 
 
@@ -644,12 +650,26 @@ function getQueuePositionHandler(req)
   }
 }
 
-function updateQueuePositions()
+function updateQueuePositions(req)
 {
   for(user in userStates)
   {
     userStates[user].queuePosition = getQueuePosition(user);
   }
+}
+
+function submitSuggestionHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const suggestion = req.headers.suggestion;
+  const category = req.headers.category;
+
+  Voter.submitSuggestion(category, suggestion);
+
+  return getState(opaqueUserId);
 }
 
 function attemptStateBroadcast(channelId) {
