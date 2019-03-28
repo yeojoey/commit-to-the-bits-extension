@@ -178,6 +178,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+    console.log("Vote Ended. isVoting set to "+this.state.isVoting);
   }
 
   handleVoteSubmit = async (vote) => {

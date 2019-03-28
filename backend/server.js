@@ -664,7 +664,7 @@ function sendStateBroadcast(channelId) {
     'Authorization': bearerPrefix + makeServerToken(channelId),
   };
 
-  const state = AcaBot.getState
+  const state = AcaBot.getState();
   //I hope this doesn't break everything
   const obj = JSON.stringify({ isVoting: state.voting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame }) ;
 
