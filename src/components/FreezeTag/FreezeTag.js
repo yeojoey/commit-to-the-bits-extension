@@ -34,6 +34,7 @@ class FreezeTag extends Component {
   }
 
   handleCategoryChange(category) {
+    console.log("changing to "+category);
     this.setState({selectedCategory: category});
   }
 
