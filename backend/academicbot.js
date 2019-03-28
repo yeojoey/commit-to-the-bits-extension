@@ -54,19 +54,19 @@ const ABot = class AcademicBot
         switch(chatter.message.charAt(1))
         {
           case 'c':
-            this.addCharacter(chatter.message.slice(3, chatter.message.length))
+            Voter.addCharacter(chatter.message.slice(3, chatter.message.length))
             break
           case 'r':
-            this.addRelationship(chatter.message.slice(3, chatter.message.length))
+            Voter.addRelationship(chatter.message.slice(3, chatter.message.length))
             break
           case 'o':
-            this.addObjective(chatter.message.slice(3, chatter.message.length))
+            Voter.addObjective(chatter.message.slice(3, chatter.message.length))
             break
           case 'w':
-            this.addWhere(chatter.message.slice(3, chatter.message.length))
+            Voter.addWhere(chatter.message.slice(3, chatter.message.length))
             break
           case 'v':
-            this.voteFor(chatter.message.charAt(3), chatter.username)
+            Voter.voteFor(chatter.message.charAt(3), chatter.username)
             break
         }
       }
@@ -138,73 +138,11 @@ const ABot = class AcademicBot
     Voter = v;
   }
 
-  // Clear internal information
-  clear()
-  {
-    Voter.clear();
-  }
-
-  // Returns the bot state to the Server and Frontend
-  getState()
-  {
-    return Voter.getState();
-  }
-
   // Retrieves a user to act as Captain
   setCaptain(cap)
   {
     this.captain = cap;
   }
-
-  //SUGGESTION ADDITION
-
-  addCharacter(cha)
-  {
-    Voter.addCharacter(cha);
-  }
-
-  addRelationship(rel)
-  {
-    Voter.addRelationship(rel);
-  }
-
-  addObjective(obj)
-  {
-    Voter.addObjective(obj);
-  }
-
-  addWhere(wh)
-  {
-    Voter.addWhere(wh);
-  }
-
-  //SUGGESTION FETCH
-
-  getCharacter(num = 1)
-  {
-    return Voter.getCharacter(num);
-  }
-
-  getRelationship(num = 1)
-  {
-    return Voter.getRelationship(num);
-  }
-
-  getObjective(num = 1)
-  {
-    return Voter.getObjective(num);
-  }
-
-  getWhere(num = 1)
-  {
-    return Voter.getWhere(num);
-  }
-
-  getRandomSuggestion()
-  {
-    Voter.getRandomSuggestion();
-  }
-
   //TIMER FOR PRINTING DISCLAIMER and/or CONSENT FORM
 
   printLegalDoc()
@@ -217,28 +155,6 @@ const ABot = class AcademicBot
   writeToLog(chatter)
   {
     GoogSheet.writeToChatLog(chatter);
-  }
-
-  //VOTING
-
-  getOptions()
-  {
-    return Voter.getOptions();
-  }
-
-  voteFor(choice, user)
-  {
-    Voter.voteFor(choice, user);
-  }
-
-  displayWinner(winner = -1)
-  {
-    Voter.displayWinner(winner);
-  }
-
-  vote()
-  {
-    Voter.vote();
   }
 
   //Print out hotkey information

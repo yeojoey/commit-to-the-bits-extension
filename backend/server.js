@@ -308,7 +308,7 @@ function clearUserVotes()
 }
 
 function getState(userId) {
-  const botState = AcaBot.getState();
+  const botState = Voter.getState();
   verifyUserExists(userId);
   pos = getQueuePosition(userId);
   const toReturn = {
@@ -316,7 +316,7 @@ function getState(userId) {
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
-    //captain: botState.captain,
+    //captain: botState.captain,F
     currentGame: currentGame,
     votedBefore: userStates[userId].votedBefore,
     inQueue: userStates[userId].inQueue,
@@ -336,9 +336,9 @@ function botClearHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
 
   // Clear bot info.
-  AcaBot.clear();
+  Voter.clear();
 
-  const state = AcaBot.getState();
+  const state = Voter.getState();
   return {
     options: state.options,
     isVoting: state.isVoting
@@ -352,9 +352,9 @@ function botStartVoteHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   // Start the vote with the bot.
-  AcaBot.vote();
+  Voter.vote();
 
-  const state = AcaBot.getState();
+  const state = Voter.getState();
 
   attemptStateBroadcast(channelId);
   return {
@@ -370,9 +370,9 @@ function botEndVoteHandler(req)
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   // Display the winner of the vote.
-  AcaBot.displayWinner();
+  Voter.displayWinner();
 
-  const botState = AcaBot.getState();
+  const botState = Voter.getState();
   attemptStateBroadcast(channelId);
   return {
     isVoting: botState.isVoting,
@@ -392,13 +392,13 @@ function botVoteHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   // Send the vote
-  AcaBot.voteFor(req.headers.vote, opaqueUserId);
+  Voter.voteFor(req.headers.vote, opaqueUserId);
 
   //Update User State
   verifyUserExists(userID);
   userStates[userID].votedBefore = true;
 
-  const botState = AcaBot.getState();
+  const botState = Voter.getState();
   return {
     isVoting: botState.isVoting,
     votes: botState.votes,
@@ -465,7 +465,7 @@ function changeToTSAHandler(req) {
     const payload = verifyAndDecode(req.headers.authorization);
     const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-    const botState = AcaBot.getState();
+    const botState = Voter.getState();
     currentGame = "TSA";
 
     attemptStateBroadcast(channelId);
@@ -483,7 +483,7 @@ function changeToFreezeTagHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  const botState = AcaBot.getState();
+  const botState = Voter.getState();
   currentGame = "FreezeTag";
   attemptStateBroadcast(channelId);
 
@@ -500,7 +500,7 @@ function changeToCourtroomHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  const botState = AcaBot.getState();
+  const botState = Voter.getState();
   currentGame = "Courtroom";
   attemptStateBroadcast(channelId);
 
@@ -674,7 +674,7 @@ function sendStateBroadcast(channelId) {
     'Authorization': bearerPrefix + makeServerToken(channelId),
   };
 
-  const state = AcaBot.getState();
+  const state = Voter.getState();
   //I hope this doesn't break everything
   const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame }) ;
 
