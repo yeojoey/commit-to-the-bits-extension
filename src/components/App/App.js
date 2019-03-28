@@ -131,6 +131,9 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
+
+    console.log("Broadcast received. Body received as:");
+    console.log(body);
     return body;
   }
 
@@ -164,6 +167,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+    console.log("Vote Started. isVoting set to "+this.state.isVoting);
   }
 
   handleEndSubmit = async e => {
@@ -177,6 +181,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+    console.log("Vote Ended. isVoting set to "+this.state.isVoting);
   }
 
   handleVoteSubmit = async (vote) => {
