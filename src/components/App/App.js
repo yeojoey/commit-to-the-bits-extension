@@ -299,12 +299,10 @@ class App extends Component {
   // Helper functions for rendering
    renderHeader = () => {
     return (
-      <Row className="justify-content"><Col>
-        <div class="float-right">
-          <Button onClick={this.toggleInstructions}>Instructions</Button>{' '}
-          <Button onClick={this.togglePanel}>{ this.state.showPanel ? "Hide" : "Show" }</Button>
-        </div>
-      </Col></Row>
+      <div class="float-right">
+        <Button onClick={this.toggleInstructions}>Instructions</Button>{' '}
+        <Button onClick={this.togglePanel}>{ this.state.showPanel ? "Hide" : "Show" }</Button>
+      </div>
     )
   }
 
