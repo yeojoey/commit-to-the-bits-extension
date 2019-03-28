@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
-import Voting from '../Voting/Voting'
+import FreezeTag from '../FreezeTag/FreezeTag'
 
 // Styling
 import Button from 'react-bootstrap/Button';
@@ -346,16 +346,13 @@ class App extends Component {
 
   renderFreezeTag = () => {
     return (
-      <Row className="justify-content-md-center">
-        <div>
-          <h4>Current Prompt:</h4>
-          <h3>{this.state.finalWord}</h3>
-        </div>
-        <div>
-          {this.state.isVoting ? <Voting options={this.state.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""
-          }
-        </div>
-      </Row>
+        <FreezeTag
+        authToken={this.Authentication.state.token}
+        isVoting={this.state.isVoting}
+        finalWord={this.state.finalWord}
+        options={this.state.options}
+        votedBefore={this.state.votedBefore}
+        handleVoteSubmit={this.handleVote} />
     )
   }
 
@@ -381,17 +378,12 @@ class App extends Component {
   renderDebugBody = () => {
     if (this.state.showPanel) {
       return (
-        <React.Fragment>
-        <Row className="justify-content-md-center">
-            <Config currentGame = {this.state.currentGame}
-                    isVoting={this.state.isVoting}
-                    handleStart={this.handleStartSubmit}
-                    handleEnd={this.handleEndSubmit}
-                    handleClear={this.handleClear}
-                    handleChangeGame={this.handleChangeGame}/>
-        </Row>
-        { this.renderCourtroom() }
-        </React.Fragment>
+      <FreezeTag
+        isVoting={true}
+        finalWord={"i want to dead"}
+        options={["test1","test2","test3","test4"]}
+        votedBefore={false}
+        handleVoteSubmit={this.handleVote} />
       )
     }
   }
