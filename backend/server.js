@@ -274,7 +274,10 @@ function botStateQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  return getState(opaqueUserId);
+  const state = getState(opaqueUserId);
+  console.log("State in botstatequery: ");
+  console.log(state);
+  return state;
 }
 
 //UserState Handling
@@ -304,7 +307,7 @@ function getState(userId) {
   const botState = AcaBot.getState();
   verifyUserExists(userId);
   pos = getQueuePosition(userId);
-  return {
+  const toReturn = {
     isVoting: botState.voting,
     votes: botState.votes,
     options: botState.options,
@@ -317,6 +320,9 @@ function getState(userId) {
     queuePosition: pos,
     headOfQueue: queue[0]
   };
+  console.log("State in botstatequery: ");
+  console.log(toReturn);
+  return toReturn;
 
 }
 
