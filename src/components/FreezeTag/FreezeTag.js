@@ -38,15 +38,18 @@ class FreezeTag extends Component {
   }
 
   handleSubmit = async () => {
-    const response = await fetch ("/api/changeTo" + game, {
+    const response = await fetch ("/api/submitSuggestion", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
+        "authorization": this.props.authToken,
+        "suggestion": this.state.suggestion,
+        "category": this.state.category
       }
     });
     const body = await response.json();
     console.log("Submitted");
+    this.state.suggestion = "";
   }
 
 
@@ -100,7 +103,7 @@ class FreezeTag extends Component {
               {this.renderDropdownItems()}
             </DropdownButton>
             <FormControl placeholder="Suggestion" value={this.state.suggestion} onChange={this.handleChange}/>
-            <Button as={InputGroup.Append}>Submit</Button>
+            <Button as={InputGroup.Append} onClick={() => this.props.handleSubmit()}>Submit</Button>
           </InputGroup>
           {this.renderVoting()}
         </div>
