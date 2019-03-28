@@ -76,6 +76,25 @@ const Vote = class VoteHandler
     console.log(this.where)
   }
 
+  submitSuggestion(category, suggestion)
+  {
+    switch(category)
+    {
+      case category == "Character":
+        addCharacter(suggestion);
+        break;
+      case category == "Relationship":
+        addRelationship(suggestion);
+        break;
+      case category == "Objective":
+        addObjective(suggestion);
+        break;
+      case category == "Location":
+        addWhere(suggestion);
+        break;
+    }
+  }
+
   getCharacter(num = 1)
   {
     var chosen = []
