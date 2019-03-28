@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-// Components
-import Authentication from '../../util/Authentication/Authentication'
-
 // Styling
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -14,8 +11,15 @@ class Config extends Component {
     this.state = {
       queue: ""
     }
+  }
 
-    console.log(this.props);
+  stringifyQueue(queue) {
+    var str = "";
+    for (var i = 0; i < queue.length; i ++) {
+      str += queue[i].discordTag + ", ";
+    }
+    console.log(str);
+    return str;
   }
 
   handleGetQueue = async e => {
@@ -28,8 +32,12 @@ class Config extends Component {
       }
     });
     const body = await response.json();
-    this.setState(body);
+    console.log(body);
+    this.setState({
+      queue: this.stringifyQueue(body.queue)
+    });
   }
+
 
   render() {
     return(
@@ -71,7 +79,8 @@ class Config extends Component {
       <React.Fragment>
       {this.state.queue}
       <br /><br />
-      <Button onClick={this.handleDequeue}>Get Next Guest Star</Button>
+      <Button onClick={this.handleGetQueue}>Show Queue</Button>{' '}
+      <Button onClick={this.props.handleDequeue}>Get Next Guest Star</Button>
       <br /> <br />
       <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
       <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>
