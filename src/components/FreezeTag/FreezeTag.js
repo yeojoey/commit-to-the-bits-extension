@@ -44,7 +44,7 @@ class FreezeTag extends Component {
         "Content-Type": "application/json",
         "authorization": this.props.authToken,
         "suggestion": this.state.suggestion,
-        "category": this.state.category
+        "category": this.state.selectedCategory
       }
     });
     const body = await response.json();
