@@ -106,6 +106,7 @@ class App extends Component {
           this.twitch.listen("broadcast", (target, contentType, message) => {
             this.setState(JSON.parse(message));
             this.getState();
+            console.log("Broadcast received. Voting state set to "+this.isVoting);
           })
 
           this.twitch.onVisibilityChanged((isVisible,_c)=>{
