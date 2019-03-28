@@ -308,7 +308,7 @@ function getState(userId) {
   verifyUserExists(userId);
   pos = getQueuePosition(userId);
   const toReturn = {
-    isVoting: botState.voting,
+    isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
@@ -371,7 +371,7 @@ function botEndVoteHandler(req)
   const botState = AcaBot.getState();
   attemptStateBroadcast(channelId);
   return {
-    isVoting: botState.voting,
+    isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
@@ -396,7 +396,7 @@ function botVoteHandler(req)
 
   const botState = AcaBot.getState();
   return {
-    isVoting: botState.voting,
+    isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
@@ -467,7 +467,7 @@ function changeToTSAHandler(req) {
     attemptStateBroadcast(channelId);
 
     return {
-      isVoting: botState.voting,
+      isVoting: botState.isVoting,
       votes: botState.votes,
       options: botState.options,
       finalWord: botState.finalWord,
@@ -484,7 +484,7 @@ function changeToFreezeTagHandler(req) {
   attemptStateBroadcast(channelId);
 
   return {
-    isVoting: botState.voting,
+    isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
@@ -501,7 +501,7 @@ function changeToCourtroomHandler(req) {
   attemptStateBroadcast(channelId);
 
   return {
-    isVoting: botState.voting,
+    isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
@@ -672,7 +672,7 @@ function sendStateBroadcast(channelId) {
 
   const state = AcaBot.getState();
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.voting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
