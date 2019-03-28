@@ -164,6 +164,7 @@ class App extends Component {
     });
     const body = await response.json();
     this.setState(body);
+    console.log("Vote Started. isVoting set to "+this.state.isVoting);
   }
 
   handleEndSubmit = async e => {
@@ -351,8 +352,7 @@ class App extends Component {
           <h3>{this.state.finalWord}</h3>
         </div>
         <div>
-          {this.state.isVoting ? <Voting options={this.state.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""
-          }
+          {this.state.isVoting ? <Voting options={this.state.options} votedBefore={this.state.votedBefore} handleVoteSubmit={this.handleVote} /> : ""}
         </div>
       </Row>
     )
