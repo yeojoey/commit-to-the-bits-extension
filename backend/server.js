@@ -28,6 +28,7 @@ const rp = require('request-promise');
 
 const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
+const VoteHandler = require('./voteHandler');
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
@@ -104,6 +105,9 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 const AcaBot = new AcademicBot()
 //Create a GoogleSheetHandler to read/write from various google sheets. For chatlogging and verifying whitelisted users.
 const GoogSheet = new GoogleSheetHandler();
+//Create a Voter to handle voting
+const Voter = new VoteHandler();
+AcaBot.setVoter(Voter);
 
 //Map of User ID's to User States
 const userStates = [];

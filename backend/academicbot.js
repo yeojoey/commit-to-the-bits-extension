@@ -3,7 +3,7 @@ const request = require('request');
 const fs = require('fs')
 var os = require('os')
 const GoogleSheetHandler = require('./googleSheetHandler.js');
-const VoteHandler = require('./vote.js');
+const VoteHandler = require('./voteHandler.js');
 
 require('dotenv').config();
 
@@ -13,7 +13,7 @@ var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Ear
 var defaultWhere = ["Pawn Shop", "Under a Desk", "Nightclub", "Deep Cave"]
 
 const GoogSheet = new GoogleSheetHandler();
-const Voter = new VoteHandler();
+var Voter;
 
 const ABot = class AcademicBot
 {
@@ -157,6 +157,11 @@ const ABot = class AcademicBot
         }
       }
     })
+  }
+
+  setVoter(v)
+  {
+    Voter = v;
   }
 
   // Clear internal information
