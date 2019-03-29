@@ -133,6 +133,13 @@ var currentGame = "FreezeTag";
       }
     }
   });
+  server.route({
+    method: "GET",
+    path: "/currentPrompt",
+    handler: function (request, h) {
+      return "prompt goes here";
+    }
+  });
 
   // Config: clear database
   server.route ({
