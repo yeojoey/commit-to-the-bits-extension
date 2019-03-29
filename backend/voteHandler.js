@@ -82,7 +82,7 @@ const Vote = class VoteHandler
     console.log("Suggestion: "+suggestion);
     switch(category)
     {
-      case category == "Character":
+      case category === "Character":
         addCharacter(suggestion);
         console.log("Category matched as character");
         break;
