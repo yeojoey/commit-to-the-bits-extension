@@ -397,8 +397,8 @@ function botVoteHandler(req)
   Voter.voteFor(req.headers.vote, opaqueUserId);
 
   //Update User State
-  verifyUserExists(userID);
-  userStates[userID].votedBefore = true;
+  verifyUserExists(opaqueUserId);
+  userStates[opaqueUserId].votedBefore = true;
 
   const botState = Voter.getState();
   return {
