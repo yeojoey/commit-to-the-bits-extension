@@ -26,7 +26,6 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
-const Vision = require('vision');
 const Inert = require('inert');
 
 const AcademicBot = require('./academicbot.js');
@@ -122,7 +121,7 @@ var currentGame = "FreezeTag";
 
 (async () => {
 
-  await server.register([Vision, Inert]);
+  await server.register(Inert);
 
   // Serve app
   server.route({
@@ -131,23 +130,11 @@ var currentGame = "FreezeTag";
     handler: {
       directory: {
         path: "./build",
-        listing: true,
+        listing: false,
         index: true
       }
     }
   });
-
-  // server.route({
-  //   method: "GET",
-  //   path: "/prompt",
-  //   handler: {
-  //     directory: {
-  //       path: "./build/prompt.html",
-  //       listing: false,
-  //       index: false
-  //     }
-  //   }
-  // });
 
   // Config: clear database
   server.route ({

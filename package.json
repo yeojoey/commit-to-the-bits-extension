@@ -21,8 +21,7 @@
     "request": "^2.85.0",
     "request-promise": "^4.2.4",
     "selfsigned": "^1.10.2",
-    "twitch-bot": "^1.2.5",
-    "vision": "^5.4.4"
+    "twitch-bot": "^1.2.5"
   },
   "scripts": {
     "start": "node backend/server && react-scripts start",
