@@ -84,6 +84,7 @@ const Vote = class VoteHandler
     {
       case category == "Character":
         addCharacter(suggestion);
+        console.log("Category matched as character");
         break;
       case category == "Relationship":
         addRelationship(suggestion);
