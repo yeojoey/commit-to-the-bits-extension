@@ -31,6 +31,7 @@ const Inert = require('inert');
 const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler');
+const formidable = require('formidable');
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
 // by default.  Do not use this in production.
