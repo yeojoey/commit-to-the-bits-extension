@@ -26,6 +26,8 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
+const Inert = require('inert');
+
 const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler');
@@ -120,7 +122,7 @@ var currentGame = "FreezeTag";
 
 (async () => {
 
-  await server.register(require('inert'));
+  await server.register(Inert);
 
   // Serve app
   server.route({
@@ -129,16 +131,9 @@ var currentGame = "FreezeTag";
     handler: {
       directory: {
         path: "./build",
-        listing: true,
+        listing: false,
         index: true
       }
-    }
-  });
-  server.route({
-    method: "GET",
-    path: "/currentPrompt",
-    handler: function (request, h) {
-      return "prompt goes here";
     }
   });
 
