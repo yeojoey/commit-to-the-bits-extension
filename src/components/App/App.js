@@ -349,7 +349,11 @@ class App extends Component {
       <Row className="justify-content-md-center">
         <div><h3>
         <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</a></h3>
-        <h5>(Right-click and open link in new window)TE</h5>
+        <h5>(Right-click and open link in new window)</h5>
+        <form action="fileupload" method="post" enctype="multipart/form-data">
+        <input type="file" name="filetoupload"></input><br></br>
+        <input type="submit"></input>
+        </form>
         </div>
       </Row>
     )
