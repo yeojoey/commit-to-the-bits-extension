@@ -82,17 +82,17 @@ const Vote = class VoteHandler
     console.log("Suggestion: "+suggestion);
     switch(category)
     {
-      case category === "Character":
+      case "Character":
         addCharacter(suggestion);
         console.log("Category matched as character");
         break;
-      case category == "Relationship":
+      case "Relationship":
         addRelationship(suggestion);
         break;
-      case category == "Objective":
+      case "Objective":
         addObjective(suggestion);
         break;
-      case category == "Location":
+      case "Location":
         addWhere(suggestion);
         break;
     }
