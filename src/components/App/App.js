@@ -131,9 +131,6 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
-
-    console.log("Broadcast received. Body received as:");
-    console.log(body);
     return body;
   }
 
@@ -259,17 +256,17 @@ class App extends Component {
     this.setState(body);
   }
 
-  handleChangeGame = async (game) => {
-    const response = await fetch ("/api/changeTo" + game, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-  }
+  // handleChangeGame = async (game) => {
+  //   const response = await fetch ("/api/changeTo" + game, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "authorization": this.Authentication.state.token
+  //     }
+  //   });
+  //   const body = await response.json();
+  //   this.setState(body);
+  // }
 
   handleClear = async e => {
     e.preventDefault();
@@ -378,7 +375,7 @@ class App extends Component {
     )
   }
 
-  renderDebugBody = () => {
+  renderHomepage = () => {
     if (this.state.showPanel) {
       return (
       <FreezeTag
@@ -454,7 +451,7 @@ class App extends Component {
               <div className="App">
                 <Container fluid={true}>
                   {this.renderHeader()}
-                  {this.renderDebugBody()}
+                  {this.renderHomepage()}
                 </Container>
               </div>
               {this.renderInstructions()}

@@ -38,6 +38,18 @@ class Config extends Component {
     });
   }
 
+  handleChangeGame = async (game) => {
+    const response = await fetch ("/api/changeTo" + game, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
+    //this.setState (body);
+  }
+
 
   render() {
     return(
