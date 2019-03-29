@@ -88,6 +88,7 @@ class App extends Component {
   testFunction()
   {
     console.log("HI");
+    this.renderTSA();
   }
 
   componentDidMount(){
