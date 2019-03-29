@@ -662,7 +662,7 @@ function submitSuggestionHandler(req)
 
   const suggestion = req.headers.suggestion;
   const category = req.headers.category;
-
+  console.log("Received suggestion " + suggestion + " for " + category);
   Voter.submitSuggestion(category, suggestion);
 
   return getState(opaqueUserId);
