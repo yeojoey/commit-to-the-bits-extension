@@ -256,18 +256,6 @@ class App extends Component {
     this.setState(body);
   }
 
-  // handleChangeGame = async (game) => {
-  //   const response = await fetch ("/api/changeTo" + game, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "authorization": this.Authentication.state.token
-  //     }
-  //   });
-  //   const body = await response.json();
-  //   this.setState(body);
-  // }
-
   handleClear = async e => {
     e.preventDefault();
     const response = await fetch ("/api/clear", {

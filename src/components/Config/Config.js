@@ -71,8 +71,8 @@ class Config extends Component {
         <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>{' '}
         <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>{' '}
         <br /><br />
-        <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-        <Button onClick={() => this.props.handleChangeGame("Courtroom")}>Start Courtroom</Button>
+        <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>
       </React.Fragment>
     )
   }
@@ -80,8 +80,8 @@ class Config extends Component {
   renderTSA () {
     return (
       <React.Fragment>
-        <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-        <Button onClick={() => this.props.handleChangeGame("Courtroom")}>Start Courtroom</Button>
+        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>
       </React.Fragment>
     )
   }
@@ -94,8 +94,8 @@ class Config extends Component {
       <Button onClick={this.handleGetQueue}>Show Queue</Button>{' '}
       <Button onClick={this.props.handleDequeue}>Get Next Guest Star</Button>
       <br /> <br />
-      <Button onClick={() => this.props.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-      <Button onClick={() => this.props.handleChangeGame("TSA")}>Start TSA Game</Button>
+      <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+      <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>
       </React.Fragment>
     )
   }
