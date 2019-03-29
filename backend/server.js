@@ -124,7 +124,7 @@ var currentGame = "FreezeTag";
   // Serve app
   server.route({
     method: "GET",
-    path: "/",
+    path: "/{path*}",
     handler: {
       directory: {
         path: "./build",
