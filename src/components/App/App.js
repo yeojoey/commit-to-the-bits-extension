@@ -5,6 +5,7 @@ import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
 import FreezeTag from '../FreezeTag/FreezeTag'
+import Homepage from '../Homepage/Homepage'
 
 // Styling
 import Button from 'react-bootstrap/Button';
@@ -364,16 +365,17 @@ class App extends Component {
   }
 
   renderHomepage = () => {
-    if (this.state.showPanel) {
-      return (
-      <FreezeTag
-        isVoting={true}
-        finalWord={"i want to dead"}
-        options={["test1","test2","test3","test4"]}
-        votedBefore={false}
-        handleVoteSubmit={this.handleVote} />
-      )
-    }
+    return (<Homepage freezeTagPrompt={this.state.finalWord}/>)
+    // if (this.state.showPanel) {
+    //   return (
+    //   <FreezeTag
+    //     isVoting={true}
+    //     finalWord={"i want to dead"}
+    //     options={["test1","test2","test3","test4"]}
+    //     votedBefore={false}
+    //     handleVoteSubmit={this.handleVote} />
+    //   )
+    // }
   }
 
   renderInstructions = () => {
@@ -436,13 +438,7 @@ class App extends Component {
       } else {
           return (
             <React.Fragment>
-              <div className="App">
-                <Container fluid={true}>
-                  {this.renderHeader()}
-                  {this.renderHomepage()}
-                </Container>
-              </div>
-              {this.renderInstructions()}
+              {this.renderHomepage()}
             </React.Fragment>
           )
       }
