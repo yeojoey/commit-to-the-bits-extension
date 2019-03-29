@@ -78,6 +78,8 @@ const Vote = class VoteHandler
 
   submitSuggestion(category, suggestion)
   {
+    console.log("Category: "+category);
+    console.log("Suggestion: "+suggestion);
     switch(category)
     {
       case category == "Character":

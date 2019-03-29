@@ -285,8 +285,6 @@ function botStateQueryHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = getState(opaqueUserId);
-  console.log("State in botstatequery: ");
-  console.log(state);
   return state;
 }
 
@@ -330,8 +328,6 @@ function getState(userId) {
     queuePosition: pos,
     headOfQueue: queue[0]
   };
-  console.log("State in botstatequery: ");
-  console.log(toReturn);
   return toReturn;
 
 }
