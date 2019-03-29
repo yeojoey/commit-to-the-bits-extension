@@ -121,7 +121,7 @@ var currentGame = "FreezeTag";
 
   await server.register(require('inert'));
 
-// Serve app
+  // Serve app
   server.route({
     method: "GET",
     path: "/",
@@ -129,11 +129,10 @@ var currentGame = "FreezeTag";
       directory: {
         path: "./build",
         listing: true,
-        index: true,
+        index: true
       }
     }
   });
-
 
   // Config: clear database
   server.route ({
