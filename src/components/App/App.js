@@ -88,10 +88,6 @@ class App extends Component {
   testFunction()
   {
     console.log("HI");
-    while(true)
-    {
-
-    }
   }
 
   componentDidMount(){
