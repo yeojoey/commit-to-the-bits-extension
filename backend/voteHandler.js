@@ -78,22 +78,19 @@ const Vote = class VoteHandler
 
   submitSuggestion(category, suggestion)
   {
-    console.log("Category: "+category);
-    console.log("Suggestion: "+suggestion);
     switch(category)
     {
       case "Character":
-        addCharacter(suggestion);
-        console.log("Category matched as character");
+        this.addCharacter(suggestion);
         break;
       case "Relationship":
-        addRelationship(suggestion);
+        this.addRelationship(suggestion);
         break;
       case "Objective":
-        addObjective(suggestion);
+        this.addObjective(suggestion);
         break;
       case "Location":
-        addWhere(suggestion);
+        this.addWhere(suggestion);
         break;
     }
   }
