@@ -5606,6 +5606,11 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
+items@2.x.x:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/items/-/items-2.1.2.tgz#0849354595805d586dac98e7e6e85556ea838558"
+  integrity sha512-kezcEqgB97BGeZZYtX/MA8AG410ptURstvnz5RAgyFZ8wQFPMxHY8GpTq+/ZHKT3frSlIthUq7EvLt9xn3TvXg==
+
 jest-changed-files@^23.4.2:
   version "23.4.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-23.4.2.tgz#1eed688370cd5eebafe4ae93d34bb3b64968fe83"
@@ -10448,6 +10453,16 @@ vise@3.x.x:
   integrity sha512-X52VtdRQbSBXdjcazRiY3eRgV3vTQ0B+7Wh8uC9cVv7lKfML5m9+9NHlbcgCY0R9EAqD1v/v7o9mhGh2A3ANFg==
   dependencies:
     hoek "6.x.x"
+
+vision@^5.4.4:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/vision/-/vision-5.4.4.tgz#981b2d811a6061cc14cf2d5d05ad3bbc3ee59572"
+  integrity sha512-jFeH7pU/ODYmTOpY5jutMKU/fDr+P621WYEnWgqwDikxutBWJ+koxlgGnkZQoKY6JlYdY4Awo+rPN3DNdTeDKg==
+  dependencies:
+    boom "7.x.x"
+    hoek "6.x.x"
+    items "2.x.x"
+    joi "14.x.x"
 
 vm-browserify@0.0.4:
   version "0.0.4"

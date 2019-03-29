@@ -26,6 +26,9 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
+const Vision = require('vision');
+const Inert = require('inert');
+
 const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler');
@@ -119,7 +122,7 @@ var currentGame = "FreezeTag";
 
 (async () => {
 
-  await server.register(require('inert'));
+  await server.register([Vision, Inert]);
 
   // Serve app
   server.route({
@@ -133,13 +136,18 @@ var currentGame = "FreezeTag";
       }
     }
   });
-  server.route({
-    method: "GET",
-    path: "/currentPrompt",
-    handler: function (request, h) {
-      return "prompt goes here";
-    }
-  });
+
+  // server.route({
+  //   method: "GET",
+  //   path: "/prompt",
+  //   handler: {
+  //     directory: {
+  //       path: "./build/prompt.html",
+  //       listing: false,
+  //       index: false
+  //     }
+  //   }
+  // });
 
   // Config: clear database
   server.route ({
