@@ -88,7 +88,10 @@ class App extends Component {
   testFunction()
   {
     console.log("HI");
-    this.renderTSA();
+    while(true)
+    {
+
+    }
   }
 
   componentDidMount(){
@@ -357,9 +360,9 @@ class App extends Component {
         <div><h3>
         <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</a></h3>
         <h5>(Right-click and open link in new window)</h5>
-        <form method="post" enctype="multipart/form-data">
+        <form action={this.testFunction} method="post" enctype="multipart/form-data">
         <input type="file" name="filetoupload"></input><br></br>
-        <button class="btn btn-primary" type="submit" onClick={this.testFunction}></button>
+        <button class="btn btn-primary" type="submit">BUTTON</button>
         </form>
         </div>
       </Row>
