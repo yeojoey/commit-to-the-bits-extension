@@ -134,19 +134,6 @@ var currentGame = "FreezeTag";
     }
   });
 
-  // Serve other stuff ???
-    server.route({
-      method: "GET",
-      path: "/",
-      handler: {
-        directory: {
-          path: "./build",
-          listing: true,
-          index: true,
-        }
-      }
-    });
-
 
   // Config: clear database
   server.route ({
