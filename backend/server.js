@@ -121,19 +121,25 @@ var currentGame = "FreezeTag";
 
   await server.register(require('inert'));
 
-  // Serve static files
-    server.route({
-      method: "GET",
-      path: "/{path*}",
-      handler: {
-        directory: {
-          path: "./build",
-          listing: true,
-          index: true,
-          redirectToSlash: true
-        }
+  // Serve app
+  server.route({
+    method: "GET",
+    path: "/{path*}",
+    handler: {
+      directory: {
+        path: "./build",
+        listing: true,
+        index: true
       }
-    });
+    }
+  });
+  server.route({
+    method: "GET",
+    path: "/currentPrompt",
+    handler: function (request, h) {
+      return "prompt goes here";
+    }
+  });
 
   // Config: clear database
   server.route ({
