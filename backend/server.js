@@ -298,8 +298,6 @@ function botStateQueryHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = getState(opaqueUserId);
-  console.log("State in botstatequery: ");
-  console.log(state);
   return state;
 }
 
@@ -343,8 +341,6 @@ function getState(userId) {
     queuePosition: pos,
     headOfQueue: queue[0]
   };
-  console.log("State in botstatequery: ");
-  console.log(toReturn);
   return toReturn;
 
 }
@@ -414,8 +410,8 @@ function botVoteHandler(req)
   Voter.voteFor(req.headers.vote, opaqueUserId);
 
   //Update User State
-  verifyUserExists(userID);
-  userStates[userID].votedBefore = true;
+  verifyUserExists(opaqueUserId);
+  userStates[opaqueUserId].votedBefore = true;
 
   const botState = Voter.getState();
   return {

@@ -80,17 +80,17 @@ const Vote = class VoteHandler
   {
     switch(category)
     {
-      case category == "Character":
-        addCharacter(suggestion);
+      case "Character":
+        this.addCharacter(suggestion);
         break;
-      case category == "Relationship":
-        addRelationship(suggestion);
+      case "Relationship":
+        this.addRelationship(suggestion);
         break;
-      case category == "Objective":
-        addObjective(suggestion);
+      case "Objective":
+        this.addObjective(suggestion);
         break;
-      case category == "Location":
-        addWhere(suggestion);
+      case "Location":
+        this.addWhere(suggestion);
         break;
     }
   }
