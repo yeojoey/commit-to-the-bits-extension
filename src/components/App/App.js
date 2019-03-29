@@ -356,7 +356,6 @@ class App extends Component {
         <div><h3>
         <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing">Submit Drawings Here</a></h3>
         <h5>(Right-click and open link in new window)</h5>
-        <button class="btn btn-primary" type="submit" onClick={this.testFunction}>BUTTON</button>
         </div>
       </Row>
     )
