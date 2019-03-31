@@ -196,6 +196,12 @@ var currentGame = "FreezeTag";
 
   server.route ({
     method: "GET",
+    path: "/api/getFreezeTagPrompt",
+    handler: getFreezeTagPromptHandler
+  })
+
+  server.route ({
+    method: "GET",
     path: "/api/dequeueAudienceMember",
     handler: dequeueAudienceMemberHandler
   })
@@ -288,6 +294,10 @@ function botStateQueryHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = getState(opaqueUserId);
   return state;
+}
+
+function getFreezeTagPromptHandler(req) {
+  return { freezeTagPrompt: finalWord }
 }
 
 //UserState Handling
