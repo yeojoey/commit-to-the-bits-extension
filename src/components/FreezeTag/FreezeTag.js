@@ -49,7 +49,6 @@ class FreezeTag extends Component {
       }
     });
     const body = await response.json();
-    console.log("Submitted");
     this.setState({ suggestion: "" });
   }
 

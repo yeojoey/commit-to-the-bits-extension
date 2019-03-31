@@ -291,7 +291,7 @@ class App extends Component {
   // Helper functions for rendering
    renderHeader = () => {
     return (
-      <div class="float-right">
+      <div class="floating-header">
         <Button onClick={this.toggleInstructions}>Instructions</Button>{' '}
         <Button onClick={this.togglePanel}>{ this.state.showPanel ? "Hide" : "Show" }</Button>
       </div>
@@ -398,9 +398,8 @@ class App extends Component {
             audience, then taps on one of the frozen performers and takes their place.  The scene then starts
             again with the new performer tying their suggestion into the story.</p>
 
-            <p>Guests interact by typing in chat to suggest characters, relationships, objectives, and locations.
-            A character suggestion would look like "!c batman" (!r for relationship, !o for objective, and !w
-            for where). </p>
+            <p>Guests interact by typing in the suggestion box below to suggest characters, relationships, objectives, and locations.
+            For example, a Character suggestion would look like "a superhero".</p>
 
             <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
           </Modal.Body>
@@ -418,7 +417,16 @@ class App extends Component {
           </Modal.Body>
           :
           <Modal.Body>
-            <p>Courtroom game instructions go here</p>
+            <p>In Untitled Courtroom Game, performers and audience members work together to create a scene.  One performer
+            takes on the role of a prosecutor while the other is a defendant.  The prosecutor is trying to convince the
+            judge that the defendant is guilty and does so by bringing in witnesses.</p>
+
+            <p>Witnesses are pulled from the audience from a queue and are given a role by the prosecutor (e.g. “Next we’ll
+              hear from the owner of the shop where the crime took place.”)  Witnesses give improvised statements.  These
+              statements should be completely random and have no (or little) connection to previous statements.  The defendant
+              takes those statements and tries to explain why they did so, making up their crime in the process.</p>
+
+            <p>To play, audience members should enter their Discord user name into the box on the overlay.</p>
           </Modal.Body>
           }
           <Modal.Footer>

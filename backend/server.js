@@ -26,6 +26,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
+
 const Inert = require('inert');
 
 const AcademicBot = require('./academicbot.js');
@@ -116,6 +117,7 @@ AcaBot.setVoter(Voter);
 const userStates = [];
 
 const server = new Hapi.Server(serverOptions);
+const io = require('socket.io')(server.listener);
 
 // Game State
 var currentGame = "FreezeTag";
@@ -192,6 +194,12 @@ var currentGame = "FreezeTag";
     method: "POST",
     path: "/api/submitSuggestion",
     handler: submitSuggestionHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getFreezeTagPrompt",
+    handler: getFreezeTagPromptHandler
   })
 
   server.route ({
@@ -288,6 +296,10 @@ function botStateQueryHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const state = getState(opaqueUserId);
   return state;
+}
+
+function getFreezeTagPromptHandler(req) {
+  return { freezeTagPrompt: Voter.getState().finalWord }
 }
 
 //UserState Handling
