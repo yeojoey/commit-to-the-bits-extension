@@ -26,6 +26,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const request = require('request');
 const rp = require('request-promise');
 
+
 const Inert = require('inert');
 
 const AcademicBot = require('./academicbot.js');
@@ -116,6 +117,7 @@ AcaBot.setVoter(Voter);
 const userStates = [];
 
 const server = new Hapi.Server(serverOptions);
+const io = require('socket.io')(server.listener);
 
 // Game State
 var currentGame = "FreezeTag";
