@@ -297,7 +297,7 @@ function botStateQueryHandler(req)
 }
 
 function getFreezeTagPromptHandler(req) {
-  return { freezeTagPrompt: finalWord }
+  return { freezeTagPrompt: Voter.getState().finalWord }
 }
 
 //UserState Handling
