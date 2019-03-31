@@ -133,7 +133,7 @@ const GoogSheet = class GoogleSheetHandler
     var listed = false;
     for(var i = 0; i < whiteListedUsers.length; i++)
     {
-      if(whiteListedUsers[i] == chatter.username)
+      if(whiteListedUsers[i].toLowerCase() == chatter.username.toLowerCase())
       {
         listed = true;
         break;
