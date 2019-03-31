@@ -398,9 +398,8 @@ class App extends Component {
             audience, then taps on one of the frozen performers and takes their place.  The scene then starts
             again with the new performer tying their suggestion into the story.</p>
 
-            <p>Guests interact by typing in chat to suggest characters, relationships, objectives, and locations.
-            A character suggestion would look like "!c batman" (!r for relationship, !o for objective, and !w
-            for where). </p>
+            <p>Guests interact by typing in the suggestion box below to suggest characters, relationships, objectives, and locations.
+            For example, a Character suggestion would look like "a superhero".</p>
 
             <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
           </Modal.Body>
