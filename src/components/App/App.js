@@ -291,7 +291,7 @@ class App extends Component {
   // Helper functions for rendering
    renderHeader = () => {
     return (
-      <div class="float-right">
+      <div class="floating-header">
         <Button onClick={this.toggleInstructions}>Instructions</Button>{' '}
         <Button onClick={this.togglePanel}>{ this.state.showPanel ? "Hide" : "Show" }</Button>
       </div>

@@ -10,3 +10,9 @@
   align-items: center;
   display: flex;
 }
+
+floating-header {
+  float: right;
+  position: absolute;
+  z-index: 1000;
+}
