@@ -139,7 +139,6 @@ const GoogSheet = class GoogleSheetHandler
     var content = process.env.GOOGLE_SHEETS_CREDENTIALS;//fs.readFileSync('credentials.json');
     var auth = this.authorize(JSON.parse(content));
     this.readWhiteListedUsers(auth, this);
-    this.listFiles(auth);
     return this.whiteList;
     }
     catch (err) {
