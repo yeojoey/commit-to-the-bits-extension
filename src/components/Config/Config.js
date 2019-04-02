@@ -68,19 +68,22 @@ class Config extends Component {
   renderMusic () {
     return (
       <React.Fragment>
-      <div><h5>Current DJ: {this.props.currentDJ}</h5><br /><br />
-      <h5>Selected songs</h5>
-      <ul>
-        <li>{this.props.selectedSongs[0]}</li>
-        <li>{this.props.selectedSongs[1]}</li>
-        <li>{this.props.selectedSongs[2]}</li>
-      </ul>
-      </div>
+      <Col>
+      <div><h5>Current DJ: {this.props.currentDJ}</h5></div>
       <div>
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
         <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
       </div>
+      </Col>
+      <h5>Selected songs</h5>
+      <Col>
+      <ol>
+        <li>{this.props.selectedSongs[0]}</li>
+        <li>{this.props.selectedSongs[1]}</li>
+        <li>{this.props.selectedSongs[2]}</li>
+      </ol>
+      </Col>
       </React.Fragment>
     )
   }
