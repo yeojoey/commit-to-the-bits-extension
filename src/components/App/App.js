@@ -294,6 +294,7 @@ class App extends Component {
     }
   }
 
+
   renderGame = () => {
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
@@ -320,6 +321,14 @@ class App extends Component {
         options={this.state.options}
         votedBefore={this.state.votedBefore}/>
     )
+  }
+
+  renderMusic = () => {
+    return (<Music authToken={this.Authentication.state.token}
+                    currentDJ={this.state.dj}
+                    isDJ={this.state.isDJ}
+                    options={this.state.musicOptions}
+      />)
   }
 
   renderTSA = () => {
