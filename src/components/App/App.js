@@ -6,6 +6,7 @@ import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
 import FreezeTag from '../FreezeTag/FreezeTag'
 import Homepage from '../Homepage/Homepage'
+import Music from '../Music/Music'
 
 // Styling
 import Button from 'react-bootstrap/Button';
@@ -83,12 +84,6 @@ class App extends Component {
               isVisible
           }
       })
-  }
-
-  //TESTING PURPOSES only
-  testFunction()
-  {
-    console.log("HI");
   }
 
   componentDidMount(){
@@ -186,26 +181,6 @@ class App extends Component {
     const body = await response.json();
     this.setState(body);
     console.log("Vote Ended. isVoting set to "+this.state.isVoting);
-  }
-
-  handleVoteSubmit = async (vote) => {
-      const userID = this.Authentication.getOpaqueId();
-      const response = await fetch ("/api/vote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": this.Authentication.state.token,
-          "userID": userID,
-          "vote": vote
-        },
-      });
-      const body = await response.json();
-      this.setState(body);
-      this.setState({votedBefore: true});
-  }
-
-  handleVote = (a) => {
-    this.handleVoteSubmit(a);
   }
 
   handleCaptain = async e => {
@@ -346,8 +321,7 @@ class App extends Component {
         isVoting={this.state.isVoting}
         finalWord={this.state.finalWord}
         options={this.state.options}
-        votedBefore={this.state.votedBefore}
-        handleVoteSubmit={this.handleVote} />
+        votedBefore={this.state.votedBefore}/>
     )
   }
 
@@ -382,6 +356,10 @@ class App extends Component {
     //     handleVoteSubmit={this.handleVote} />
     //   )
     // }
+  }
+
+  renderMusic = () => {
+    return ();
   }
 
   renderInstructions = () => {
