@@ -36,9 +36,7 @@ const Muse = class Music
   getOptions()
   {
     const toReturn = [];
-    var prunedList = moods;
-
-    console.log(prunedList[0]);
+    var prunedList = moods.slice();
 
     //Make sure we don't provide options that are already in the queue
     for(var i = 0; i < prunedList.length; i++)
