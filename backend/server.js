@@ -786,6 +786,7 @@ function getDJHandler(req)
   dj = Muse.getDJ();
   verifyUserExists(dj);
   console.log("UserID of DJ: "+dj);
+  dropOtherDJ();
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
 
@@ -813,6 +814,14 @@ function chooseMusicHandler(req)
   Muse.addToQueue(req.headers.music);
   attemptStateBroadcast(channel_id);
   return getState(opaqueUserId);
+}
+
+function dropOtherDJ()
+{
+  for(var key in userStates)
+  {
+    userStates[key].isDJ = false;
+  }
 }
 
 //**********
