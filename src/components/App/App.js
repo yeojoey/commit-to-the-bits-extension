@@ -20,13 +20,6 @@ import Row from 'react-bootstrap/Row';
 
 import './App.css';
 
-// DEBUG
-const testState =  {
-    isVoting: false,
-    options: ["batman", "superman", "wonder woman", "aquaman"],
-    finalWord: "No suggestions yet."
-}
-
 class App extends Component {
   state = {
     response: "",
@@ -342,6 +335,12 @@ class App extends Component {
       <Instructions toggleInstructions={this.toggleInstructions}
                     currentGame={this.state.currentGame}
       />
+    )
+  }
+
+  renderHomepage = () => {
+    return (
+      <b>Something disappeared here</b>
     )
   }
 
