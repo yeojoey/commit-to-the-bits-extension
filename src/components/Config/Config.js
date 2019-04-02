@@ -59,7 +59,28 @@ class Config extends Component {
           {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
           {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
           {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
+          {this.props.currentGame === "Music" ? this.renderMusic() : "" }
         </Col>
+      </React.Fragment>
+    )
+  }
+
+  renderMusic () {
+    return (
+      <React.Fragment>
+      <div><h5>Current DJ: {this.props.currentDJ}</h5><br /><br />
+      <h5>Selected songs</h5>
+      <ul>
+        <li>{this.props.selectedSongs[0]}</li>
+        <li>{this.props.selectedSongs[1]}</li>
+        <li>{this.props.selectedSongs[2]}</li>
+      </ul>
+      </div>
+      <div>
+        <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
+      </div>
       </React.Fragment>
     )
   }
@@ -72,7 +93,8 @@ class Config extends Component {
         <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>{' '}
         <br /><br />
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
       </React.Fragment>
     )
   }
@@ -81,7 +103,8 @@ class Config extends Component {
     return (
       <React.Fragment>
         <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
       </React.Fragment>
     )
   }
@@ -95,7 +118,8 @@ class Config extends Component {
       <Button onClick={this.props.handleDequeue}>Get Next Guest Star</Button>
       <br /> <br />
       <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-      <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>
+      <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+      <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
       </React.Fragment>
     )
   }

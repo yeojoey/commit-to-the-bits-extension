@@ -6,6 +6,8 @@ import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
 import FreezeTag from '../FreezeTag/FreezeTag'
 import Homepage from '../Homepage/Homepage'
+import Instructions from '../Instructions/Instructions'
+import Music from '../Music/Music'
 
 // Styling
 import Button from 'react-bootstrap/Button';
@@ -83,12 +85,6 @@ class App extends Component {
               isVisible
           }
       })
-  }
-
-  //TESTING PURPOSES only
-  testFunction()
-  {
-    console.log("HI");
   }
 
   componentDidMount(){
@@ -186,26 +182,6 @@ class App extends Component {
     const body = await response.json();
     this.setState(body);
     console.log("Vote Ended. isVoting set to "+this.state.isVoting);
-  }
-
-  handleVoteSubmit = async (vote) => {
-      const userID = this.Authentication.getOpaqueId();
-      const response = await fetch ("/api/vote", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": this.Authentication.state.token,
-          "userID": userID,
-          "vote": vote
-        },
-      });
-      const body = await response.json();
-      this.setState(body);
-      this.setState({votedBefore: true});
-  }
-
-  handleVote = (a) => {
-    this.handleVoteSubmit(a);
   }
 
   handleCaptain = async e => {
@@ -311,12 +287,12 @@ class App extends Component {
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
                     handleDequeue={this.handleDequeue}
-                    handleChangeToTSA={this.handleChangeToTSA}
-                    handleChangeToFreezeTag={this.handleChangeToFreezeTag}
-                    handleChangeToCourtroom={this.handleChangeToCourtroom}
                     handleChangeGame={this.handleChangeGame}
                     handleGetGuestStar={this.handleGetGuestStar}
-                    guestStar={this.state.guestStar}/>
+                    guestStar={this.state.guestStar}
+                    currentDJ={this.state.dj}
+                    selectedSongs={this.state.musicQueue}
+                    />
           : ""}
         </Row>
         { this.renderGame() }
@@ -327,14 +303,14 @@ class App extends Component {
 
   renderGame = () => {
     if (this.state.currentGame === "FreezeTag") {
-      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
 
     else if (this.state.currentGame === "TSA") {
-      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment> );
 
     } else {
-      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
 
   }
@@ -346,8 +322,7 @@ class App extends Component {
         isVoting={this.state.isVoting}
         finalWord={this.state.finalWord}
         options={this.state.options}
-        votedBefore={this.state.votedBefore}
-        handleVoteSubmit={this.handleVote} />
+        votedBefore={this.state.votedBefore}/>
     )
   }
 
@@ -364,76 +339,10 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
-      <Courtroom queuePosition={this.state.queuePosition}
-                  inQueue={this.state.inQueue}
-                  handleEnqueue={this.handleEnqueue}/>
+      <Instructions toggleInstructions={this.toggleInstructions}
+                    currentGame={this.state.currentGame}
+      />
     )
-  }
-
-  renderHomepage = () => {
-    return (<Homepage freezeTagPrompt={this.state.finalWord}/>)
-    // if (this.state.showPanel) {
-    //   return (
-    //   <FreezeTag
-    //     isVoting={true}
-    //     finalWord={"i want to dead"}
-    //     options={["test1","test2","test3","test4"]}
-    //     votedBefore={false}
-    //     handleVoteSubmit={this.handleVote} />
-    //   )
-    // }
-  }
-
-  renderInstructions = () => {
-    if (this.state.showInstructions) {
-      return (
-        <Modal.Dialog>
-          <Modal.Header closeButton onClick={this.toggleInstructions}>
-            <Modal.Title>Instructions</Modal.Title>
-          </Modal.Header>
-          { this.state.currentGame === "FreezeTag" ?
-          <Modal.Body>
-            <p>In Freeze Tag, 2 performers act out a scene.  At a certain point, the host or other performers
-            will shout out "Freeze!" and the performers stop moving.  A new performer gets a suggestion from the
-            audience, then taps on one of the frozen performers and takes their place.  The scene then starts
-            again with the new performer tying their suggestion into the story.</p>
-
-            <p>Guests interact by typing in the suggestion box below to suggest characters, relationships, objectives, and locations.
-            For example, a Character suggestion would look like "a superhero".</p>
-
-            <p>Vote on your favorite suggestion by clicking the corresponding button on the screen.</p>
-          </Modal.Body>
-          :
-          this.state.currentGame === "TSA" ?
-          <Modal.Body>
-            <p>In TSA, audience members submit drawings of the contents of a traveller's bag.  One performer as a TSA
-            Agent will interrogate the traveller as they try to justify increasingly random security X-Rays.</p>
-
-            <p>You will be submitting these pictures.  Please open up MS Paint and draw whatever comes to mind.  Submit
-            it by simply dropping it in this <a href="https://drive.google.com/drive/folders/1LbIjPZp2xjq_AsMxN_QjfNWH3wA832aY?usp=sharing" target="_blank">Google
-            Drive folder</a>.</p>
-
-            <p>Have fun making this traveller's day more difficult!</p>
-          </Modal.Body>
-          :
-          <Modal.Body>
-            <p>In Untitled Courtroom Game, performers and audience members work together to create a scene.  One performer
-            takes on the role of a prosecutor while the other is a defendant.  The prosecutor is trying to convince the
-            judge that the defendant is guilty and does so by bringing in witnesses.</p>
-
-            <p>Witnesses are pulled from the audience from a queue and are given a role by the prosecutor (e.g. “Next we’ll
-              hear from the owner of the shop where the crime took place.”)  Witnesses give improvised statements.  These
-              statements should be completely random and have no (or little) connection to previous statements.  The defendant
-              takes those statements and tries to explain why they did so, making up their crime in the process.</p>
-
-            <p>To play, audience members should enter their Discord user name into the box on the overlay.</p>
-          </Modal.Body>
-          }
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.toggleInstructions}>Close</Button>
-          </Modal.Footer>
-        </Modal.Dialog>
-    )}
   }
 
   render() {
