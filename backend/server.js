@@ -54,7 +54,9 @@ const channelColors = {};
 const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
-const queue = [];
+const queue = [];                           // Used for queueing users for Courtroom Game
+var djBucket = [];                        // Used for collecting users who want to be DJ
+var dj = "";
 
 const STRINGS = {
   secretEnv: usingValue('secret'),
@@ -197,6 +199,24 @@ var currentGame = "FreezeTag";
   })
 
   server.route ({
+    method: "POST",
+    path: "/api/getInDJBucket",
+    handler: getInDJBucketHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/clearDJBucket",
+    handler: clearDJBucket
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getDJ",
+    handler: getDJHandler
+  })
+
+  server.route ({
     method: "GET",
     path: "/api/getFreezeTagPrompt",
     handler: getFreezeTagPromptHandler
@@ -313,6 +333,8 @@ function verifyUserExists(userID)
       inQueue: false,
       discordTag: "",
       queuePosition: -1,
+      isDJ: false,
+      inDJBucket: false,
     }
   }
 }
@@ -338,6 +360,9 @@ function getState(userId) {
     currentGame: currentGame,
     votedBefore: userStates[userId].votedBefore,
     inQueue: userStates[userId].inQueue,
+    inDJBucket: userStates[userId].inDJBucket,
+    isDJ: userStates[userId].isDJ,
+    dj: dj,
     discordTag: userStates[userId].discordTag,
     queuePosition: pos,
     headOfQueue: queue[0]
@@ -666,6 +691,69 @@ function updateQueuePositions(req)
   for(user in userStates)
   {
     userStates[user].queuePosition = getQueuePosition(user);
+  }
+}
+
+//***************
+//QUEUE STUFF End
+//***************
+
+//***************
+//DJ Handling
+//***************
+
+function getInDJBucketHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  verifyUserExists(opaqueUserId);
+  djBucket.push(opaqueUserId);
+
+  userStates[opaqueUserId].inDJBucket = true;
+
+  return getState(opaqueUserId);
+}
+
+function clearDJBucketHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  djBucket = [];
+
+  for(var key in userStates)
+  {
+    userStates[key].inDJBucket = false;
+    userStates[key].isDJ = false;
+  }
+}
+
+function getDJHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  let rand = Math.floor(Math.random() * Math.floor(djBucket.length));
+  dj = djBucket[rand];
+  removeFromDJBucket(dj);
+  userStates[dj].isDJ = true;
+  userStates[dj].inDJBucket = false;
+
+  return getState(opaqueUserId);
+}
+
+function removeFromDJBucket(uID)
+{
+  for(var i = 0; i < djBucket.length; i++)
+  {
+    if(djBucket[i] == uID)
+    {
+      djBucket = djBucket.splice(i, 1);
+    }
   }
 }
 
