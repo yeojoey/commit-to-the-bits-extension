@@ -80,7 +80,7 @@ const Muse = class Music
       {
         console.log("Before Removal");
         console.log(this.djBucket);
-        this.djBucket = this.djBucket.splice(i, 1);
+        this.djBucket.splice(i, 1);
         console.log("After Removal");
         console.log(this.djBucket);
       }
