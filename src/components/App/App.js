@@ -332,6 +332,16 @@ class App extends Component {
 
   renderCourtroom = () => {
     return (
+      <Courtroom authToken={this.Authentication.state.token}
+                  inQueue={this.state.inQueue}
+                  queuePosition={this.state.queuePosition}
+                  handleEnqueue={this.handleEnqueue}
+      />
+    )
+  }
+
+  renderInstructions = () => {
+    return (
       <Instructions toggleInstructions={this.toggleInstructions}
                     currentGame={this.state.currentGame}
       />
