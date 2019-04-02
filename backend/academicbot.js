@@ -70,10 +70,13 @@ const ABot = class AcademicBot
 
       if(this.restrictions.length > 0)
       {
+        Debug.Log("restrictions exist");
         for(var i = 0; i < this.restrictions.length; i++)
         {
+          Debug.Log("Restriction : "+this.restrictions[i]);
           if(chatter.message.includes(this.restrictions[i]))
           {
+            Debug.Log("get banned");
             this.Bot.say('/timeout '+chatter.username+' 1');
             break;
           }
