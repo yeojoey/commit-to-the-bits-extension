@@ -783,6 +783,8 @@ function getDJHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   dj = Muse.getDJ();
+  verifyUserExists(dj);
+  console.log("UserID of DJ: "+dj);
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
 

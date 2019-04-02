@@ -12,6 +12,7 @@ const Muse = class Music
   getInDJBucket(uID)
   {
     this.djBucket.push(uID);
+    console.log(this.djBucket);
   }
 
   clearDJBucket()
