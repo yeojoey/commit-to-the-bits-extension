@@ -38,7 +38,7 @@ const Muse = class Music
     const toReturn = [];
     var prunedList = this.moods;
 
-    Debug.Log(prunedList[0]);
+    console.log(prunedList[0]);
 
     //Make sure we don't provide options that are already in the queue
     for(var i = 0; i < prunedList.length; i++)
