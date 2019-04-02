@@ -78,8 +78,10 @@ const Muse = class Music
       console.log("checking bucket");
       if(this.djBucket[i] == uID)
       {
+        console.log("Before Removal");
+        console.log(this.djBucket);
         this.djBucket = this.djBucket.splice(i, 1);
-        console.log("remove from bucket");
+        console.log("After Removal");
         console.log(this.djBucket);
       }
     }
