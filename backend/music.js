@@ -39,13 +39,13 @@ const Muse = class Music
     var prunedList = this.moods;
 
     //Make sure we don't provide options that are already in the queue
-    for(int i = 0; i < prunedList.length; i++)
+    for(var i = 0; i < prunedList.length; i++)
     {
       if(this.queue.includes(prunedList[i]))
         prunedList = prunedList.splice(i, 1);
     }
 
-    for(int i = 0; i < 3; i++)
+    for(var i = 0; i < 3; i++)
     {
       let index = this.randomInt(prunedList.length);
       toReturn.push(prunedList[index]);
