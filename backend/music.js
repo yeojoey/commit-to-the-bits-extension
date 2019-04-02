@@ -89,7 +89,7 @@ const Muse = class Music
 
   randomInt(max)
   {
-    return Math.floor(Math.random() * Math.floor(max);
+    return Math.floor(Math.random() * Math.floor(max));
   }
 }
 
