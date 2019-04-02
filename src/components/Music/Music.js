@@ -25,7 +25,15 @@ class Music extends Component {
   }
 
   handleSelectSong = async (choice) => {
-
+    const response = await fetch ("/api/chooseMusic", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken,
+        "music": choice
+      }
+    });
+    const body = await response.json();
   }
 
   renderJoinQueue () {

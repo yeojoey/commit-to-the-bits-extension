@@ -370,7 +370,7 @@ class App extends Component {
               isDJ={this.state.isDJ}
               currentDJ={this.state.dj}
               options={this.state.musicOptions}
-            }/>
+            />
     );
   }
 
