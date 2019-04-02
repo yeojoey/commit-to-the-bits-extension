@@ -52,7 +52,7 @@ class Config extends Component {
 
   handleGetNextDJ = async () => {
     const response = await fetch ("/api/getDJ", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.props.authToken
