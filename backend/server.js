@@ -220,6 +220,12 @@ var currentGame = "FreezeTag";
   })
 
   server.route ({
+    method: "POST",
+    path: "/api/chooseMusic",
+    handler: chooseMusicHandler
+  })
+
+  server.route ({
     method: "GET",
     path: "/api/getFreezeTagPrompt",
     handler: getFreezeTagPromptHandler
@@ -796,6 +802,17 @@ function getMusicOptionsHandler(req)
   return {
     musicOptions: opt
   }
+}
+
+function chooseMusicHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  Muse.addToQueue(req.headers.music);
+
+  return getState(opaqueUserId);
 }
 
 //**********
