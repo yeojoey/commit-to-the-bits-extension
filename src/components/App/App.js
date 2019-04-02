@@ -286,12 +286,12 @@ class App extends Component {
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
                     handleDequeue={this.handleDequeue}
-                    handleChangeToTSA={this.handleChangeToTSA}
-                    handleChangeToFreezeTag={this.handleChangeToFreezeTag}
-                    handleChangeToCourtroom={this.handleChangeToCourtroom}
                     handleChangeGame={this.handleChangeGame}
                     handleGetGuestStar={this.handleGetGuestStar}
-                    guestStar={this.state.guestStar}/>
+                    guestStar={this.state.guestStar}
+                    currentDJ={this.state.dj}
+                    selectedSongs={this.state.musicQueue}
+                    />
           : ""}
         </Row>
         { this.renderGame() }
@@ -302,14 +302,14 @@ class App extends Component {
 
   renderGame = () => {
     if (this.state.currentGame === "FreezeTag") {
-      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
 
     else if (this.state.currentGame === "TSA") {
-      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderTSA() }</React.Fragment> );
 
     } else {
-      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment>);
+      return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
 
   }
@@ -345,7 +345,12 @@ class App extends Component {
   }
 
   renderHomepage = () => {
-    return (<Homepage freezeTagPrompt={this.state.finalWord}/>)
+    return (
+      <React.Fragment>
+        { this.renderMusic() }
+      </React.Fragment>
+    );
+    //return (<Homepage freezeTagPrompt={this.state.finalWord}/>)
     // if (this.state.showPanel) {
     //   return (
     //   <FreezeTag
@@ -359,7 +364,14 @@ class App extends Component {
   }
 
   renderMusic = () => {
-    return ();
+    return (
+      <Music authToken={this.Authentication.state.token}
+              inQueue={this.state.inDJBucket}
+              isDJ={this.state.isDJ}
+              currentDJ={this.state.dj}
+              options={this.state.musicOptions}
+            }/>
+    );
   }
 
   renderInstructions = () => {

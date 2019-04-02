@@ -386,7 +386,6 @@ function getState(userId) {
     musicQueue: musicState.musicQueue,
     musicOptions: musicState.musicOptions,
 
-
     discordTag: userStates[userId].discordTag,
     queuePosition: pos,
     headOfQueue: queue[0]
