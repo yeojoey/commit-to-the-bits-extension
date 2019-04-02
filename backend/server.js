@@ -369,6 +369,7 @@ function botStartVoteHandler(req)
 
   // Start the vote with the bot.
   Voter.vote();
+  clearUserVotes();
 
   const state = Voter.getState();
 
