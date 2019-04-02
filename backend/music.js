@@ -36,7 +36,7 @@ const Muse = class Music
   getOptions()
   {
     const toReturn = [];
-    var prunedList = this.moods;
+    var prunedList = moods;
 
     console.log(prunedList[0]);
 
