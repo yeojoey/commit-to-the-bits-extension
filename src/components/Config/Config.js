@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // Styling
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 class Config extends Component {
 
@@ -47,7 +48,17 @@ class Config extends Component {
       }
     });
     const body = await response.json();
-    //this.setState (body);
+  }
+
+  handleGetNextDJ = async () => {
+    const response = await fetch ("/api/getDJ", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
   }
 
 
@@ -67,9 +78,10 @@ class Config extends Component {
 
   renderMusic () {
     return (
-      <React.Fragment>
+      <Row>
       <Col>
-      <div><h5>Current DJ: {this.props.currentDJ}</h5></div>
+      <div><h5>Current DJ: {this.props.currentDJ}</h5><br /><br />
+      <Button onClick={() => this.handleGetNextDJ()}>Get Next DJ</Button></div>
       <div>
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
@@ -84,7 +96,7 @@ class Config extends Component {
         <li>{this.props.selectedSongs[2]}</li>
       </ol>
       </Col>
-      </React.Fragment>
+      </Row>
     )
   }
 
