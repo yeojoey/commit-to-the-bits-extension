@@ -280,7 +280,6 @@ var currentGame = "FreezeTag";
     handler: getDJHandler
   })
 
-
   // Start the server.
   await server.start();
 
