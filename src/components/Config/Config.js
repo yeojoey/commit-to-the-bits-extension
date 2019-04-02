@@ -88,8 +88,8 @@ class Config extends Component {
         <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
       </div>
       </Col>
-      <h5>Selected songs</h5>
       <Col>
+      <h5>Selected songs</h5>
       <ol>
         <li>{this.props.selectedSongs[0]}</li>
         <li>{this.props.selectedSongs[1]}</li>

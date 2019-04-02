@@ -774,6 +774,7 @@ function clearDJBucketHandler(req)
     userStates[key].inDJBucket = false;
     userStates[key].isDJ = false;
   }
+  attemptStateBroadcast(channelId);
 }
 
 function getDJHandler(req)
@@ -787,7 +788,7 @@ function getDJHandler(req)
   console.log("UserID of DJ: "+dj);
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
-
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
