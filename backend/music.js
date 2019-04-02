@@ -75,7 +75,7 @@ const Muse = class Music
   {
     for(var i = 0; i < this.djBucket.length; i++)
     {
-      console.log("checking bucket");
+      console.log("checking bucket for uid " + uID);
       if(this.djBucket[i] == uID)
       {
         console.log("Before Removal");
