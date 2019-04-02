@@ -216,7 +216,7 @@ var currentGame = "FreezeTag";
   server.route ({
     method: "POST",
     path: "/api/clearDJBucket",
-    handler: clearDJBucket
+    handler: clearDJBucketHandler
   })
 
   server.route ({
@@ -784,6 +784,23 @@ function getDJHandler(req)
 
   return getState(opaqueUserId);
 }
+
+function getMusicOptionsHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const opt = Muse.getOptions();
+
+  return {
+    musicOptions: opt
+  }
+}
+
+//**********
+// DJ HANDLING END
+//***********
 
 function submitSuggestionHandler(req)
 {
