@@ -280,7 +280,6 @@ var currentGame = "FreezeTag";
     handler: getDJHandler
   })
 
-
   // Start the server.
   await server.start();
 
@@ -775,6 +774,7 @@ function clearDJBucketHandler(req)
     userStates[key].inDJBucket = false;
     userStates[key].isDJ = false;
   }
+  attemptStateBroadcast(channelId);
 }
 
 function getDJHandler(req)
@@ -789,7 +789,7 @@ function getDJHandler(req)
   dropOtherDJ();
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
-
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
