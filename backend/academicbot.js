@@ -29,6 +29,8 @@ const ABot = class AcademicBot
       channels: [channel]
     })
 
+    this.restrictions = ['s'];
+
     this.startup()
   }
 
@@ -66,7 +68,17 @@ const ABot = class AcademicBot
         }
       }
 
-    setInterval(this.printLegalDoc, 300000)
+      if(this.restrictions.length > 0)
+      {
+        for(var i = 0; i < this.restrictions.length; i++)
+        {
+          if(chatter.message.includes(this.restrictions[i]))
+          {
+            this.Bot.say('/timeout '+chatter.username+' 1');
+            break;
+          }
+        }
+      }
 
       this.writeToLog(chatter)
     })
@@ -154,6 +166,16 @@ const ABot = class AcademicBot
       console.log(this.hotkeys[i])
       console.log()
     }
+  }
+
+  setRestriction(restrs)
+  {
+    this.restrictions = restrs;
+  }
+
+  clearRestrictions()
+  {
+    this.restrictions = [];
   }
 
 }
