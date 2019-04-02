@@ -1,4 +1,4 @@
-const moods = ["happy", "angry", "sad", "wacky", "marriage"];
+const moods = ["action", "romance", "wild west", "spooky"];
 
 const Muse = class Music
 {
