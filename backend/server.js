@@ -579,7 +579,7 @@ function changeToCourtroomHandler(req) {
   }
 }
 
-function changeToMusic(req) {
+function changeToMusicHandler(req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
