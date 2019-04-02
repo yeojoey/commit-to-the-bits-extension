@@ -341,11 +341,15 @@ class App extends Component {
   }
 
   renderInstructions = () => {
+    if (this.state.showInstructions) {
     return (
       <Instructions toggleInstructions={this.toggleInstructions}
                     currentGame={this.state.currentGame}
       />
     )
+    } else {
+      return (null);
+    }
   }
 
   renderHomepage = () => {
