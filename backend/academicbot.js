@@ -29,7 +29,7 @@ const ABot = class AcademicBot
       channels: [channel]
     })
 
-    this.restrictions = ['s'];
+    this.restrictions = [];
 
     this.startup()
   }
