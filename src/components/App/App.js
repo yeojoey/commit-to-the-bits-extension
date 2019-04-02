@@ -300,7 +300,10 @@ class App extends Component {
     }
 
     else if (this.state.currentGame === "TSA") {
+
       return ( <React.Fragment>{ this.renderTSA() }</React.Fragment> );
+    } else if (this.state.currentGame === "Music") {
+      return ( <React.Fragment>{ this.renderMusic() }</React.Fragment> );
 
     } else {
       return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
