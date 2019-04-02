@@ -32,6 +32,7 @@ const Inert = require('inert');
 const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler');
+const Music = require('./music.js');
 const formidable = require('formidable');
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
@@ -114,6 +115,8 @@ const GoogSheet = new GoogleSheetHandler();
 //Create a Voter to handle voting
 const Voter = new VoteHandler();
 AcaBot.setVoter(Voter);
+//Music object to handle DJ Game
+const Muse = new Music();
 
 //Map of User ID's to User States
 const userStates = [];
@@ -188,6 +191,12 @@ var currentGame = "FreezeTag";
 
   server.route ({
     method: "POST",
+    path: "/api/changeToMusic",
+    handler: changeToMusicHandler
+  })
+
+  server.route ({
+    method: "POST",
     path: "/api/enqueueAudienceMember",
     handler: enqueueAudienceMemberHandler
   })
@@ -208,12 +217,6 @@ var currentGame = "FreezeTag";
     method: "POST",
     path: "/api/clearDJBucket",
     handler: clearDJBucket
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getDJ",
-    handler: getDJHandler
   })
 
   server.route ({
@@ -256,6 +259,19 @@ var currentGame = "FreezeTag";
     method: "GET",
     path: "/api/getHeadOfQueue",
     handler: getHeadOfQueueHandler
+  })
+
+  //DJ Handling - GET
+  server.route ({
+    method: "GET",
+    path: "/api/getMusicOptions",
+    handler: getMusicOptionsHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getDJ",
+    handler: getDJHandler
   })
 
 
@@ -349,20 +365,28 @@ function clearUserVotes()
 
 function getState(userId) {
   const botState = Voter.getState();
+  const musicState = Muse.getState();
+
   verifyUserExists(userId);
   pos = getQueuePosition(userId);
+
   const toReturn = {
     isVoting: botState.isVoting,
     votes: botState.votes,
     options: botState.options,
     finalWord: botState.finalWord,
-    //captain: botState.captain,F
-    currentGame: currentGame,
     votedBefore: userStates[userId].votedBefore,
     inQueue: userStates[userId].inQueue,
+
+    currentGame: currentGame,
+
     inDJBucket: userStates[userId].inDJBucket,
     isDJ: userStates[userId].isDJ,
-    dj: dj,
+    dj: musicState.dj,
+    musicQueue: musicState.musicQueue,
+    musicOptions: musicState.musicOptions,
+
+
     discordTag: userStates[userId].discordTag,
     queuePosition: pos,
     headOfQueue: queue[0]
@@ -555,6 +579,23 @@ function changeToCourtroomHandler(req) {
   }
 }
 
+function changeToMusic(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const botState = Voter.getState();
+  currentGame = "Music";
+  attemptStateBroadcast(channelId);
+
+  return {
+    isVoting: botState.isVoting,
+    votes: botState.votes,
+    options: botState.options,
+    finalWord: botState.finalWord,
+    currentGame: currentGame
+  }
+}
+
 /*******************
 *   QUEUE RELATED
 ********************/
@@ -709,7 +750,7 @@ function getInDJBucketHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   verifyUserExists(opaqueUserId);
-  djBucket.push(opaqueUserId);
+  Muse.getInDJBucket(opaqueUserId);
 
   userStates[opaqueUserId].inDJBucket = true;
 
@@ -722,7 +763,7 @@ function clearDJBucketHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  djBucket = [];
+  Muse.clearDJBucket();
 
   for(var key in userStates)
   {
@@ -737,24 +778,11 @@ function getDJHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  let rand = Math.floor(Math.random() * Math.floor(djBucket.length));
-  dj = djBucket[rand];
-  removeFromDJBucket(dj);
+  dj = Muse.getDJ();
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
 
   return getState(opaqueUserId);
-}
-
-function removeFromDJBucket(uID)
-{
-  for(var i = 0; i < djBucket.length; i++)
-  {
-    if(djBucket[i] == uID)
-    {
-      djBucket = djBucket.splice(i, 1);
-    }
-  }
 }
 
 function submitSuggestionHandler(req)
