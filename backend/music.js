@@ -75,9 +75,12 @@ const Muse = class Music
   {
     for(var i = 0; i < this.djBucket.length; i++)
     {
+      console.log("checking bucket");
       if(this.djBucket[i] == uID)
       {
         this.djBucket = this.djBucket.splice(i, 1);
+        console.log("remove from bucket");
+        console.log(this.djBucket);
       }
     }
   }
