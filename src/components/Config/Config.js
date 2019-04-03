@@ -40,7 +40,7 @@ class Config extends Component {
   }
 
   handleChangeGame = async (game) => {
-    const response = await fetch ("/api/changeGame, {
+    const response = await fetch ("/api/changeGame", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
