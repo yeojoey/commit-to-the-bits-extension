@@ -825,7 +825,7 @@ function getMusicOptionsHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const opt = Muse.getOptions();
-
+  console.log(opt);
   return {
     musicOptions: opt
   }

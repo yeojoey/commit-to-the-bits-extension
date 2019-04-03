@@ -60,7 +60,7 @@ const Muse = class Music
       this.options.push(prunedList[index]);
       prunedList.splice(index, 1);
     }
-
+    console.log(this.options);
     return this.options;
   }
 
