@@ -327,7 +327,9 @@ class App extends Component {
     return (<Music authToken={this.Authentication.state.token}
                     currentDJ={this.state.dj}
                     isDJ={this.state.isDJ}
+                    inQueue={this.state.inDJBucket}
                     options={this.state.musicOptions}
+                    canSelectSong={this.state.canSelectSong}
       />)
   }
 

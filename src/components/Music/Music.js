@@ -40,6 +40,7 @@ class Music extends Component {
     return (
       <div>
       {this.renderCurrentDJ()}
+      <h5>You are not in line.</h5><br />
       <Button onClick = {() => this.joinQueue() }>Join Queue</Button>
       </div>
     )
@@ -67,10 +68,16 @@ class Music extends Component {
       <div>
       <h4>You're the DJ!</h4>
         <div>
+        {this.props.canSelectSong ?
+          <React.Fragment>
           <h5>Choose the next song</h5>
           <Button onClick={() => this.handleSelectSong(this.props.options[0])}>{this.props.options[0]}</Button>{' '}
           <Button onClick={() => this.handleSelectSong(this.props.options[1])}>{this.props.options[1]}</Button>{' '}
           <Button onClick={() => this.handleSelectSong(this.props.options[2])}>{this.props.options[2]}</Button>{' '}
+          </React.Fragment>
+          :
+          <h5>Thanks for creating a playlist!</h5>
+        }
         </div>
       </div>
     )
