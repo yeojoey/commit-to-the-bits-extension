@@ -172,6 +172,12 @@ var currentGame = "FreezeTag";
   });
 
   server.route ({
+    method: 'POST',
+    path: "/api/changeGame",
+    handler: changeGameHandler
+  })
+
+  server.route ({
     method: "POST",
     path: "/api/changeToTSA",
     handler: changeToTSAHandler
@@ -528,6 +534,24 @@ function captainQueryHandler(req)
       console.log(err)
     })
   return toReturn;
+}
+
+function changeGameHandler (req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const botState = Voter.getState();
+  currentGame = req.headers.game;
+
+  attemptStateBroadcast(channelId);
+  return {
+    isVoting: botState.isVoting,
+    votes: botState.votes,
+    options: botState.options,
+    finalWord: botState.finalWord,
+    currentGame: currentGame
+  }
 }
 
 function changeToTSAHandler(req) {
