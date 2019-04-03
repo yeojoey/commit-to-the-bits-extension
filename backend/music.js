@@ -35,7 +35,7 @@ const Muse = class Music
     this.canSelectSong = true;
   }
 
-  async getDJ()
+  getDJ()
   {
     let rand = this.randomInt(this.djBucket.length);
     let id = this.djBucket[rand];
@@ -43,7 +43,7 @@ const Muse = class Music
     this.removeFromDJBucket(id);
     this.clearQueue();
 
-    this.dj = await this.convertUidToUsername(id);
+    this.dj = this.convertUidToUsername(id);
     console.log("DJNAME : "+this.dj);
     return {
       dj: this.dj,
@@ -129,11 +129,12 @@ const Muse = class Music
       }
     };
 
-     await request(options, function(err, res, body) {
+    const name = await request(options, function(err, res, body) {
       let json = JSON.parse(body);
       console.log("IN ASYNC : " + json.display_name);
       return json.display_name;
     });
+    return name;
   }
 }
 
