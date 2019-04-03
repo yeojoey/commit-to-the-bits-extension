@@ -345,7 +345,6 @@ function botStateQueryHandler(req)
   verifyUserExists(opaqueUserId);
 
   const state = getState(opaqueUserId);
-  setDisplayName(payload.user_id, opaqueUserId);
   return state;
 }
 
@@ -357,7 +356,7 @@ function getFreezeTagPromptHandler(req) {
 
 function verifyUserExists(opaqueUserId)
 {
-  if(!(userStates.hasOwnProperty(opID)))
+  if(!(userStates.hasOwnProperty(opaqueUserId)))
   {
     userStates[opaqueUserId] = {
       votedBefore: false,
@@ -371,10 +370,8 @@ function verifyUserExists(opaqueUserId)
   }
 }
 
-async function setDisplayName(uID, opaqueUserId)
+function setDisplayName(name, opaqueUserId)
 {
-  const dName = await convertUidToUsername(uID);
-
   userStates[opaqueUserId].displayName = dName;
 }
 
@@ -389,8 +386,6 @@ function clearUserVotes()
 function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
-  const djID = musicState.dj;
-  dj = userStates[djID].displayName;
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
@@ -407,7 +402,7 @@ function getState(userId) {
 
     inDJBucket: userStates[userId].inDJBucket,
     isDJ: userStates[userId].isDJ,
-    dj: dj,
+    dj: musicState.dj,
     musicQueue: musicState.musicQueue,
     musicOptions: musicState.musicOptions,
     canSelectSong: musicState.canSelectSong,
@@ -793,7 +788,7 @@ function getInDJBucketHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //verifyUserExists(opaqueUserId);
-  Muse.getInDJBucket(opaqueUserId);
+  Muse.getInDJBucket(payload.user_id, opaqueUserId);
 
   console.log(payload);
 
@@ -825,8 +820,9 @@ function getDJHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get DJ and Set options accordingly
-  const djID = Muse.getDJ();
-  dj = userStates[djID].displayName;
+  djObj = Muse.getDJ();
+  dj = djObj.dj;
+  uID = djObj.id;
   Muse.getOptions();
 
   //Make sure this userID exists. (This should never be a problem, but hey who knows)
@@ -835,8 +831,9 @@ function getDJHandler(req)
   dropOtherDJ();
 
   //Update the DJ's userstate
-  userStates[djID].isDJ = true;
-  userStates[djID].inDJBucket = false;
+  userStates[uID].isDJ = true;
+  userStates[uID].inDJBucket = false;
+  userStates[uID].displayName = dName;
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
@@ -925,10 +922,8 @@ function sendStateBroadcast(channelId) {
 
   const state = Voter.getState();
   const museState = Muse.getState();
-  const djID = museState.dj;
-  dj = userStates[djID].displayName;
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: dj, canSelectSong: museState.canSelectSong }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
