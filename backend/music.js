@@ -43,15 +43,12 @@ const Muse = class Music
     for(var i = 0; i < prunedList.length; i++)
     {
       if(this.queue.includes(prunedList[i]))
-        prunedList = prunedList.splice(i, 1);
+        prunedList.splice(i, 1);
     }
 
     for(var i = 0; i < 3; i++)
     {
-      console.log("Possible List of Choices");
-      console.log(prunedList);
       let index = this.randomInt(prunedList.length);
-      console.log("random number: "+index);
       toReturn.push(prunedList[index]);
       prunedList.splice(index, 1);
     }
