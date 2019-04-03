@@ -44,9 +44,10 @@ const Muse = class Music
     this.clearQueue();
 
     let promise = await this.convertUidToUsername(id);
+    promise = JSON.parse(promise);
     this.dj = promise.display_name;
-    console.log("PROMISE");
-    console.log(promise);
+    console.log("DJ");
+    console.log(this.dj);
     return {
       dj: this.dj,
       id: opID,
