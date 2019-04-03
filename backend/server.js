@@ -371,11 +371,6 @@ function verifyUserExists(opaqueUserId)
   }
 }
 
-function setDisplayName(name, opaqueUserId)
-{
-  userStates[opaqueUserId].displayName = dName;
-}
-
 function clearUserVotes()
 {
   for(var key in userStates)
@@ -836,7 +831,7 @@ async function getDJHandler(req)
   console.log(djObj);
   userStates[uID].isDJ = true;
   userStates[uID].inDJBucket = false;
-  userStates[uID].displayName = dName;
+  userStates[uID].displayName = dj;
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
