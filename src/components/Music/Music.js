@@ -40,6 +40,7 @@ class Music extends Component {
     return (
       <div>
       {this.renderCurrentDJ()}
+      <h5>You are not in line.</h5><br />
       <Button onClick = {() => this.joinQueue() }>Join Queue</Button>
       </div>
     )
