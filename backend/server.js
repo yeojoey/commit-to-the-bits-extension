@@ -179,30 +179,6 @@ var currentGame = "FreezeTag";
 
   server.route ({
     method: "POST",
-    path: "/api/changeToTSA",
-    handler: changeToTSAHandler
-  })
-
-  server.route ({
-    method: "POST",
-    path: "/api/changeToFreezeTag",
-    handler: changeToFreezeTagHandler
-  })
-
-  server.route ({
-    method: "POST",
-    path: "/api/changeToCourtroom",
-    handler: changeToCourtroomHandler
-  })
-
-  server.route ({
-    method: "POST",
-    path: "/api/changeToMusic",
-    handler: changeToMusicHandler
-  })
-
-  server.route ({
-    method: "POST",
     path: "/api/enqueueAudienceMember",
     handler: enqueueAudienceMemberHandler
   })
