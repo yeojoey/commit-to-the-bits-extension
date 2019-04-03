@@ -46,10 +46,11 @@ const Muse = class Music
     for(var i = 0; i < prunedList.length; i++)
     {
       console.log("CHECKING IF IN QUEUE");
-      console.log(prunedList[i]);
+      console.log(prunedList[i]+" of "+prunedList.length);
       console.log(i);
       if(this.queue.includes(prunedList[i]))
       {
+        console.log("Thing found");
         prunedList.splice(i, 1);
       }
     }
