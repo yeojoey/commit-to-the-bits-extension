@@ -341,6 +341,9 @@ function botStateQueryHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  verifyUserExists(payload);
+
   const state = getState(opaqueUserId);
   return state;
 }
@@ -351,18 +354,22 @@ function getFreezeTagPromptHandler(req) {
 
 //UserState Handling
 
-function verifyUserExists(userID)
+async function verifyUserExists(payload)
 {
-  //var dName = await convertUidToUsername(userID);
-  if(!(userStates.hasOwnProperty(userID)))
+  const opID = payload.opaque_user_id;
+  if(!(userStates.hasOwnProperty(opID)))
   {
-    userStates[userID] = {
+    let uID = payload.user_id;
+    let dName = await convertUidToUsername(uID);
+
+    userStates[opID] = {
       votedBefore: false,
       inQueue: false,
       discordTag: "",
       queuePosition: -1,
       isDJ: false,
       inDJBucket: false,
+      displayName: dName,
     }
   }
 }
@@ -379,7 +386,7 @@ function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
 
-  verifyUserExists(userId);
+  //verifyUserExists(userId);
   pos = getQueuePosition(userId);
 
   const toReturn = {
@@ -473,7 +480,7 @@ function botVoteHandler(req)
   Voter.voteFor(req.headers.vote, opaqueUserId);
 
   //Update User State
-  verifyUserExists(opaqueUserId);
+  //verifyUserExists(opaqueUserId);
   userStates[opaqueUserId].votedBefore = true;
 
   const botState = Voter.getState();
@@ -676,7 +683,7 @@ function enqueueAudienceMemberHandler(req) {
   {
     queue[queue.length] = queueObj;
     console.log("Attempt user creation");
-    verifyUserExists(opaqueUserId);
+    //verifyUserExists(opaqueUserId);
     console.log("Done adding new member.");
     userStates[opaqueUserId].inQueue = true;
     userStates[opaqueUserId].discordTag = queueObj.discordTag
@@ -779,7 +786,7 @@ function getInDJBucketHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  verifyUserExists(opaqueUserId);
+  //verifyUserExists(opaqueUserId);
   Muse.getInDJBucket(opaqueUserId);
 
   console.log(payload);
@@ -812,11 +819,11 @@ function getDJHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get DJ and Set options accordingly
-  dj = Muse.getDJ();
+  dj = userStates[Muse.getDJ()].displayName;
   Muse.getOptions();
 
   //Make sure this userID exists. (This should never be a problem, but hey who knows)
-  verifyUserExists(dj);
+  //verifyUserExists(dj);
   //Make everyone else not a DJ.
   dropOtherDJ();
 
