@@ -44,7 +44,7 @@ const Muse = class Music
     this.clearQueue();
 
     this.dj = await this.convertUidToUsername(id);
-
+    console.log("OPID : "+opID);
     return {
       dj: this.dj,
       id: opID,
