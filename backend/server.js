@@ -385,6 +385,8 @@ function clearUserVotes()
 function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
+  const djID = musicState.dj;
+  const dj = userStates[djID].displayName;
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
@@ -401,7 +403,7 @@ function getState(userId) {
 
     inDJBucket: userStates[userId].inDJBucket,
     isDJ: userStates[userId].isDJ,
-    dj: musicState.dj,
+    dj: dj,
     musicQueue: musicState.musicQueue,
     musicOptions: musicState.musicOptions,
     canSelectSong: musicState.canSelectSong,
