@@ -131,6 +131,7 @@ const Muse = class Music
 
     request(options, function(err, res, body) {
       let json = JSON.parse(body);
+      console.log("IN ASYNC : " + json.display_name);
       return json.display_name;
     });
   }
