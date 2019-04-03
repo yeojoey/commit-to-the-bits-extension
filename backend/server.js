@@ -822,7 +822,7 @@ function getDJHandler(req)
   userStates[dj].inDJBucket = false;
 
   //TESTING YO
-  console.log(req.headers.authorization);
+  console.log(payload);
 
   const url = 'https://api.twitch.tv/kraken/user';
   const options = {
