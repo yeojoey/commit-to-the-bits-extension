@@ -49,7 +49,7 @@ class Music extends Component {
   renderCurrentDJ () {
     return (
       <div>
-      <h5>The current DJ is: {this.props.currentDJ}</h5>
+      <h5>The current DJ is: {this.props.currentDJ === "" ? "No one" : this.props.currentDJ}</h5>
       </div>
     )
   }
