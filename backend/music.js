@@ -7,6 +7,7 @@ const Muse = class Music
     this.djBucket = [];
     this.dj = "";
     this.queue = [];
+    this.canSelectSong = true;
   }
 
   getInDJBucket(uID)
@@ -23,6 +24,7 @@ const Muse = class Music
   clearQueue()
   {
     this.queue = [];
+    this.canSelectSong = true;
   }
 
   getDJ()
@@ -78,7 +80,8 @@ const Muse = class Music
     return {
       musicQueue: this.queue,
       musicOptions: opt,
-      dj: this.dj
+      dj: this.dj,
+      canSelectSong: this.canSelectSong,
     }
   }
 
@@ -101,6 +104,8 @@ const Muse = class Music
   addToQueue(mood)
   {
     this.queue.push(mood);
+    if(this.queue.length >= 3)
+      this.canSelectSong = false;
     return this.queue;
   }
 

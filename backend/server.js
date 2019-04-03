@@ -396,6 +396,7 @@ function getState(userId) {
     dj: musicState.dj,
     musicQueue: musicState.musicQueue,
     musicOptions: musicState.musicOptions,
+    canSelectSong: musicState.canSelectSong,
 
     discordTag: userStates[userId].discordTag,
     queuePosition: pos,
@@ -891,7 +892,7 @@ function sendStateBroadcast(channelId) {
   const state = Voter.getState();
   const museState = Muse.getState();
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
