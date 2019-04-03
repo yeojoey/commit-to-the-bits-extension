@@ -43,7 +43,8 @@ const Muse = class Music
     this.removeFromDJBucket(id);
     this.clearQueue();
 
-    this.dj = await this.convertUidToUsername(id);
+    let promise = await this.convertUidToUsername(id);
+    this.dj = promise.display_name;
     console.log("DJNAME : "+this.dj);
     return {
       dj: this.dj,
