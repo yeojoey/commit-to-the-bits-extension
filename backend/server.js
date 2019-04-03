@@ -833,7 +833,7 @@ function getDJHandler(req)
 
   //Update the DJ's userstate
   console.log(userStates);
-  console.log(uID);
+  console.log(djObj);
   userStates[uID].isDJ = true;
   userStates[uID].inDJBucket = false;
   userStates[uID].displayName = dName;
