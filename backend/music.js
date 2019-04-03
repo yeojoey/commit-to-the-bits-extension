@@ -8,6 +8,7 @@ const Muse = class Music
     this.dj = "";
     this.queue = [];
     this.canSelectSong = true;
+    this.options = [];
   }
 
   getInDJBucket(uID)
@@ -39,7 +40,7 @@ const Muse = class Music
 
   getOptions()
   {
-    const toReturn = [];
+    this.options = [];
     var prunedList = moods.slice();
 
     //Make sure we don't provide options that are already in the queue
@@ -56,11 +57,11 @@ const Muse = class Music
     for(var i = 0; i < 3; i++)
     {
       let index = this.randomInt(prunedList.length);
-      toReturn.push(prunedList[index]);
+      this.options.push(prunedList[index]);
       prunedList.splice(index, 1);
     }
 
-    return toReturn;
+    return this.options;
   }
 
   getQueue()
@@ -70,10 +71,9 @@ const Muse = class Music
 
   getState()
   {
-    var opt = this.getOptions();
     return {
       musicQueue: this.queue,
-      musicOptions: opt,
+      musicOptions: this.options,
       dj: this.dj,
       canSelectSong: this.canSelectSong,
     }
