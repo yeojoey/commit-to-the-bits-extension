@@ -355,7 +355,7 @@ function getFreezeTagPromptHandler(req) {
 
 //UserState Handling
 
-async function verifyUserExists(opaqueUserId)
+function verifyUserExists(opaqueUserId)
 {
   if(!(userStates.hasOwnProperty(opID)))
   {
