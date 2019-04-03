@@ -44,7 +44,7 @@ const Muse = class Music
 
     //Make sure we don't provide options that are already in the queue
     var len = prunedList.length;
-    for(var i = 0; i < len; i++)
+    for(var i = 0; i < prunedList.length; i++)
     {
       console.log("CHECKING IF IN QUEUE");
       console.log(prunedList[i]+" of "+prunedList.length);
@@ -53,6 +53,7 @@ const Muse = class Music
       {
         console.log("Thing found");
         prunedList.splice(i, 1);
+        i--;
       }
     }
 
