@@ -386,7 +386,7 @@ function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
   const djID = musicState.dj;
-  const dj = userStates[djID].displayName;
+  dj = userStates[djID].displayName;
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
@@ -921,8 +921,10 @@ function sendStateBroadcast(channelId) {
 
   const state = Voter.getState();
   const museState = Muse.getState();
+  const djID = museState.dj;
+  dj = userStates[djID].displayName;
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
