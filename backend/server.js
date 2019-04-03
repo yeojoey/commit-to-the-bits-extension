@@ -179,6 +179,30 @@ var currentGame = "FreezeTag";
 
   server.route ({
     method: "POST",
+    path: "/api/changeToTSA",
+    handler: changeToTSAHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/changeToFreezeTag",
+    handler: changeToFreezeTagHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/changeToCourtroom",
+    handler: changeToCourtroomHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/changeToMusic",
+    handler: changeToMusicHandler
+  })
+
+  server.route ({
+    method: "POST",
     path: "/api/enqueueAudienceMember",
     handler: enqueueAudienceMemberHandler
   })
@@ -531,6 +555,76 @@ function changeGameHandler (req) {
   }
 }
 
+function changeToTSAHandler(req) {
+    // Verify all requests.
+    const payload = verifyAndDecode(req.headers.authorization);
+    const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+    const botState = Voter.getState();
+    currentGame = "TSA";
+
+    attemptStateBroadcast(channelId);
+
+    return {
+      isVoting: botState.isVoting,
+      votes: botState.votes,
+      options: botState.options,
+      finalWord: botState.finalWord,
+      currentGame: currentGame
+    }
+}
+
+function changeToFreezeTagHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const botState = Voter.getState();
+  currentGame = "FreezeTag";
+  attemptStateBroadcast(channelId);
+
+  return {
+    isVoting: botState.isVoting,
+    votes: botState.votes,
+    options: botState.options,
+    finalWord: botState.finalWord,
+    currentGame: currentGame
+  }
+}
+
+function changeToCourtroomHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const botState = Voter.getState();
+  currentGame = "Courtroom";
+  attemptStateBroadcast(channelId);
+
+  return {
+    isVoting: botState.isVoting,
+    votes: botState.votes,
+    options: botState.options,
+    finalWord: botState.finalWord,
+    currentGame: currentGame
+  }
+}
+
+function changeToMusicHandler(req) {
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  const botState = Voter.getState();
+  currentGame = "Music";
+  attemptStateBroadcast(channelId);
+
+  return {
+    isVoting: botState.isVoting,
+    votes: botState.votes,
+    options: botState.options,
+    finalWord: botState.finalWord,
+    currentGame: currentGame
+  }
+}
+
 /*******************
 *   QUEUE RELATED
 ********************/
@@ -715,6 +809,7 @@ function getDJHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   dj = Muse.getDJ();
+  Muse.getOptions();
   verifyUserExists(dj);
   console.log("UserID of DJ: "+dj);
   dropOtherDJ();
@@ -731,7 +826,6 @@ function getMusicOptionsHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const opt = Muse.getOptions();
-  console.log(opt);
   return {
     musicOptions: opt
   }
@@ -743,6 +837,7 @@ function chooseMusicHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   Muse.addToQueue(req.headers.music);
+  Muse.getOptions();
   attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
