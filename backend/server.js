@@ -353,6 +353,7 @@ function getFreezeTagPromptHandler(req) {
 
 function verifyUserExists(userID)
 {
+  var dName = await convertUidToUsername(userID);
   if(!(userStates.hasOwnProperty(userID)))
   {
     userStates[userID] = {
@@ -781,6 +782,8 @@ function getInDJBucketHandler(req)
   verifyUserExists(opaqueUserId);
   Muse.getInDJBucket(opaqueUserId);
 
+  console.log(payload);
+
   userStates[opaqueUserId].inDJBucket = true;
   attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
@@ -975,6 +978,24 @@ function userIsInCooldown(opaqueUserId) {
   const now = Date.now();
   if (cooldown && cooldown > now) {
     return true;
+  }
+
+  function convertUidToUsername(uid)
+  {
+    const url = 'https://api.twitch.tv/kraken/users/'+uid;
+    const options = {
+      url: url,
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.twitchtv.v5+json',
+        'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
+      }
+    };
+
+    request(options, function(err, res, body) {
+      let json = JSON.parse(body);
+      return json.display_name;
+    });
   }
 
   // Voting extensions must also track per-user votes to prevent skew.
