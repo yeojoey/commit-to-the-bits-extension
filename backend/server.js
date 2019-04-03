@@ -830,7 +830,7 @@ function getDJHandler(req)
     headers: {
       'Accept': 'application/vnd.twitchtv.v5+json',
       'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
-      'Authorization': req.headers.authorization;
+      'Authorization': req.headers.authorization
     }
   };
 
