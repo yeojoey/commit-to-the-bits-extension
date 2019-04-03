@@ -812,7 +812,7 @@ function chooseMusicHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   Muse.addToQueue(req.headers.music);
-  attemptStateBroadcast(channel_id);
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
