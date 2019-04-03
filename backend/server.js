@@ -353,7 +353,7 @@ function getFreezeTagPromptHandler(req) {
 
 function verifyUserExists(userID)
 {
-  var dName = await convertUidToUsername(userID);
+  //var dName = await convertUidToUsername(userID);
   if(!(userStates.hasOwnProperty(userID)))
   {
     userStates[userID] = {
