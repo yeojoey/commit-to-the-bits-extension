@@ -84,6 +84,7 @@ class Music extends Component {
   }
 
   render () {
+    console.log("in queue? " + this.props.inQueue);
     if (this.props.isDJ) {
       return( <Row className="justify-content-md-center mx-5"><Col>{this.renderDJ()}</Col></Row>);
     } else {
