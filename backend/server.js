@@ -810,6 +810,7 @@ function getDJHandler(req)
   dj = Muse.getDJ();
   verifyUserExists(dj);
   console.log("UserID of DJ: "+dj);
+  dropOtherDJ();
   userStates[dj].isDJ = true;
   userStates[dj].inDJBucket = false;
   attemptStateBroadcast(channelId);
@@ -835,8 +836,16 @@ function chooseMusicHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   Muse.addToQueue(req.headers.music);
-  attemptStateBroadcast(channel_id);
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
+}
+
+function dropOtherDJ()
+{
+  for(var key in userStates)
+  {
+    userStates[key].isDJ = false;
+  }
 }
 
 //**********
@@ -880,8 +889,9 @@ function sendStateBroadcast(channelId) {
   };
 
   const state = Voter.getState();
+  const museState = Muse.getState();
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',

@@ -40,17 +40,24 @@ const Muse = class Music
     var prunedList = moods.slice();
 
     //Make sure we don't provide options that are already in the queue
+    console.log("THE QUEUE");
+    console.log(this.queue);
     for(var i = 0; i < prunedList.length; i++)
     {
+      console.log("CHECKING IF IN QUEUE");
+      console.log(prunedList[i]);
       if(this.queue.includes(prunedList[i]))
-        prunedList = prunedList.splice(i, 1);
+      {
+        console.log("IT IS");
+        prunedList.splice(i, 1);
+      }
     }
 
     for(var i = 0; i < 3; i++)
     {
       let index = this.randomInt(prunedList.length);
       toReturn.push(prunedList[index]);
-      prunedList = prunedList.splice(index, 1);
+      prunedList.splice(index, 1);
     }
 
     return toReturn;
@@ -75,11 +82,13 @@ const Muse = class Music
   {
     for(var i = 0; i < this.djBucket.length; i++)
     {
-      console.log("checking bucket");
+      console.log("checking bucket for uid " + uID);
       if(this.djBucket[i] == uID)
       {
-        this.djBucket = this.djBucket.splice(i, 1);
-        console.log("remove from bucket");
+        console.log("Before Removal");
+        console.log(this.djBucket);
+        this.djBucket.splice(i, 1);
+        console.log("After Removal");
         console.log(this.djBucket);
       }
     }
