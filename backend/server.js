@@ -336,15 +336,16 @@ function verifyAndDecode(header) {
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
-async function botStateQueryHandler(req)
+function botStateQueryHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  await verifyUserExists(payload);
+  verifyUserExists(opaqueUserId);
 
   const state = getState(opaqueUserId);
+  setDisplayName(payload.user_id, opaqueUserId);
   return state;
 }
 
@@ -354,24 +355,27 @@ function getFreezeTagPromptHandler(req) {
 
 //UserState Handling
 
-async function verifyUserExists(payload)
+async function verifyUserExists(opaqueUserId)
 {
-  const opID = payload.opaque_user_id;
   if(!(userStates.hasOwnProperty(opID)))
   {
-    let uID = payload.user_id;
-    let dName = await convertUidToUsername(uID);
-
-    userStates[opID] = {
+    userStates[opaqueUserId] = {
       votedBefore: false,
       inQueue: false,
       discordTag: "",
       queuePosition: -1,
       isDJ: false,
       inDJBucket: false,
-      displayName: dName,
+      displayName: "",
     }
   }
+}
+
+async function setDisplayName(uID, opaqueUserId)
+{
+  const dName = await convertUidToUsername(uID);
+
+  userStates[opaqueUserId].displayName = dName;
 }
 
 function clearUserVotes()
