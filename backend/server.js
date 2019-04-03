@@ -823,21 +823,21 @@ function getDJHandler(req)
 
   //TESTING YO
 
-  // const url = 'https://api.twitch.tv/kraken/user';
-  // const options = {
-  //   url: url,
-  //   method: 'GET',
-  //   headers: {
-  //     'Accept': 'application/vnd.twitchtv.v5+json',
-  //     'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
-  //     'Authorization': req.headers.authorization
-  //   }
-  // };
-  //
-  // request(options, function(err, res, body) {
-  //   let json = JSON.parse(body);
-  //   console.log(json);
-  // });
+  const url = 'https://api.twitch.tv/kraken/user';
+  const options = {
+    url: url,
+    method: 'GET',
+    headers: {
+      'Accept': 'application/vnd.twitchtv.v5+json',
+      'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
+      'Authorization': req.headers.authorization
+    }
+  };
+
+  request(options, function(err, res, body) {
+    let json = JSON.parse(body);
+    console.log(json);
+  });
 
   //END TESTING YO
 
