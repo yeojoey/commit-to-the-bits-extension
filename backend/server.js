@@ -822,6 +822,7 @@ function getDJHandler(req)
   userStates[dj].inDJBucket = false;
 
   //TESTING YO
+  console.log(req.headers.authorization);
 
   const url = 'https://api.twitch.tv/kraken/user';
   const options = {
@@ -830,7 +831,7 @@ function getDJHandler(req)
     headers: {
       'Accept': 'application/vnd.twitchtv.v5+json',
       'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
-      'Authorization': req.headers.authorization
+      'Authorization': 'OAuth ' + req.headers.authorization
     }
   };
 
