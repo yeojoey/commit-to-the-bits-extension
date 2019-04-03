@@ -782,7 +782,7 @@ function getInDJBucketHandler(req)
   Muse.getInDJBucket(opaqueUserId);
 
   userStates[opaqueUserId].inDJBucket = true;
-
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
