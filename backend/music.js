@@ -40,10 +40,17 @@ const Muse = class Music
     var prunedList = moods.slice();
 
     //Make sure we don't provide options that are already in the queue
+    console.log("THE QUEUE");
+    console.log(this.queue);
     for(var i = 0; i < prunedList.length; i++)
     {
+      console.log("CHECKING IF IN QUEUE");
+      console.log(prunedList[i]);
       if(this.queue.includes(prunedList[i]))
+      {
+        console.log("IT IS");
         prunedList.splice(i, 1);
+      }
     }
 
     for(var i = 0; i < 3; i++)
