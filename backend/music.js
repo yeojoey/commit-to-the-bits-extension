@@ -1,5 +1,6 @@
-const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
+const request = require('request');
 
+const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
 const Muse = class Music
 {
   constructor()
