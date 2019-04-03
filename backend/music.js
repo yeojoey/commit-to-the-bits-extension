@@ -48,7 +48,10 @@ const Muse = class Music
 
     for(var i = 0; i < 3; i++)
     {
+      console.log("Possible List of Choices");
+      console.log(prunedList);
       let index = this.randomInt(prunedList.length);
+      console.log("random number: "+index);
       toReturn.push(prunedList[index]);
       prunedList = prunedList.splice(index, 1);
     }
