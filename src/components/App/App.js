@@ -328,6 +328,7 @@ class App extends Component {
                     currentDJ={this.state.dj}
                     isDJ={this.state.isDJ}
                     options={this.state.musicOptions}
+                    canSelectSong={this.state.canSelectSong}
       />)
   }
 
