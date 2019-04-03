@@ -35,7 +35,7 @@ const Muse = class Music
     this.canSelectSong = true;
   }
 
-  getDJ()
+  async getDJ()
   {
     let rand = this.randomInt(this.djBucket.length);
     let id = this.djBucket[rand];
@@ -43,7 +43,7 @@ const Muse = class Music
     this.removeFromDJBucket(id);
     this.clearQueue();
 
-    this.dj = this.convertUidToUsername(id);
+    this.dj = await this.convertUidToUsername(id);
     console.log("DJNAME : "+this.dj);
     return {
       dj: this.dj,
