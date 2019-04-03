@@ -45,7 +45,8 @@ const Muse = class Music
 
     let promise = await this.convertUidToUsername(id);
     this.dj = promise.display_name;
-    console.log("DJNAME : "+this.dj);
+    console.log("PROMISE");
+    console.log(promise);
     return {
       dj: this.dj,
       id: opID,
@@ -132,7 +133,6 @@ const Muse = class Music
 
     const name = await request(options, function(err, res, body) {
       let json = JSON.parse(body);
-      console.log("IN ASYNC : " + json.display_name);
       return json.display_name;
     });
     return name;
