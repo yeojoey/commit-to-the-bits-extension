@@ -80,8 +80,8 @@ class Config extends Component {
   renderMusic () {
     return (
       <React.Fragment><Row><Col>
-      <div><h5>Current DJ: {this.props.currentDJ}</h5><br />
-      <Button onClick={() => this.handleGetNextDJ()}>Get Next DJ</Button></div>
+      <div><h5>Current DJ: {this.props.currentDJ}</h5></div>
+      <div><Button onClick={() => this.handleGetNextDJ()}>Get Next DJ</Button></div>
       </Col>
       <Col>
       <h5>Selected songs</h5>

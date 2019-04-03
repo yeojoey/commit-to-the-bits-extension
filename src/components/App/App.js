@@ -280,7 +280,6 @@ class App extends Component {
                     handleEnd={this.handleEndSubmit}
                     handleClear={this.handleClear}
                     handleDequeue={this.handleDequeue}
-                    handleChangeGame={this.handleChangeGame}
                     handleGetGuestStar={this.handleGetGuestStar}
                     guestStar={this.state.guestStar}
                     currentDJ={this.state.dj}
