@@ -40,11 +40,12 @@ class Config extends Component {
   }
 
   handleChangeGame = async (game) => {
-    const response = await fetch ("/api/changeTo" + game, {
+    const response = await fetch ("/api/changeGame, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.props.authToken
+        "authorization": this.props.authToken,
+        "game": game
       }
     });
     const body = await response.json();
@@ -78,15 +79,9 @@ class Config extends Component {
 
   renderMusic () {
     return (
-      <Row>
-      <Col>
+      <React.Fragment><Row><Col>
       <div><h5>Current DJ: {this.props.currentDJ}</h5><br /><br />
       <Button onClick={() => this.handleGetNextDJ()}>Get Next DJ</Button></div>
-      <div>
-        <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
-      </div>
       </Col>
       <Col>
       <h5>Selected songs</h5>
@@ -97,6 +92,13 @@ class Config extends Component {
       </ol>
       </Col>
       </Row>
+      <Row>
+      <div>
+        <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
+      </div>
+      </Row></React.Fragment>
     )
   }
 
