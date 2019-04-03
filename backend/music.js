@@ -117,7 +117,7 @@ const Muse = class Music
     return Math.floor(Math.random() * Math.floor(max));
   }
 
-  convertUidToUsername(uid)
+  async convertUidToUsername(uid)
   {
     const url = 'https://api.twitch.tv/kraken/users/'+uid;
     const options = {
@@ -129,7 +129,7 @@ const Muse = class Music
       }
     };
 
-    request(options, function(err, res, body) {
+     await request(options, function(err, res, body) {
       let json = JSON.parse(body);
       console.log("IN ASYNC : " + json.display_name);
       return json.display_name;
