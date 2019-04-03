@@ -12,7 +12,8 @@ const Muse = class Music
 
   getInDJBucket(uID)
   {
-    this.djBucket.push(uID);
+    if(!this.djBucket.includes(uID))
+      this.djBucket.push(uID);
     console.log(this.djBucket);
   }
 
@@ -94,6 +95,7 @@ const Muse = class Music
     this.queue.push(mood);
     if(this.queue.length >= 3)
       this.canSelectSong = false;
+    console.log("CAN SELECT SONG: "+this.canSelectSong);
     return this.queue;
   }
 
