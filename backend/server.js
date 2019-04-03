@@ -336,13 +336,13 @@ function verifyAndDecode(header) {
   //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
-async function botStateQueryHandler(req)
+function botStateQueryHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  await verifyUserExists(payload);
+  verifyUserExists(opaqueUserId);
 
   const state = getState(opaqueUserId);
   return state;
@@ -354,24 +354,26 @@ function getFreezeTagPromptHandler(req) {
 
 //UserState Handling
 
-async function verifyUserExists(payload)
+function verifyUserExists(opaqueUserId)
 {
-  const opID = payload.opaque_user_id;
-  if(!(userStates.hasOwnProperty(opID)))
+  if(!(userStates.hasOwnProperty(opaqueUserId)))
   {
-    let uID = payload.user_id;
-    let dName = await convertUidToUsername(uID);
-
-    userStates[opID] = {
+    userStates[opaqueUserId] = {
       votedBefore: false,
       inQueue: false,
       discordTag: "",
       queuePosition: -1,
       isDJ: false,
       inDJBucket: false,
-      displayName: dName,
+      displayName: "",
     }
+    console.log(userStates);
   }
+}
+
+function setDisplayName(name, opaqueUserId)
+{
+  userStates[opaqueUserId].displayName = dName;
 }
 
 function clearUserVotes()
@@ -385,8 +387,6 @@ function clearUserVotes()
 function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
-  const djID = musicState.dj;
-  dj = userStates[djID].displayName;
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
@@ -403,7 +403,7 @@ function getState(userId) {
 
     inDJBucket: userStates[userId].inDJBucket,
     isDJ: userStates[userId].isDJ,
-    dj: dj,
+    dj: musicState.dj,
     musicQueue: musicState.musicQueue,
     musicOptions: musicState.musicOptions,
     canSelectSong: musicState.canSelectSong,
@@ -789,7 +789,7 @@ function getInDJBucketHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //verifyUserExists(opaqueUserId);
-  Muse.getInDJBucket(opaqueUserId);
+  Muse.getInDJBucket(payload.user_id, opaqueUserId);
 
   console.log(payload);
 
@@ -814,15 +814,16 @@ function clearDJBucketHandler(req)
   attemptStateBroadcast(channelId);
 }
 
-function getDJHandler(req)
+async function getDJHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get DJ and Set options accordingly
-  const djID = Muse.getDJ();
-  dj = userStates[djID].displayName;
+  djObj = await Muse.getDJ();
+  dj = djObj.dj;
+  uID = djObj.id;
   Muse.getOptions();
 
   //Make sure this userID exists. (This should never be a problem, but hey who knows)
@@ -831,8 +832,11 @@ function getDJHandler(req)
   dropOtherDJ();
 
   //Update the DJ's userstate
-  userStates[djID].isDJ = true;
-  userStates[djID].inDJBucket = false;
+  console.log(userStates);
+  console.log(djObj);
+  userStates[uID].isDJ = true;
+  userStates[uID].inDJBucket = false;
+  userStates[uID].displayName = dName;
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
@@ -921,10 +925,8 @@ function sendStateBroadcast(channelId) {
 
   const state = Voter.getState();
   const museState = Muse.getState();
-  const djID = museState.dj;
-  dj = userStates[djID].displayName;
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: dj, canSelectSong: museState.canSelectSong }) ;
+  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',

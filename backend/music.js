@@ -1,26 +1,32 @@
-const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
+const request = require('request');
 
+const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
 const Muse = class Music
 {
   constructor()
   {
     this.djBucket = [];
+    this.opaqueBucket = [];
     this.dj = "";
     this.queue = [];
     this.canSelectSong = true;
     this.options = [];
   }
 
-  getInDJBucket(uID)
+  getInDJBucket(uID, opID)
   {
     if(!this.djBucket.includes(uID))
+    {
       this.djBucket.push(uID);
+      this.opaqueBucket.push(opID);
+    }
     console.log(this.djBucket);
   }
 
   clearDJBucket()
   {
     this.djBucket = [];
+    this.opaqueBucket = [];
   }
 
   clearQueue()
@@ -29,13 +35,20 @@ const Muse = class Music
     this.canSelectSong = true;
   }
 
-  getDJ()
+  async getDJ()
   {
     let rand = this.randomInt(this.djBucket.length);
-    this.dj = this.djBucket[rand];
-    this.removeFromDJBucket(this.dj);
+    let id = this.djBucket[rand];
+    let opID = this.opaqueBucket[rand];
+    this.removeFromDJBucket(id);
     this.clearQueue();
-    return this.dj;
+
+    this.dj = await this.convertUidToUsername(id);
+    console.log("OPID : "+opID);
+    return {
+      dj: this.dj,
+      id: opID,
+    };
   }
 
   getOptions()
@@ -85,6 +98,7 @@ const Muse = class Music
       if(this.djBucket[i] == uID)
       {
         this.djBucket.splice(i, 1);
+        this.opaqueBucket.splice(i, 1);
       }
     }
   }
@@ -101,6 +115,24 @@ const Muse = class Music
   randomInt(max)
   {
     return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  convertUidToUsername(uid)
+  {
+    const url = 'https://api.twitch.tv/kraken/users/'+uid;
+    const options = {
+      url: url,
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.twitchtv.v5+json',
+        'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
+      }
+    };
+
+    request(options, function(err, res, body) {
+      let json = JSON.parse(body);
+      return json.display_name;
+    });
   }
 }
 
