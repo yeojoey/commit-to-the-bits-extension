@@ -7,6 +7,7 @@ const Muse = class Music
     this.djBucket = [];
     this.dj = "";
     this.queue = [];
+    this.canSelectSong = true;
   }
 
   getInDJBucket(uID)
@@ -23,6 +24,7 @@ const Muse = class Music
   clearQueue()
   {
     this.queue = [];
+    this.canSelectSong = true;
   }
 
   getDJ()
@@ -38,20 +40,15 @@ const Muse = class Music
   {
     const toReturn = [];
     var prunedList = moods.slice();
-    console.log("Pruned List");
-    console.log(prunedList);
 
     //Make sure we don't provide options that are already in the queue
-    console.log("THE QUEUE");
-    console.log(this.queue);
+    var len = prunedList.length;
     for(var i = 0; i < prunedList.length; i++)
     {
-      console.log("CHECKING IF IN QUEUE");
-      console.log(prunedList[i]);
       if(this.queue.includes(prunedList[i]))
       {
-        console.log("IT IS");
         prunedList.splice(i, 1);
+        i--;
       }
     }
 
@@ -76,7 +73,8 @@ const Muse = class Music
     return {
       musicQueue: this.queue,
       musicOptions: opt,
-      dj: this.dj
+      dj: this.dj,
+      canSelectSong: this.canSelectSong,
     }
   }
 
@@ -84,14 +82,9 @@ const Muse = class Music
   {
     for(var i = 0; i < this.djBucket.length; i++)
     {
-      console.log("checking bucket for uid " + uID);
       if(this.djBucket[i] == uID)
       {
-        console.log("Before Removal");
-        console.log(this.djBucket);
         this.djBucket.splice(i, 1);
-        console.log("After Removal");
-        console.log(this.djBucket);
       }
     }
   }
@@ -99,6 +92,8 @@ const Muse = class Music
   addToQueue(mood)
   {
     this.queue.push(mood);
+    if(this.queue.length >= 3)
+      this.canSelectSong = false;
     return this.queue;
   }
 
