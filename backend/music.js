@@ -38,6 +38,8 @@ const Muse = class Music
   {
     const toReturn = [];
     var prunedList = moods.slice();
+    console.log("Pruned List");
+    console.log(prunedList);
 
     //Make sure we don't provide options that are already in the queue
     console.log("THE QUEUE");
