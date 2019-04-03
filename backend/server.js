@@ -819,7 +819,8 @@ function getDJHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   //Get DJ and Set options accordingly
-  dj = userStates[Muse.getDJ()].displayName;
+  const djID = Muse.getDJ();
+  dj = userStates[djID].displayName;
   Muse.getOptions();
 
   //Make sure this userID exists. (This should never be a problem, but hey who knows)
@@ -828,29 +829,8 @@ function getDJHandler(req)
   dropOtherDJ();
 
   //Update the DJ's userstate
-  userStates[dj].isDJ = true;
-  userStates[dj].inDJBucket = false;
-
-  //TESTING YO
-  console.log(payload);
-
-  const url = 'https://api.twitch.tv/kraken/user';
-  const options = {
-    url: url,
-    method: 'GET',
-    headers: {
-      'Accept': 'application/vnd.twitchtv.v5+json',
-      'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
-      'Authorization': 'OAuth ' + req.headers.authorization
-    }
-  };
-
-  request(options, function(err, res, body) {
-    let json = JSON.parse(body);
-    console.log(json);
-  });
-
-  //END TESTING YO
+  userStates[djID].isDJ = true;
+  userStates[djID].inDJBucket = false;
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
