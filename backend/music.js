@@ -53,7 +53,7 @@ const Muse = class Music
       let index = this.randomInt(prunedList.length);
       console.log("random number: "+index);
       toReturn.push(prunedList[index]);
-      prunedList = prunedList.splice(index, 1);
+      prunedList.splice(index, 1);
     }
 
     return toReturn;
