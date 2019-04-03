@@ -817,6 +817,7 @@ async function getDJHandler(req)
 
   //Get DJ and Set options accordingly
   djObj = await Muse.getDJ();
+  console.log(djObj);
   dj = djObj.dj;
   uID = djObj.id;
   Muse.getOptions();
