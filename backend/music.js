@@ -43,7 +43,7 @@ const Muse = class Music
     console.log(prunedList.length);
 
     //Make sure we don't provide options that are already in the queue
-    for(var i = 0; i < prunedList.length; i++)
+    for(var i = 0; i < this.moods.length; i++)
     {
       console.log("CHECKING IF IN QUEUE");
       console.log(prunedList[i]+" of "+prunedList.length);
