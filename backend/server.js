@@ -367,6 +367,7 @@ function verifyUserExists(opaqueUserId)
       inDJBucket: false,
       displayName: "",
     }
+    console.log(userStates);
   }
 }
 
@@ -831,6 +832,8 @@ function getDJHandler(req)
   dropOtherDJ();
 
   //Update the DJ's userstate
+  console.log(userStates);
+  console.log(uID);
   userStates[uID].isDJ = true;
   userStates[uID].inDJBucket = false;
   userStates[uID].displayName = dName;
