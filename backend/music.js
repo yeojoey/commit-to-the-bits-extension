@@ -40,20 +40,13 @@ const Muse = class Music
   {
     const toReturn = [];
     var prunedList = moods.slice();
-    console.log("Pruned List");
-    console.log(prunedList);
-    console.log(prunedList.length);
 
     //Make sure we don't provide options that are already in the queue
     var len = prunedList.length;
     for(var i = 0; i < prunedList.length; i++)
     {
-      console.log("CHECKING IF IN QUEUE");
-      console.log(prunedList[i]+" of "+prunedList.length);
-      console.log(i);
       if(this.queue.includes(prunedList[i]))
       {
-        console.log("Thing found");
         prunedList.splice(i, 1);
         i--;
       }
@@ -89,14 +82,9 @@ const Muse = class Music
   {
     for(var i = 0; i < this.djBucket.length; i++)
     {
-      console.log("checking bucket for uid " + uID);
       if(this.djBucket[i] == uID)
       {
-        console.log("Before Removal");
-        console.log(this.djBucket);
         this.djBucket.splice(i, 1);
-        console.log("After Removal");
-        console.log(this.djBucket);
       }
     }
   }
