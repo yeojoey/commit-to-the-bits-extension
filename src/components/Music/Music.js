@@ -40,8 +40,8 @@ class Music extends Component {
     return (
       <div>
       {this.renderCurrentDJ()}
-      <h5>You are not in line.</h5><br />
-      <Button onClick = {() => this.joinQueue() }>Join Queue</Button>
+      <h5>If you want to be selected as a DJ, click the button below.</h5>
+      <Button onClick = {() => this.joinQueue() }>Pick me!</Button>
       </div>
     )
   }
@@ -58,7 +58,7 @@ class Music extends Component {
     return (
       <div>
       {this.renderCurrentDJ()}
-      <h4>You are in line.</h4>
+      <h5>You are in line to be the DJ.</h5>
       </div>
     );
   }
