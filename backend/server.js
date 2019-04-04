@@ -815,23 +815,26 @@ async function getDJHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  //Get DJ and Set options accordingly
-  djObj = await Muse.getDJ();
-  console.log("In outer ASYNC : "+djObj);
-  dj = djObj.dj;
-  uID = djObj.id;
-  Muse.getOptions();
+  if(Muse.getQueue().Length > 0)
+  {
+    //Get DJ and Set options accordingly
+    djObj = await Muse.getDJ();
+    console.log("In outer ASYNC : "+djObj);
+    dj = djObj.dj;
+    uID = djObj.id;
+    Muse.getOptions();
 
-  //Make sure this userID exists. (This should never be a problem, but hey who knows)
-  //verifyUserExists(dj);
-  //Make everyone else not a DJ.
-  dropOtherDJ();
+    //Make sure this userID exists. (This should never be a problem, but hey who knows)
+    //verifyUserExists(dj);
+    //Make everyone else not a DJ.
+    dropOtherDJ();
 
-  //Update the DJ's userstate
-  console.log(djObj);
-  userStates[uID].isDJ = true;
-  userStates[uID].inDJBucket = false;
-  userStates[uID].displayName = dj;
+    //Update the DJ's userstate
+    console.log(djObj);
+    userStates[uID].isDJ = true;
+    userStates[uID].inDJBucket = false;
+    userStates[uID].displayName = dj;
+  }
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
