@@ -815,8 +815,8 @@ async function getDJHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
   const blah = Muse.getDJBucket();
-  const len = blah.Length;
-  console.log(Muse.getDJBucket().Length);
+  const len = blah.length;
+  console.log(Muse.getDJBucket().length);
   console.log(len);
   if(Muse.getDJBucket().Length > 0)
   {
