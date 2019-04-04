@@ -84,6 +84,11 @@ const Muse = class Music
     return this.queue;
   }
 
+  getDJBucket()
+  {
+    return this.djBucket;
+  }
+
   getState()
   {
     return {
