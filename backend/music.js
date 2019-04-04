@@ -1,6 +1,6 @@
 const request = require('request-promise');
 
-const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
+const moods = ["Action", "Adventure", "Choral", "Comedy", "Dance", "Dramatic", "Gregorian Chant", "Groovy", "Fancy", "Futuristic", "Heavy Metal", "Mysterious", "Old-Timey", "Romance", "Sensual", "Smooth Jazz", "Spooky", "Suspense", "Sad", "Wild West"];
 const Muse = class Music
 {
   constructor()
