@@ -20,7 +20,6 @@ const Muse = class Music
       this.djBucket.push(uID);
       this.opaqueBucket.push(opID);
     }
-    console.log(this.djBucket);
   }
 
   clearDJBucket()
@@ -46,8 +45,6 @@ const Muse = class Music
     let promise = await this.convertUidToUsername(id);
     promise = JSON.parse(promise);
     this.dj = promise.display_name;
-    console.log("DJ");
-    console.log(this.dj);
     return {
       dj: this.dj,
       id: opID,
@@ -116,7 +113,6 @@ const Muse = class Music
     this.queue.push(mood);
     if(this.queue.length >= 3)
       this.canSelectSong = false;
-    console.log("CAN SELECT SONG: "+this.canSelectSong);
     return this.queue;
   }
 
