@@ -30,13 +30,11 @@ class FreezeTag extends Component {
   }
 
   handleVote = async (vote) => {
-      const userID = this.Authentication.getOpaqueId();
       const response = await fetch ("/api/vote", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "authorization": this.props.authToken,
-          "userID": userID,
           "vote": vote
         },
       });
