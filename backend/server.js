@@ -479,7 +479,7 @@ function botVoteHandler(req)
   //Update User State
   //verifyUserExists(opaqueUserId);
   userStates[opaqueUserId].votedBefore = true;
-
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
