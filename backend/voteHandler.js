@@ -292,7 +292,7 @@ const Vote = class VoteHandler
     if(obj != 0)
       toReturn.push(obj + " (Objective)")
     if(wh != 0)
-      toReturn.push(wh + " (Where)")
+      toReturn.push(wh + " (Location)")
 
     return toReturn
   }
