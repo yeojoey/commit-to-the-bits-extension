@@ -1,6 +1,6 @@
-const request = require('request');
+const request = require('request-promise');
 
-const moods = ["Action", "Heavy Metal", "Marriage", "Romance", "Spooky", "Very Sad", "Wild West"];
+const moods = ["Action", "Adventure", "Choral", "Comedy", "Dance", "Dramatic", "Gregorian Chant", "Groovy", "Fancy", "Futuristic", "Heavy Metal", "Mysterious", "Old-Timey", "Romance", "Sensual", "Smooth Jazz", "Spooky", "Suspense", "Sad", "Wild West"];
 const Muse = class Music
 {
   constructor()
@@ -20,7 +20,6 @@ const Muse = class Music
       this.djBucket.push(uID);
       this.opaqueBucket.push(opID);
     }
-    console.log(this.djBucket);
   }
 
   clearDJBucket()
@@ -43,8 +42,9 @@ const Muse = class Music
     this.removeFromDJBucket(id);
     this.clearQueue();
 
-    this.dj = await this.convertUidToUsername(id);
-    console.log("OPID : "+opID);
+    let promise = await this.convertUidToUsername(id);
+    promise = JSON.parse(promise);
+    this.dj = promise.display_name;
     return {
       dj: this.dj,
       id: opID,
@@ -81,6 +81,11 @@ const Muse = class Music
     return this.queue;
   }
 
+  getDJBucket()
+  {
+    return this.djBucket;
+  }
+
   getState()
   {
     return {
@@ -108,7 +113,6 @@ const Muse = class Music
     this.queue.push(mood);
     if(this.queue.length >= 3)
       this.canSelectSong = false;
-    console.log("CAN SELECT SONG: "+this.canSelectSong);
     return this.queue;
   }
 
@@ -117,7 +121,7 @@ const Muse = class Music
     return Math.floor(Math.random() * Math.floor(max));
   }
 
-  convertUidToUsername(uid)
+  async convertUidToUsername(uid)
   {
     const url = 'https://api.twitch.tv/kraken/users/'+uid;
     const options = {
@@ -129,10 +133,11 @@ const Muse = class Music
       }
     };
 
-    request(options, function(err, res, body) {
+    const name = await request(options, function(err, res, body) {
       let json = JSON.parse(body);
       return json.display_name;
     });
+    return name;
   }
 }
 

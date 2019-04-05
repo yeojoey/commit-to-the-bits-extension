@@ -371,11 +371,6 @@ function verifyUserExists(opaqueUserId)
   }
 }
 
-function setDisplayName(name, opaqueUserId)
-{
-  userStates[opaqueUserId].displayName = dName;
-}
-
 function clearUserVotes()
 {
   for(var key in userStates)
@@ -819,24 +814,27 @@ async function getDJHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+  
+  if(Muse.getDJBucket().length > 0)
+  {
+    //Get DJ and Set options accordingly
+    djObj = await Muse.getDJ();
+    console.log("In outer ASYNC : "+djObj);
+    dj = djObj.dj;
+    uID = djObj.id;
+    Muse.getOptions();
 
-  //Get DJ and Set options accordingly
-  djObj = await Muse.getDJ();
-  dj = djObj.dj;
-  uID = djObj.id;
-  Muse.getOptions();
+    //Make sure this userID exists. (This should never be a problem, but hey who knows)
+    //verifyUserExists(dj);
+    //Make everyone else not a DJ.
+    dropOtherDJ();
 
-  //Make sure this userID exists. (This should never be a problem, but hey who knows)
-  //verifyUserExists(dj);
-  //Make everyone else not a DJ.
-  dropOtherDJ();
-
-  //Update the DJ's userstate
-  console.log(userStates);
-  console.log(djObj);
-  userStates[uID].isDJ = true;
-  userStates[uID].inDJBucket = false;
-  userStates[uID].displayName = dName;
+    //Update the DJ's userstate
+    console.log(djObj);
+    userStates[uID].isDJ = true;
+    userStates[uID].inDJBucket = false;
+    userStates[uID].displayName = dj;
+  }
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
