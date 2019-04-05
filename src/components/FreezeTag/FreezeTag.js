@@ -103,7 +103,7 @@ class FreezeTag extends Component {
       <Col>
         <div>
           <h6>Current Prompt:</h6>
-          <h5>{this.props.finalWord}</h5>
+          <h5>{this.props.finalWord === "" ? "No prompt yet" : this.props.finalWord}</h5>
         </div>
         <div>
           <h6>Make a submission</h6>
