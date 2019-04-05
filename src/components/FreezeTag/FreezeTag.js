@@ -134,7 +134,7 @@ class FreezeTag extends Component {
               title={this.state.selectedCategory}>
               {this.renderDropdownItems()}
             </DropdownButton>
-            <FormControl placeholder="Suggestion" value={this.state.suggestion} onChange={this.handleChange}/>
+            <FormControl placeholder={this.state.placeholder} value={this.state.suggestion} onChange={this.handleChange}/>
             <Button as={InputGroup.Append} onClick={() => this.handleSubmit()}>Submit</Button>
           </InputGroup>
           {this.renderVoting()}
