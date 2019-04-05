@@ -17,7 +17,8 @@ class FreezeTag extends Component {
     super(props)
     this.state = {
       selectedCategory: "Character",
-      suggestion: ""
+      suggestion: "",
+      placeholder: "e.g. a teacher"
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleCategoryChange = this.handleCategoryChange.bind(this);
@@ -45,7 +46,28 @@ class FreezeTag extends Component {
 
   handleCategoryChange(category) {
     console.log("changing to "+category);
-    this.setState({selectedCategory: category});
+    var placeholder = "";
+    switch (category) {
+
+      case "Relationship":
+      placeholder = "e.g. best friends"
+      break;
+
+      case "Objective":
+      placeholder = "e.g. to make money"
+      break;
+
+      case "Location":
+      placeholder = "e.g. hospital"
+      break;
+
+      default:
+      case "Character":
+        placeholder = "e.g. teacher";
+        break;
+
+    }
+    this.setState({selectedCategory: category, suggestion: "", placeholder: placeholder});
   }
 
   handleSubmit = async () => {
@@ -112,7 +134,7 @@ class FreezeTag extends Component {
               title={this.state.selectedCategory}>
               {this.renderDropdownItems()}
             </DropdownButton>
-            <FormControl placeholder="Suggestion" value={this.state.suggestion} onChange={this.handleChange}/>
+            <FormControl placeholder={this.state.placeholder} value={this.state.suggestion} onChange={this.handleChange}/>
             <Button as={InputGroup.Append} onClick={() => this.handleSubmit()}>Submit</Button>
           </InputGroup>
           {this.renderVoting()}
