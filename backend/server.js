@@ -480,13 +480,7 @@ function botVoteHandler(req)
   //verifyUserExists(opaqueUserId);
   userStates[opaqueUserId].votedBefore = true;
 
-  const botState = Voter.getState();
-  return {
-    isVoting: botState.isVoting,
-    votes: botState.votes,
-    options: botState.options,
-    finalWord: botState.finalWord,
-  };
+  return getState(opaqueUserId);
 }
 
 function captainQueryHandler(req)
@@ -814,7 +808,7 @@ async function getDJHandler(req)
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
-  
+
   if(Muse.getDJBucket().length > 0)
   {
     //Get DJ and Set options accordingly
