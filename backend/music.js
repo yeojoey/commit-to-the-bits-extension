@@ -108,6 +108,21 @@ const Muse = class Music
     }
   }
 
+  removeFromQueue(index)
+  {
+    this.queue.splice(index, 1);
+    this.canSelectSong = true;
+    return this.queue;
+  }
+
+  swapElements(el1, el2)
+  {
+    let temp = this.queue[el1];
+    this.queue[el1] = this.queue[el2];
+    this.queue[el2] = temp;
+    return this.queue;
+  }
+
   addToQueue(mood)
   {
     this.queue.push(mood);
