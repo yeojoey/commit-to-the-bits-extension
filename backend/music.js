@@ -144,7 +144,7 @@ const Muse = class Music
       method: 'GET',
       headers: {
         'Accept': 'application/vnd.twitchtv.v5+json',
-        'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
+        'Client-ID': process.env.ENV_CLIENT_ID,
       }
     };
 

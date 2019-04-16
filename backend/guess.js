@@ -1,17 +1,20 @@
 require('dotenv').config();
 
+//Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
 const words = {
-  noun: "",
-  verb: "",
-  location: ""
+  noun: {},
+  verb: {},
+  location: {}
 }
 
+//Stores the username of the person who correctly guessed the noun, verb, or loaction.
 const guessedBy = {
   noun: "",
   verb: "",
   location: ""
 }
 
+//These objects store more objects that contain a suggested word and the user who submitted the word. There are 'previous' versions to allow us to avoid repeating words.
 var nouns = [];
 var verbs = [];
 var locations = [];
@@ -24,6 +27,24 @@ const Guesser = class Guess
   constructor()
   {
 
+  }
+
+  async addWord(word, uid, type)
+  {
+    let promise = await this.convertUidToUsername(id);
+    promise = JSON.parse(promise);
+    var user = promise.display_name;
+
+    if(type == "noun")
+      addNoun(word, user);
+    else if(type == "verb")
+    {
+      addVerb(word, user);
+    }
+    else if(type == "location")
+    {
+      addLocation(word, user);
+    }
   }
 
   addNoun(no, user)
@@ -61,6 +82,29 @@ const Guesser = class Guess
       verb: "",
       location: ""
     };
+  }
+
+  getState()
+  {
+    var state = {
+      isGuessing: false,
+      currentNoun: words.noun.word,
+      currentVerb: words.verb.word,
+      currentLocation: words.location.word,
+      guessedNoun: guessedBy.noun,
+      guessedVerb: guessedBy.verb,
+      guessedLocation: guessedBy.location
+    }
+  }
+
+  getWord(type)
+  {
+    if(type == "noun")
+      return getNoun();
+    else if(type == "verb")
+      return getVerb();
+    else if(type == "location")
+      return getLocation();
   }
 
   getNoun()
@@ -123,8 +167,12 @@ const Guesser = class Guess
     return word.word;
   }
 
-  guess(word, user)
+  async guess(word, uid)
   {
+    let promise = await this.convertUidToUsername(id);
+    promise = JSON.parse(promise);
+    var user = promise.display_name;
+
     if(guessedBy.noun == "")
       guessNoun(word, user);
     if(guessedBy.verb == "")
@@ -170,6 +218,30 @@ const Guesser = class Guess
   {
     return Math.floor(Math.random() * max);
   }
+
+  async convertUidToUsername(uid)
+  {
+    const url = 'https://api.twitch.tv/kraken/users/'+uid;
+    const options = {
+      url: url,
+      method: 'GET',
+      headers: {
+        'Accept': 'application/vnd.twitchtv.v5+json',
+        'Client-ID': process.env.ENV_CLIENT_ID,
+      }
+    };
+
+    const name = await request(options, function(err, res, body) {
+      let json = JSON.parse(body);
+      return json.display_name;
+    });
+    return name;
+  }
+
+  //Use
+  // let promise = await this.convertUidToUsername(id);
+  // promise = JSON.parse(promise);
+  // this.dj = promise.display_name;
 }
 
 module.exports = Guesser;
