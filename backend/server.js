@@ -949,6 +949,8 @@ function submitWordHandler(req)
   const type = req.headers.type;
   Gus.addWord(word, uid, type);
 
+  //Broadcast to everyone
+  attemptStateBroadcast(channelId);
   return getState(opaqueUserId);
 }
 
