@@ -349,6 +349,7 @@ class App extends Component {
             <React.Fragment>
               <div className="App">
                 <Container fluid={true}>
+                  {this.renderHeader()}
                   {this.renderHomepage()}
                 </Container>
               </div>
