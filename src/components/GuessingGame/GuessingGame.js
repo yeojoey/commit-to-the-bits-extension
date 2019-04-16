@@ -95,6 +95,7 @@ class GuessingGame extends Component {
             <FormControl placeholder="e.g. fisherman" wordType="noun" value={this.state.nounSubmission} onChange={this.handleChange}/>
             <Button as={InputGroup.Append} wordType="noun" onClick={() => this.submitNoun()} >Submit</Button>
           </InputGroup>
+          <h6>Guessed by: charlieparke</h6>
           </Col>
           <Col>
           <h5>Verb</h5>
@@ -102,6 +103,7 @@ class GuessingGame extends Component {
             <FormControl placeholder="e.g. driving" wordType="verb" value={this.state.verbSubmission} onChange={this.handleChange}/>
             <Button as={InputGroup.Append} wordType="verb" onClick={() => this.submitVerb()}>Submit</Button>
           </InputGroup>
+          <h6>Guessed by: charlieparke</h6>
           </Col>
           <Col>
           <h5>Location</h5>
@@ -109,6 +111,7 @@ class GuessingGame extends Component {
             <FormControl placeholder="e.g. classroom" wordType="location"  value={this.state.locationSubmission} onChange={this.handleChange}/>
             <Button as={InputGroup.Append} wordType="location" onClick={() => this.submitLocation()}>Submit</Button>
           </InputGroup>
+          <h6>Guessed by: charlieparke</h6>
           </Col>
         </Row>
       </React.Fragment>
