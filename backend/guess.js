@@ -56,6 +56,7 @@ const Guesser = class Guess
 
   addNoun(no, user)
   {
+    console.log(nouns);
     nouns[nouns.length] = {
       word: no,
       user: user,
@@ -64,6 +65,7 @@ const Guesser = class Guess
 
   addVerb(ve, user)
   {
+    console.log(verbs);
     verbs[verbs.length] = {
       word: ve,
       user: user,
@@ -72,6 +74,7 @@ const Guesser = class Guess
 
   addLocation(loc, user)
   {
+    console.log(locations);
     locations[locations.length] = {
       word: loc,
       user: user,
@@ -113,6 +116,7 @@ const Guesser = class Guess
 
   getNoun()
   {
+    console.log("Getting a noun.");
     let rand = this.getRandomInt(nouns.length);
     let word = nouns[rand];
 
@@ -129,11 +133,13 @@ const Guesser = class Guess
 
     words.noun = word;
     answers[0].submitter = word.user;
+    console.log("Got noun: "+word.word);
     return word.word;
   }
 
   getVerb()
   {
+    console.log("Getting a verb.");
     let rand = this.getRandomInt(verbs.length);
     let word = verbs[rand];
 
@@ -150,11 +156,13 @@ const Guesser = class Guess
 
     words.verb = word;
     answers[1].submitter = word.user;
+    console.log("Got verb: "+word.word);
     return word.word;
   }
 
   getLocation()
   {
+    console.log("Getting a location.");
     let rand = this.getRandomInt(locations.length);
     let word = locations[rand];
 
@@ -171,6 +179,7 @@ const Guesser = class Guess
 
     words.location = word;
     answers[2].submitter = word.user;
+    console.log("Got location: "+word.word);
     return word.word;
   }
 
