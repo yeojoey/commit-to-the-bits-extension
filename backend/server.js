@@ -454,6 +454,7 @@ function getState(userId) {
 
     guessingGame: {
       phase: guessState.phase,
+      words: guessState.words,
       answers: guessState.answers
     }
   };
