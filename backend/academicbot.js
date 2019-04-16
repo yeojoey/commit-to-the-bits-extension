@@ -201,6 +201,11 @@ const ABot = class AcademicBot
     }
   }
 
+  getGuessing()
+  {
+    return this.guessing;
+  }
+
   clearRestrictions()
   {
     this.restrictions = [];

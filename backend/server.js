@@ -33,6 +33,7 @@ const AcademicBot = require('./academicbot.js');
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler');
 const Music = require('./music.js');
+const Guess = require('./guess.js');
 const formidable = require('formidable');
 
 // The developer rig uses self-signed certificates.  Node doesn't accept them
@@ -117,6 +118,9 @@ const Voter = new VoteHandler();
 AcaBot.setVoter(Voter);
 //Music object to handle DJ Game
 const Muse = new Music();
+//Guess object to handle guessing game
+const Gus = new Guess();
+AcaBot.setGuesser(Gus);
 
 //Map of User ID's to User States
 const userStates = [];
@@ -131,6 +135,10 @@ var currentGame = "FreezeTag";
 
   await server.register(Inert);
 
+  //********************
+  //***GENERAL ROUTES***
+  //********************
+
   // Serve app
   server.route({
     method: "GET",
@@ -142,33 +150,6 @@ var currentGame = "FreezeTag";
         index: true
       }
     }
-  });
-
-  // Config: clear database
-  server.route ({
-    method: 'POST',
-    path: "/api/clear",
-    handler: botClearHandler
-  });
-
-  // Config: start Voting
-  server.route ({
-    method: 'POST',
-    path: "/api/startVote",
-    handler: botStartVoteHandler
-  });
-
-  // Config: end voting
-  server.route ({
-    method: 'POST',
-    path: "/api/endVote",
-    handler: botEndVoteHandler
-  });
-
-  server.route ({
-    method: 'POST',
-    path: '/api/vote',
-    handler: botVoteHandler
   });
 
   server.route ({
@@ -201,16 +182,69 @@ var currentGame = "FreezeTag";
     handler: changeToMusicHandler
   })
 
+  //***********************
+  //***FREEZE TAG ROUTES***
+  //***********************
+
+  // Config: clear database
   server.route ({
-    method: "POST",
-    path: "/api/enqueueAudienceMember",
-    handler: enqueueAudienceMemberHandler
-  })
+    method: 'POST',
+    path: "/api/clear",
+    handler: botClearHandler
+  });
+
+  // Config: start Voting
+  server.route ({
+    method: 'POST',
+    path: "/api/startVote",
+    handler: botStartVoteHandler
+  });
+
+  // Config: end voting
+  server.route ({
+    method: 'POST',
+    path: "/api/endVote",
+    handler: botEndVoteHandler
+  });
+
+  server.route ({
+    method: 'POST',
+    path: '/api/vote',
+    handler: botVoteHandler
+  });
 
   server.route ({
     method: "POST",
     path: "/api/submitSuggestion",
     handler: submitSuggestionHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getFreezeTagPrompt",
+    handler: getFreezeTagPromptHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getBotState",
+    handler: botStateQueryHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getCaptain",
+    handler: captainQueryHandler
+  })
+
+  //******************************
+  //***MUSIC TO MY PEERS ROUTES***
+  //******************************
+
+  server.route ({
+    method: "POST",
+    path: "/api/enqueueAudienceMember",
+    handler: enqueueAudienceMemberHandler
   })
 
   server.route ({
@@ -233,12 +267,6 @@ var currentGame = "FreezeTag";
 
   server.route ({
     method: "GET",
-    path: "/api/getFreezeTagPrompt",
-    handler: getFreezeTagPromptHandler
-  })
-
-  server.route ({
-    method: "GET",
     path: "/api/dequeueAudienceMember",
     handler: dequeueAudienceMemberHandler
   })
@@ -253,18 +281,6 @@ var currentGame = "FreezeTag";
     method: "GET",
     path: "/api/getQueue",
     handler: getQueueHandler
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getBotState",
-    handler: botStateQueryHandler
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getCaptain",
-    handler: captainQueryHandler
   })
 
   server.route ({
@@ -284,6 +300,33 @@ var currentGame = "FreezeTag";
     method: "GET",
     path: "/api/getDJ",
     handler: getDJHandler
+  })
+
+  //**************************
+  //***GUESSGING GAME ROUTE***
+  //**************************
+  server.route ({
+    method: "POST",
+    path: "/api/submitWord",
+    handler: submitWordHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/beginGuessing",
+    handler: beginGuessingHandler
+  })
+
+  server.route ({
+    method: "POST",
+    path: "/api/beginWordSubmission",
+    handler: beginWordSubmissionHandler
+  })
+
+  server.route ({
+    method: "GET",
+    path: "/api/getWord",
+    handler: getWordHandler
   })
 
   // Start the server.
@@ -382,6 +425,8 @@ function clearUserVotes()
 function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
+  const guessState = Gus.getState();
+  guessState.isGuessing = AcaBot.getGuessing();
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
@@ -405,7 +450,17 @@ function getState(userId) {
 
     discordTag: userStates[userId].discordTag,
     queuePosition: pos,
-    headOfQueue: queue[0]
+    headOfQueue: queue[0],
+
+    guessingGame: {
+      isGuessing: guessState.isGuessing,
+      currentNoun: guessState.currentNoun,
+      currentVerb: guessState.currentVerb,
+      currentLocation: guessState.currentLocation,
+      guessedNoun: guessState.guessedNoun,
+      guessedVerb: guessState.guessedVerb,
+      guessedLocation: guessState.guessedLocation
+    }
   };
   return toReturn;
 
@@ -892,6 +947,49 @@ function submitSuggestionHandler(req)
 
   return getState(opaqueUserId);
 }
+
+//**********************************
+//***GUESSING GAME HANDLING START***
+//**********************************
+
+function submitWordHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const word = req.headers.word;
+  const uid = payload.user_id;
+  const type = req.headers.type;
+  Gus.addWord(word, uid, type);
+
+  return getState(opaqueUserId);
+}
+
+function submitWordHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+}
+
+function submitWordHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+}
+
+function submitWordHandler(req)
+{
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+}
+
+//**********************************
+//***GUESSING GAME HANDLING START***
+//**********************************
 
 function attemptStateBroadcast(channelId) {
   // Check the cool-down to determine if it's okay to send now.
