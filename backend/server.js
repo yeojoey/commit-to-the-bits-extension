@@ -453,13 +453,8 @@ function getState(userId) {
     headOfQueue: queue[0],
 
     guessingGame: {
-      isGuessing: guessState.isGuessing,
-      currentNoun: guessState.currentNoun,
-      currentVerb: guessState.currentVerb,
-      currentLocation: guessState.currentLocation,
-      guessedNoun: guessState.guessedNoun,
-      guessedVerb: guessState.guessedVerb,
-      guessedLocation: guessState.guessedLocation
+      phase: guessState.phase,
+      answers: guessState.answers
     }
   };
   return toReturn;
@@ -890,15 +885,6 @@ async function getDJHandler(req)
   return getState(opaqueUserId);
 }
 
-function convertUidToUsername(uid)
-{
-  const url = 'https://api.twitch.tv/kraken/users/'+uid;
-  const options = {
-    url: url,
-    method: 'GET'
-  }
-}
-
 function getMusicOptionsHandler(req)
 {
   // Verify all requests.
@@ -966,25 +952,45 @@ function submitWordHandler(req)
   return getState(opaqueUserId);
 }
 
-function submitWordHandler(req)
+function beginGuessingHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  AcaBot.setGuessing("Guessing");
+
+  //Broadcast to everyone
+  attemptStateBroadcast(channelId);
+  return getState(opaqueUserId);
 }
 
-function submitWordHandler(req)
+function beginWordSubmissionHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  AcaBot.setGuessing("Submission");
+
+  //Broadcast to everyone
+  attemptStateBroadcast(channelId);
+  return getState(opaqueUserId);
 }
 
-function submitWordHandler(req)
+function getWordHandler(req)
 {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+
+  const type = req.headers.type;
+
+  Gus.getWord(type);
+
+  //Broadcast to everyone
+  attemptStateBroadcast(channelId);
+  return getState(opaqueUserId);
 }
 
 //**********************************
@@ -1061,24 +1067,6 @@ function userIsInCooldown(opaqueUserId) {
   const now = Date.now();
   if (cooldown && cooldown > now) {
     return true;
-  }
-
-  function convertUidToUsername(uid)
-  {
-    const url = 'https://api.twitch.tv/kraken/users/'+uid;
-    const options = {
-      url: url,
-      method: 'GET',
-      headers: {
-        'Accept': 'application/vnd.twitchtv.v5+json',
-        'Client-ID': 'tndhpyr8a9l40u3m5cw5wpnrbievij',
-      }
-    };
-
-    request(options, function(err, res, body) {
-      let json = JSON.parse(body);
-      return json.display_name;
-    });
   }
 
   // Voting extensions must also track per-user votes to prevent skew.
