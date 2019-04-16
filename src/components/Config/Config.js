@@ -10,7 +10,8 @@ class Config extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      queue: ""
+      queue: "",
+      guessingWords: [{word: null, submitter: null}, {word: null, submitter: null}, {word: null, submitter: null}]
     }
   }
 
@@ -93,12 +94,55 @@ class Config extends Component {
     return(
       <React.Fragment>
         <Col md="auto">
-          <h4>Config Panel</h4>
+          <h5>Config Panel</h5>
           {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
           {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
           {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
           {this.props.currentGame === "Music" ? this.renderMusic() : "" }
+          {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
         </Col>
+      </React.Fragment>
+    )
+  }
+
+  renderGuessing () {
+    return (
+      <React.Fragment>
+      <Row>
+      <Button>Start Guessing Phase</Button>
+      </Row>
+      <Row>
+        <Col>
+        {this.state.guessingWords[0].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[0].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[0].submitter}</h6>
+          </div>
+        }
+        <Button>Get New Noun</Button>
+        </Col>
+        <Col>
+        {this.state.guessingWords[1].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[1].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[1].submitter}</h6>
+          </div>
+        }
+        <Button>Get New Verb</Button>
+        </Col>
+        <Col>
+        {this.state.guessingWords[2].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[2].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[2].submitter}</h6>
+          </div>
+        }
+        <Button>Get New Location</Button>
+        </Col>
+        </Row>
       </React.Fragment>
     )
   }

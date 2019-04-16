@@ -231,7 +231,7 @@ class App extends Component {
     if (this.state.showPanel) {
       return (
         <React.Fragment>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center Config">
           {this.Authentication.isModerator() ?
             <Config currentGame = {this.state.currentGame}
                     isVoting={this.state.isVoting}
@@ -350,6 +350,20 @@ class App extends Component {
               <div className="App">
                 <Container fluid={true}>
                   {this.renderHeader()}
+                  <Row className="justify-content-md-center Config">
+                  <Config currentGame = "GuessingGame"
+                          isVoting={this.state.isVoting}
+                          authToken ={this.Authentication.state.token}
+                          handleStart={this.handleStartSubmit}
+                          handleEnd={this.handleEndSubmit}
+                          handleClear={this.handleClear}
+                          handleDequeue={this.handleDequeue}
+                          handleGetGuestStar={this.handleGetGuestStar}
+                          guestStar={this.state.guestStar}
+                          currentDJ={this.state.dj}
+                          selectedSongs={this.state.musicQueue}
+                          />
+                    </Row>
                   {this.renderHomepage()}
                 </Container>
               </div>

@@ -91,7 +91,7 @@ class GuessingGame extends Component {
           <Col>
           <h6>Noun</h6>
           {
-            this.state.answers[0].word == null ?
+            this.state.answers[0].word === null ?
             <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
               <FormControl placeholder="e.g. fisherman" wordType="noun" value={this.state.nounSubmission} onChange={this.handleChange}/>
               <Button as={InputGroup.Append} wordType="noun" onClick={() => this.submitNoun()} >Submit</Button>
@@ -108,7 +108,7 @@ class GuessingGame extends Component {
           <Col>
           <h6>Verb</h6>
           {
-            this.state.answers[1].word == null ?
+            this.state.answers[1].word === null ?
             <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
               <FormControl placeholder="e.g. driving" wordType="verb" value={this.state.verbSubmission} onChange={this.handleChange}/>
               <Button as={InputGroup.Append} wordType="verb" onClick={() => this.submitVerb()}>Submit</Button>
@@ -124,7 +124,7 @@ class GuessingGame extends Component {
           <Col>
           <h6>Location</h6>
           {
-            this.state.answers[2].word == null ?
+            this.state.answers[2].word === null ?
             <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
               <FormControl placeholder="e.g. classroom" wordType="location"  value={this.state.locationSubmission} onChange={this.handleChange}/>
               <Button as={InputGroup.Append} wordType="location" onClick={() => this.submitLocation()}>Submit</Button>
