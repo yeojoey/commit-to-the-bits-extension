@@ -23,6 +23,32 @@ class Config extends Component {
     return str;
   }
 
+  // Freeze Tag Handlers
+
+  handleStartVote = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/startVote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
+  }
+
+  handleEndVote = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/endVote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
+  }
+
   handleGetQueue = async e => {
     e.preventDefault();
     const response = await fetch ("/api/getQueue", {
@@ -106,8 +132,8 @@ class Config extends Component {
     return (
       <React.Fragment>
         <Button onClick={this.props.handleClear} variant="danger">Clear</Button>{' '}
-        <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>{' '}
-        <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>{' '}
+        <Button onClick={this.handleStartVote} disabled={this.props.isVoting}>Start Vote</Button>{' '}
+        <Button onClick={this.handleEndVote} disabled={!this.props.isVoting}>End Vote</Button>{' '}
         <br /><br />
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}

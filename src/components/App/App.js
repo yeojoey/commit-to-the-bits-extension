@@ -5,6 +5,7 @@ import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
 import FreezeTag from '../FreezeTag/FreezeTag'
+import GuessingGame from '../GuessingGame/GuessingGame'
 import Homepage from '../Homepage/Homepage'
 import Instructions from '../Instructions/Instructions'
 import Music from '../Music/Music'
@@ -134,47 +135,6 @@ class App extends Component {
       if(this.twitch){
           this.twitch.unlisten('broadcast', ()=>console.log('successfully unlistened'))
       }
-  }
-
-  handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/postScream", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-  }
-
-  handleStartSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/startVote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-    console.log("Vote Started. isVoting set to "+this.state.isVoting);
-  }
-
-  handleEndSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/endVote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-    console.log("Vote Ended. isVoting set to "+this.state.isVoting);
   }
 
   handleCaptain = async e => {
@@ -367,7 +327,7 @@ class App extends Component {
 
   renderHomepage = () => {
     return (
-      <b>Something disappeared here</b>
+      <GuessingGame authToken="123" />
     )
   }
 
@@ -387,7 +347,12 @@ class App extends Component {
       } else {
           return (
             <React.Fragment>
-              {this.renderHomepage()}
+              <div className="App">
+                <Container fluid={true}>
+                  {this.renderHomepage()}
+                </Container>
+              </div>
+              {this.renderInstructions()}
             </React.Fragment>
           )
       }
