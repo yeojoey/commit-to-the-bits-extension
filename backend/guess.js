@@ -14,6 +14,13 @@ const guessedBy = {
   location: ""
 }
 
+//Joey's preference for state. Contains word info for current secret words. Submitter is always filled in, word and guesser are only filled after correctly guessed.
+var answers = [
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null}
+];
+
 //These objects store more objects that contain a suggested word and the user who submitted the word. There are 'previous' versions to allow us to avoid repeating words.
 var nouns = [];
 var verbs = [];
@@ -87,13 +94,10 @@ const Guesser = class Guess
   getState()
   {
     var state = {
+      phase: "Submission",
       isGuessing: false,
-      currentNoun: words.noun.word,
-      currentVerb: words.verb.word,
-      currentLocation: words.location.word,
-      guessedNoun: guessedBy.noun,
-      guessedVerb: guessedBy.verb,
-      guessedLocation: guessedBy.location
+      words: words,
+      answers: answers,
     }
   }
 
@@ -124,6 +128,7 @@ const Guesser = class Guess
     }
 
     words.noun = word;
+    answers[0].submitter = word.user;
     return word.word;
   }
 
@@ -144,6 +149,7 @@ const Guesser = class Guess
     }
 
     words.verb = word;
+    answers[1].submitter = word.user;
     return word.word;
   }
 
@@ -164,6 +170,7 @@ const Guesser = class Guess
     }
 
     words.location = word;
+    answers[2].submitter = word.user;
     return word.word;
   }
 
@@ -188,6 +195,8 @@ const Guesser = class Guess
       if(message.includes(words.noun.word))
       {
         guessedBy.noun = user;
+        answers[0].word = words.noun.word;
+        answers[0].guesser = user;
       }
     }
   }
@@ -199,6 +208,8 @@ const Guesser = class Guess
       if(message.includes(words.verb.word))
       {
         guessedBy.verb = user;
+        answers[1].word = words.verb.word;
+        answers[1].guesser = user;
       }
     }
   }
@@ -210,6 +221,8 @@ const Guesser = class Guess
       if(message.includes(words.location.word))
       {
         guessedBy.location = user;
+        answers[2].word = words.location.word;
+        answers[2].guesser = user;
       }
     }
   }
