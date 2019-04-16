@@ -9,6 +9,7 @@ require('dotenv').config();
 
 const GoogSheet = new GoogleSheetHandler();
 var Voter;
+var Guesser;
 
 const ABot = class AcademicBot
 {
@@ -30,6 +31,8 @@ const ABot = class AcademicBot
     })
 
     this.restrictions = [];
+
+    this.guessing = false;
 
     this.startup()
   }
@@ -81,6 +84,11 @@ const ABot = class AcademicBot
             break;
           }
         }
+      }
+
+      if(this.guessing)
+      {
+        Guesser.guess(chatter.message, chatter.username);
       }
 
       this.writeToLog(chatter)
@@ -142,6 +150,11 @@ const ABot = class AcademicBot
     Voter = v;
   }
 
+  setGuesser(g)
+  {
+    Guesser = g;
+  }
+
   // Retrieves a user to act as Captain
   setCaptain(cap)
   {
@@ -174,6 +187,18 @@ const ABot = class AcademicBot
   setRestriction(restrs)
   {
     this.restrictions = restrs;
+  }
+
+  setGuessing()
+  {
+    if(this.guessing)
+    {
+      this.guessing = false;
+    }
+    else
+    {
+      this.guessing = true;
+    }
   }
 
   clearRestrictions()
