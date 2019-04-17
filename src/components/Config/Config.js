@@ -89,13 +89,13 @@ class Config extends Component {
     const body = await response.json();
   }
 
-  getGuessingWord = async () => {
+  getGuessingWord = async (e) => {
     console.log(e.target.wordType);
     const response = await fetch ("/api/getWord", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "authorization": this.props.authToken
+        "authorization": this.props.authToken,
         "type": e.target.wordType
       }
     });
