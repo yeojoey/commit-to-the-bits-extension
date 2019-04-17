@@ -42,6 +42,8 @@ const Guesser = class Guess
     promise = JSON.parse(promise);
     var user = promise.display_name;
 
+    console.log("Submitting "+word+" as "+type+". Word submitted by "+user);
+
     if(type == "noun")
       addNoun(word, user);
     else if(type == "verb")
@@ -60,6 +62,7 @@ const Guesser = class Guess
       word: no,
       user: user,
     };
+    console.log(nouns);
   }
 
   addVerb(ve, user)
@@ -68,6 +71,7 @@ const Guesser = class Guess
       word: ve,
       user: user,
     };
+    console.log(verbs);
   }
 
   addLocation(loc, user)
@@ -76,6 +80,7 @@ const Guesser = class Guess
       word: loc,
       user: user,
     };
+    console.log(locations);
   }
 
   clearWords()
@@ -113,6 +118,7 @@ const Guesser = class Guess
 
   getNoun()
   {
+    console.log("Getting a noun.");
     let rand = this.getRandomInt(nouns.length);
     let word = nouns[rand];
 
@@ -129,11 +135,13 @@ const Guesser = class Guess
 
     words.noun = word;
     answers[0].submitter = word.user;
+    console.log("Got noun: "+word.word);
     return word.word;
   }
 
   getVerb()
   {
+    console.log("Getting a verb.");
     let rand = this.getRandomInt(verbs.length);
     let word = verbs[rand];
 
@@ -150,11 +158,13 @@ const Guesser = class Guess
 
     words.verb = word;
     answers[1].submitter = word.user;
+    console.log("Got verb: "+word.word);
     return word.word;
   }
 
   getLocation()
   {
+    console.log("Getting a location.");
     let rand = this.getRandomInt(locations.length);
     let word = locations[rand];
 
@@ -171,6 +181,7 @@ const Guesser = class Guess
 
     words.location = word;
     answers[2].submitter = word.user;
+    console.log("Got location: "+word.word);
     return word.word;
   }
 

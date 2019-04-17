@@ -454,6 +454,7 @@ function getState(userId) {
 
     guessingGame: {
       phase: guessState.phase,
+      words: guessState.words,
       answers: guessState.answers
     }
   };
@@ -947,6 +948,7 @@ function submitWordHandler(req)
   const word = req.headers.word;
   const uid = payload.user_id;
   const type = req.headers.type;
+  console.log("Word submission received. Word: "+word+" Type: "+type);
   Gus.addWord(word, uid, type);
 
   //Broadcast to everyone
@@ -987,7 +989,7 @@ function getWordHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   const type = req.headers.type;
-
+  console.log("Received 'Get Word' request. Type: "+type);
   Gus.getWord(type);
 
   //Broadcast to everyone
