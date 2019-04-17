@@ -154,6 +154,7 @@ class Config extends Component {
         <Button>Get New Location</Button>
         </Col>
         </Row>
+        <Row>
         <div>
           <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
           <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
