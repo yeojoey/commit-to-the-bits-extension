@@ -54,7 +54,7 @@ class App extends Component {
           isVisible:true,
           showPanel: true,
           showInstructions: false,
-          currentGame: "",
+          currentGame: "FreezeTag",
           votedBefore: false,
           captain: "",
           inQueue: false,

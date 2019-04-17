@@ -124,31 +124,31 @@ class Config extends Component {
       </Row>
       <Row>
         <Col className="col-sm">
-        {this.props.guessingWords[0].word === null ? <h5>None yet</h5>
+        {this.state.answers[0].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[0].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[0].submitter}</h6>
+            <h5>{this.state.answers[0].word}</h5>
+            <h6>Submitted by: {this.state.answers[0].submitter}</h6>
           </div>
         }
         <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
         </Col>
         <Col className="col-sm">
-        {this.props.guessingWords[1].word === null ? <h5>None yet</h5>
+        {this.state.answers[1].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[1].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[1].submitter}</h6>
+            <h5>{this.state.answers[1].word}</h5>
+            <h6>Submitted by: {this.state.answers[1].submitter}</h6>
           </div>
         }
         <Button>Get New Verb</Button>
         </Col>
         <Col className="col-sm">
-        {this.props.guessingWords[2].word === null ? <h5>None yet</h5>
+        {this.state.answers[2].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[2].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[2].submitter}</h6>
+            <h5>{this.state.answers[2].word}</h5>
+            <h6>Submitted by: {this.state.answers[2].submitter}</h6>
           </div>
         }
         <Button>Get New Location</Button>
