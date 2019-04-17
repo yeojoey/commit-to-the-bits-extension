@@ -1,11 +1,11 @@
 require('dotenv').config();
 
 //Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
-const words = {
-  noun: {},
-  verb: {},
-  location: {}
-}
+const words = [
+  {word: null, submitter: null},
+  {word: null, submitter: null},
+  {word: null, submitter: null}
+];
 
 //Stores the username of the person who correctly guessed the noun, verb, or loaction.
 const guessedBy = {
@@ -134,7 +134,8 @@ const Guesser = class Guess
       previousNouns = [];
     }
 
-    words.noun = word;
+    words[0].word = word.word;
+    words[0].submitter = word.user;
     answers[0].submitter = word.user;
     console.log("Got noun: "+word.word);
     return word.word;
@@ -157,7 +158,8 @@ const Guesser = class Guess
       previousVerbs = [];
     }
 
-    words.verb = word;
+    words[1].word = word.word;
+    words[1].submitter = word.user;
     answers[1].submitter = word.user;
     console.log("Got verb: "+word.word);
     return word.word;
@@ -180,7 +182,8 @@ const Guesser = class Guess
       previousLocations = [];
     }
 
-    words.location = word;
+    words[2].word = word.word;
+    words[2].submitter = word.user;
     answers[2].submitter = word.user;
     console.log("Got location: "+word.word);
     return word.word;
@@ -202,12 +205,12 @@ const Guesser = class Guess
 
   guessNoun(message, user)
   {
-    if(!(words.noun.user == user))
+    if(!(words[0].submitter == user))
     {
-      if(message.includes(words.noun.word))
+      if(message.includes(words[0].word))
       {
         guessedBy.noun = user;
-        answers[0].word = words.noun.word;
+        answers[0].word = words[0].word;
         answers[0].guesser = user;
       }
     }
@@ -215,12 +218,12 @@ const Guesser = class Guess
 
   guessVerb(message, user)
   {
-    if(!(words.verb.user == user))
+    if(!(words[1].submitter == user))
     {
-      if(message.includes(words.verb.word))
+      if(message.includes(words[1].word))
       {
         guessedBy.verb = user;
-        answers[1].word = words.verb.word;
+        answers[1].word = words[1].word;
         answers[1].guesser = user;
       }
     }
@@ -228,12 +231,12 @@ const Guesser = class Guess
 
   guessLocation(message, user)
   {
-    if(!(words.location.user == user))
+    if(!(words[2].user == user))
     {
-      if(message.includes(words.location.word))
+      if(message.includes(words[2].word))
       {
         guessedBy.location = user;
-        answers[2].word = words.location.word;
+        answers[2].word = words[2].word;
         answers[2].guesser = user;
       }
     }
