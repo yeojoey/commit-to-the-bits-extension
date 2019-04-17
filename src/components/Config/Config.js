@@ -102,7 +102,6 @@ class Config extends Component {
     const body = await response.json();
   }
 
-
   render() {
     return(
       <React.Fragment>
@@ -124,31 +123,31 @@ class Config extends Component {
       </Row>
       <Row>
         <Col className="col-sm">
-        {this.state.guessingWords[0].word === null ? <h5>None yet</h5>
+        {this.props.guessingWords[0].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.state.guessingWords[0].word}</h5>
-            <h6>Submitted by: {this.state.guessingWords[0].submitter}</h6>
+            <h5>{this.props.guessingWords[0].word}</h5>
+            <h6>Submitted by: {this.props.guessingWords[0].submitter}</h6>
           </div>
         }
         <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
         </Col>
         <Col className="col-sm">
-        {this.state.guessingWords[1].word === null ? <h5>None yet</h5>
+        {this.props.guessingWords[1].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.state.guessingWords[1].word}</h5>
-            <h6>Submitted by: {this.state.guessingWords[1].submitter}</h6>
+            <h5>{this.props.guessingWords[1].word}</h5>
+            <h6>Submitted by: {this.props.guessingWords[1].submitter}</h6>
           </div>
         }
         <Button>Get New Verb</Button>
         </Col>
         <Col className="col-sm">
-        {this.state.guessingWords[2].word === null ? <h5>None yet</h5>
+        {this.props.guessingWords[2].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.state.guessingWords[2].word}</h5>
-            <h6>Submitted by: {this.state.guessingWords[2].submitter}</h6>
+            <h5>{this.props.guessingWords[2].word}</h5>
+            <h6>Submitted by: {this.props.guessingWords[2].submitter}</h6>
           </div>
         }
         <Button>Get New Location</Button>
