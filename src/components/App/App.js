@@ -59,7 +59,12 @@ class App extends Component {
           captain: "",
           inQueue: false,
           queuePosition: "",
-          guestStar: ""
+          guestStar: "",
+          guessingGame: {
+            words: null,
+            answers: null,
+            phase: "Submission"
+          }
       }
 
       this.togglePanel = this.togglePanel.bind(this);
