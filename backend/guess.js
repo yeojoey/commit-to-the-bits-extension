@@ -100,10 +100,11 @@ const Guesser = class Guess
   {
     var state = {
       phase: "Submission",
-      isGuessing: false,
       words: words,
       answers: answers,
     }
+
+    return state;
   }
 
   getWord(type)
