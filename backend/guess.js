@@ -42,6 +42,8 @@ const Guesser = class Guess
     promise = JSON.parse(promise);
     var user = promise.display_name;
 
+    console.log("Submitting "+word+" as "+type+". Word submitted by "+user);
+
     if(type == "noun")
       addNoun(word, user);
     else if(type == "verb")
@@ -56,29 +58,29 @@ const Guesser = class Guess
 
   addNoun(no, user)
   {
-    console.log(nouns);
     nouns[nouns.length] = {
       word: no,
       user: user,
     };
+    console.log(nouns);
   }
 
   addVerb(ve, user)
   {
-    console.log(verbs);
     verbs[verbs.length] = {
       word: ve,
       user: user,
     };
+    console.log(verbs);
   }
 
   addLocation(loc, user)
   {
-    console.log(locations);
     locations[locations.length] = {
       word: loc,
       user: user,
     };
+    console.log(locations);
   }
 
   clearWords()
