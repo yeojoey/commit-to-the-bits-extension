@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 //Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
-const words = []
+const words = [
   {word: null, submitter: null},
   {word: null, submitter: null},
   {word: null, submitter: null}
