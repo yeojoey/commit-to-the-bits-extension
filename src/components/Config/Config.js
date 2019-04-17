@@ -106,14 +106,12 @@ class Config extends Component {
   render() {
     return(
       <React.Fragment>
-        <Col md="auto">
-          <h5>Config Panel</h5>
-          {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
-          {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
-          {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
-          {this.props.currentGame === "Music" ? this.renderMusic() : "" }
-          {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
-        </Col>
+        <h5>Config Panel</h5>
+        {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
+        {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
+        {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
+        {this.props.currentGame === "Music" ? this.renderMusic() : "" }
+        {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
       </React.Fragment>
     )
   }
