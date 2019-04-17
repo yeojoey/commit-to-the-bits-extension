@@ -154,6 +154,13 @@ class Config extends Component {
         <Button>Get New Location</Button>
         </Col>
         </Row>
+        <div>
+          <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>
+        </div>
+        </Row>
       </React.Fragment>
     )
   }
@@ -177,7 +184,8 @@ class Config extends Component {
       <div>
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
+        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </div>
       </Row></React.Fragment>
     )
@@ -192,7 +200,8 @@ class Config extends Component {
         <br /><br />
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }
@@ -202,7 +211,8 @@ class Config extends Component {
       <React.Fragment>
         <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }
@@ -217,7 +227,8 @@ class Config extends Component {
       <br /> <br />
       <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
       <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-      <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+      <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+      <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }

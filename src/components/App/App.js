@@ -369,7 +369,7 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   <Row className="justify-content-md-center Config">
-                  <Config currentGame = "GuessingGame"
+                  <Config currentGame = {this.state.currentGame}
                           isVoting={this.state.isVoting}
                           authToken ={this.Authentication.state.token}
                           handleStart={this.handleStartSubmit}
