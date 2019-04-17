@@ -426,6 +426,8 @@ function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
   const guessState = Gus.getState();
+  console.log("Guessing game state: ");
+  console.log(guessState);
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
