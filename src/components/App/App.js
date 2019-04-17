@@ -250,6 +250,7 @@ class App extends Component {
                     guestStar={this.state.guestStar}
                     currentDJ={this.state.dj}
                     selectedSongs={this.state.musicQueue}
+                    guessingWords={this.state.guessingGame.words}
                     />
           : ""}
         </Row>
