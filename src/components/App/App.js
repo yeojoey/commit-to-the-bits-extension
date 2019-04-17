@@ -106,6 +106,7 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
+            console.log("broadcast received");
             this.setState(JSON.parse(message));
             this.getState();
           })
@@ -133,7 +134,6 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
-    console.log(JSON.stringify(body));
     return body;
   }
 
@@ -264,6 +264,7 @@ class App extends Component {
 
 
   renderGame = () => {
+    console.log(this.state.currentGame);
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
@@ -276,7 +277,6 @@ class App extends Component {
     } else {
       return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
-
   }
 
   renderFreezeTag = () => {
