@@ -258,13 +258,13 @@ class App extends Component {
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
-
     else if (this.state.currentGame === "TSA") {
-
       return ( <React.Fragment>{ this.renderTSA() }</React.Fragment> );
     } else if (this.state.currentGame === "Music") {
       return ( <React.Fragment>{ this.renderMusic() }</React.Fragment> );
 
+    } else if (this.state.currentGame === "GuessingGame") {
+      return (<React.Fragment> { this.renderGuessing() } </React.Fragment>)
     } else {
       return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
@@ -325,6 +325,14 @@ class App extends Component {
     }
   }
 
+  renderGuessing = () => {
+    return (
+      <GuessingGame authToken = {this.Authentication.state.token}
+                    phase = {this.state.guessingGame.phase}
+                    answers = {this.state.guessingGame.answers}/>
+    )
+  }
+
   renderHomepage = () => {
     return (
       <GuessingGame authToken="123" />
@@ -362,6 +370,7 @@ class App extends Component {
                           guestStar={this.state.guestStar}
                           currentDJ={this.state.dj}
                           selectedSongs={this.state.musicQueue}
+                          guessingWords = {this.state.guessingGame.words}
                           />
                     </Row>
                   {this.renderHomepage()}
