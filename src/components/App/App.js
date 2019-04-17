@@ -342,7 +342,9 @@ class App extends Component {
 
   renderHomepage = () => {
     return (
-      <GuessingGame authToken="123" />
+      <GuessingGame authToken = "123"
+                    phase = {this.state.guessingGame.phase}
+                    answers = {this.state.guessingGame.answers}/>
     )
   }
 
