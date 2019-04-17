@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.Config {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
 floating-header {
   float: right;
   position: absolute;

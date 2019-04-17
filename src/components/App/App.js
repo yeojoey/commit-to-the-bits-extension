@@ -5,6 +5,7 @@ import Authentication from '../../util/Authentication/Authentication'
 import Config from '../Config/Config'
 import Courtroom from '../Courtroom/Courtroom'
 import FreezeTag from '../FreezeTag/FreezeTag'
+import GuessingGame from '../GuessingGame/GuessingGame'
 import Homepage from '../Homepage/Homepage'
 import Instructions from '../Instructions/Instructions'
 import Music from '../Music/Music'
@@ -136,47 +137,6 @@ class App extends Component {
       }
   }
 
-  handleSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/postScream", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-  }
-
-  handleStartSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/startVote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-    console.log("Vote Started. isVoting set to "+this.state.isVoting);
-  }
-
-  handleEndSubmit = async e => {
-    e.preventDefault();
-    const response = await fetch ("/api/endVote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": this.Authentication.state.token
-      }
-    });
-    const body = await response.json();
-    this.setState(body);
-    console.log("Vote Ended. isVoting set to "+this.state.isVoting);
-  }
-
   handleCaptain = async e => {
     e.preventDefault();
     const response = await fetch ("/api/getCaptain", {
@@ -271,7 +231,7 @@ class App extends Component {
     if (this.state.showPanel) {
       return (
         <React.Fragment>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center Config">
           {this.Authentication.isModerator() ?
             <Config currentGame = {this.state.currentGame}
                     isVoting={this.state.isVoting}
@@ -367,7 +327,7 @@ class App extends Component {
 
   renderHomepage = () => {
     return (
-      <b>Something disappeared here</b>
+      <GuessingGame authToken="123" />
     )
   }
 
@@ -387,7 +347,27 @@ class App extends Component {
       } else {
           return (
             <React.Fragment>
-              {this.renderHomepage()}
+              <div className="App">
+                <Container fluid={true}>
+                  {this.renderHeader()}
+                  <Row className="justify-content-md-center Config">
+                  <Config currentGame = "GuessingGame"
+                          isVoting={this.state.isVoting}
+                          authToken ={this.Authentication.state.token}
+                          handleStart={this.handleStartSubmit}
+                          handleEnd={this.handleEndSubmit}
+                          handleClear={this.handleClear}
+                          handleDequeue={this.handleDequeue}
+                          handleGetGuestStar={this.handleGetGuestStar}
+                          guestStar={this.state.guestStar}
+                          currentDJ={this.state.dj}
+                          selectedSongs={this.state.musicQueue}
+                          />
+                    </Row>
+                  {this.renderHomepage()}
+                </Container>
+              </div>
+              {this.renderInstructions()}
             </React.Fragment>
           )
       }

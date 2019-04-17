@@ -129,7 +129,7 @@ const server = new Hapi.Server(serverOptions);
 const io = require('socket.io')(server.listener);
 
 // Game State
-var currentGame = "FreezeTag";
+var currentGame = "GuessingGame";
 
 (async () => {
 

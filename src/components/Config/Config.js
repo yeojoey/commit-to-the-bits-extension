@@ -10,7 +10,8 @@ class Config extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      queue: ""
+      queue: "",
+      guessingWords: [{word: null, submitter: null}, {word: null, submitter: null}, {word: null, submitter: null}]
     }
   }
 
@@ -21,6 +22,32 @@ class Config extends Component {
     }
     console.log(str);
     return str;
+  }
+
+  // Freeze Tag Handlers
+
+  handleStartVote = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/startVote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
+  }
+
+  handleEndVote = async e => {
+    e.preventDefault();
+    const response = await fetch ("/api/endVote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+      }
+    });
+    const body = await response.json();
   }
 
   handleGetQueue = async e => {
@@ -62,17 +89,73 @@ class Config extends Component {
     const body = await response.json();
   }
 
+  getGuessingWord = async (e) => {
+    console.log(e.target.wordType);
+    const response = await fetch ("/api/getWord", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken,
+        "type": e.target.wordType
+      }
+    });
+    const body = await response.json();
+  }
+
 
   render() {
     return(
       <React.Fragment>
         <Col md="auto">
-          <h4>Config Panel</h4>
+          <h5>Config Panel</h5>
           {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
           {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
           {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
           {this.props.currentGame === "Music" ? this.renderMusic() : "" }
+          {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
         </Col>
+      </React.Fragment>
+    )
+  }
+
+  renderGuessing () {
+    return (
+      <React.Fragment>
+      <Row>
+      <Button>Start Guessing Phase</Button>
+      </Row>
+      <Row>
+        <Col>
+        {this.state.guessingWords[0].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[0].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[0].submitter}</h6>
+          </div>
+        }
+        <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
+        </Col>
+        <Col>
+        {this.state.guessingWords[1].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[1].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[1].submitter}</h6>
+          </div>
+        }
+        <Button>Get New Verb</Button>
+        </Col>
+        <Col>
+        {this.state.guessingWords[2].word === null ? <h5>None yet</h5>
+          :
+          <div>
+            <h5>{this.state.guessingWords[2].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[2].submitter}</h6>
+          </div>
+        }
+        <Button>Get New Location</Button>
+        </Col>
+        </Row>
       </React.Fragment>
     )
   }
@@ -106,8 +189,8 @@ class Config extends Component {
     return (
       <React.Fragment>
         <Button onClick={this.props.handleClear} variant="danger">Clear</Button>{' '}
-        <Button onClick={this.props.handleStart} disabled={this.props.isVoting}>Start Vote</Button>{' '}
-        <Button onClick={this.props.handleEnd} disabled={!this.props.isVoting}>End Vote</Button>{' '}
+        <Button onClick={this.handleStartVote} disabled={this.props.isVoting}>Start Vote</Button>{' '}
+        <Button onClick={this.handleEndVote} disabled={!this.props.isVoting}>End Vote</Button>{' '}
         <br /><br />
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
