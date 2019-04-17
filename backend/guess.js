@@ -195,6 +195,8 @@ const Guesser = class Guess
     promise = JSON.parse(promise);
     var user = promise.display_name;
 
+    word = word.toLowerCase();
+
     if(guessedBy.noun == "")
       guessNoun(word, user);
     if(guessedBy.verb == "")
@@ -207,7 +209,8 @@ const Guesser = class Guess
   {
     if(!(words[0].submitter == user))
     {
-      if(message.includes(words[0].word))
+      let toCompare = words[0].word.toLowerCase();
+      if(message.includes(toCompare))
       {
         guessedBy.noun = user;
         answers[0].word = words[0].word;
@@ -220,7 +223,8 @@ const Guesser = class Guess
   {
     if(!(words[1].submitter == user))
     {
-      if(message.includes(words[1].word))
+      let toCompare = words[1].word.toLowerCase();
+      if(message.includes(toCompare))
       {
         guessedBy.verb = user;
         answers[1].word = words[1].word;
@@ -233,7 +237,8 @@ const Guesser = class Guess
   {
     if(!(words[2].user == user))
     {
-      if(message.includes(words[2].word))
+      let toCompare = words[2].word.toLowerCase();
+      if(message.includes(toCompare))
       {
         guessedBy.location = user;
         answers[2].word = words[2].word;
