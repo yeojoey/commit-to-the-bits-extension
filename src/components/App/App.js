@@ -390,6 +390,7 @@ class App extends Component {
             </React.Fragment>
           )
       }
+      return (null);
   }
 }
 

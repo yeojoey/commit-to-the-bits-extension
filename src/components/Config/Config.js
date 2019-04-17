@@ -125,7 +125,7 @@ class Config extends Component {
       <Button>Start Guessing Phase</Button>
       </Row>
       <Row>
-        <Col>
+        <Col className="col-sm">
         {this.props.guessingWords[0].word === null ? <h5>None yet</h5>
           :
           <div>
@@ -135,7 +135,7 @@ class Config extends Component {
         }
         <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
         </Col>
-        <Col>
+        <Col className="col-sm">
         {this.props.guessingWords[1].word === null ? <h5>None yet</h5>
           :
           <div>
@@ -145,7 +145,7 @@ class Config extends Component {
         }
         <Button>Get New Verb</Button>
         </Col>
-        <Col>
+        <Col className="col-sm">
         {this.props.guessingWords[2].word === null ? <h5>None yet</h5>
           :
           <div>
