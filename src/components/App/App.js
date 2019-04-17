@@ -257,6 +257,8 @@ class App extends Component {
         { this.renderGame() }
         </React.Fragment>
       )
+    } else {
+      return (null)
     }
   }
 
@@ -270,8 +272,7 @@ class App extends Component {
     } else if (this.state.currentGame === "Music") {
       return ( <React.Fragment>{ this.renderMusic() }</React.Fragment> );
     } else if (this.state.currentGame === "GuessingGame") {
-      return (null);
-      //return (<React.Fragment> { this.renderGuessing() } </React.Fragment>)
+      return (<React.Fragment> { this.renderGuessing() } </React.Fragment>)
     } else {
       return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
