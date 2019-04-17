@@ -89,6 +89,19 @@ class Config extends Component {
     const body = await response.json();
   }
 
+  getGuessingWord = async () => {
+    console.log(e.target.wordType);
+    const response = await fetch ("/api/getWord", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": this.props.authToken
+        "type": e.target.wordType
+      }
+    });
+    const body = await response.json();
+  }
+
 
   render() {
     return(
@@ -120,7 +133,7 @@ class Config extends Component {
             <h6>Submitted by: {this.state.guessingWords[0].submitter}</h6>
           </div>
         }
-        <Button>Get New Noun</Button>
+        <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
         </Col>
         <Col>
         {this.state.guessingWords[1].word === null ? <h5>None yet</h5>
