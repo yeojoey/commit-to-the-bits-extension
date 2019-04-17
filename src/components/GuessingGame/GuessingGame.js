@@ -29,12 +29,12 @@ class GuessingGame extends Component {
     }
   }
 
-  handleChange (event) {
+  handleChange =  (event) => {
     if (event.target.wordType === "noun") {
       this.setState({
         nounSubmission: event.target.value
       })
-    } else if (event.target.wordtype === "verb") {
+    } else if (event.target.wordType === "verb") {
       this.setState({
         verbSubmission: event.target.value
       })
