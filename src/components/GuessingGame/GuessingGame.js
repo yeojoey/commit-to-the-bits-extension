@@ -22,7 +22,7 @@ class GuessingGame extends Component {
   submitWord = async (event) => {
     // Submission phase
     if (this.props.phase === "Submission") {
-      console.log(event.target.wordType);
+      console.log("event.target.wordType");
     }
     // Guessing phase
     else {
