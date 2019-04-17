@@ -426,7 +426,6 @@ function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
   const guessState = Gus.getState();
-  guessState.isGuessing = AcaBot.getGuessing();
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
