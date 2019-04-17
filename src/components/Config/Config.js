@@ -106,14 +106,12 @@ class Config extends Component {
   render() {
     return(
       <React.Fragment>
-        <Col md="auto">
-          <h5>Config Panel</h5>
-          {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
-          {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
-          {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
-          {this.props.currentGame === "Music" ? this.renderMusic() : "" }
-          {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
-        </Col>
+        <h5>Config Panel</h5>
+        {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
+        {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
+        {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
+        {this.props.currentGame === "Music" ? this.renderMusic() : "" }
+        {this.props.currentGame === "GuessingGame" ? this.renderGuessing() : "" }
       </React.Fragment>
     )
   }
@@ -125,36 +123,44 @@ class Config extends Component {
       <Button>Start Guessing Phase</Button>
       </Row>
       <Row>
-        <Col>
-        {this.props.guessingWords[0].word === null ? <h5>None yet</h5>
+        <Col className="col-sm">
+        {this.state.guessingWords[0].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[0].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[0].submitter}</h6>
+            <h5>{this.state.guessingWords[0].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[0].submitter}</h6>
           </div>
         }
         <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
         </Col>
-        <Col>
-        {this.props.guessingWords[1].word === null ? <h5>None yet</h5>
+        <Col className="col-sm">
+        {this.state.guessingWords[1].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[1].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[1].submitter}</h6>
+            <h5>{this.state.guessingWords[1].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[1].submitter}</h6>
           </div>
         }
         <Button>Get New Verb</Button>
         </Col>
-        <Col>
-        {this.props.guessingWords[2].word === null ? <h5>None yet</h5>
+        <Col className="col-sm">
+        {this.state.guessingWords[2].word === null ? <h5>None yet</h5>
           :
           <div>
-            <h5>{this.props.guessingWords[2].word}</h5>
-            <h6>Submitted by: {this.props.guessingWords[2].submitter}</h6>
+            <h5>{this.state.guessingWords[2].word}</h5>
+            <h6>Submitted by: {this.state.guessingWords[2].submitter}</h6>
           </div>
         }
         <Button>Get New Location</Button>
         </Col>
+        </Row>
+        <Row>
+        <div>
+          <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+          <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>
+        </div>
         </Row>
       </React.Fragment>
     )
@@ -179,7 +185,8 @@ class Config extends Component {
       <div>
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>
+        <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </div>
       </Row></React.Fragment>
     )
@@ -194,7 +201,8 @@ class Config extends Component {
         <br /><br />
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }
@@ -204,7 +212,8 @@ class Config extends Component {
       <React.Fragment>
         <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-        <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+        <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+        <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }
@@ -219,7 +228,8 @@ class Config extends Component {
       <br /> <br />
       <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
       <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-      <Button onClick={() => this.handleChangeGame("Music")}>Start Music</Button>
+      <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>{' '}
+      <Button onClick={() => this.handleChangeGame("GuessingGame")}>Start Guessing Game</Button>
       </React.Fragment>
     )
   }

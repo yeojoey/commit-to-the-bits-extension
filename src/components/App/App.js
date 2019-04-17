@@ -54,12 +54,17 @@ class App extends Component {
           isVisible:true,
           showPanel: true,
           showInstructions: false,
-          currentGame: "",
+          currentGame: "FreezeTag",
           votedBefore: false,
           captain: "",
           inQueue: false,
           queuePosition: "",
-          guestStar: ""
+          guestStar: "",
+          guessingGame: {
+            words: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}],
+            answers: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}],
+            phase: "Submission"
+          }
       }
 
       this.togglePanel = this.togglePanel.bind(this);
@@ -101,6 +106,7 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
+            console.log("broadcast received");
             this.setState(JSON.parse(message));
             this.getState();
           })
@@ -128,7 +134,6 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     this.setState(body);
-    console.log(JSON.stringify(body));
     return body;
   }
 
@@ -245,17 +250,21 @@ class App extends Component {
                     guestStar={this.state.guestStar}
                     currentDJ={this.state.dj}
                     selectedSongs={this.state.musicQueue}
+                    guessingWords={this.state.guessingGame.words}
                     />
           : ""}
         </Row>
         { this.renderGame() }
         </React.Fragment>
       )
+    } else {
+      return (null)
     }
   }
 
 
   renderGame = () => {
+    console.log(this.state.currentGame);
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
@@ -263,13 +272,11 @@ class App extends Component {
       return ( <React.Fragment>{ this.renderTSA() }</React.Fragment> );
     } else if (this.state.currentGame === "Music") {
       return ( <React.Fragment>{ this.renderMusic() }</React.Fragment> );
-
     } else if (this.state.currentGame === "GuessingGame") {
       return (<React.Fragment> { this.renderGuessing() } </React.Fragment>)
     } else {
       return ( <React.Fragment>{ this.renderCourtroom() }</React.Fragment> );
     }
-
   }
 
   renderFreezeTag = () => {
@@ -336,7 +343,9 @@ class App extends Component {
 
   renderHomepage = () => {
     return (
-      <GuessingGame authToken="123" />
+      <GuessingGame authToken = "123"
+                    phase = {this.state.guessingGame.phase}
+                    answers = {this.state.guessingGame.answers}/>
     )
   }
 
@@ -360,7 +369,7 @@ class App extends Component {
                 <Container fluid={true}>
                   {this.renderHeader()}
                   <Row className="justify-content-md-center Config">
-                  <Config currentGame = "GuessingGame"
+                  <Config currentGame = {this.state.currentGame}
                           isVoting={this.state.isVoting}
                           authToken ={this.Authentication.state.token}
                           handleStart={this.handleStartSubmit}
@@ -381,6 +390,7 @@ class App extends Component {
             </React.Fragment>
           )
       }
+      return (null);
   }
 }
 
