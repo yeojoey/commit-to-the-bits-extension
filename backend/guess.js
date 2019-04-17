@@ -89,11 +89,11 @@ const Guesser = class Guess
     verbs = [];
     locations = [];
 
-    words = {
-      noun: "",
-      verb: "",
-      location: ""
-    };
+    words = [
+      {word: null, submitter: null},
+      {word: null, submitter: null},
+      {word: null, submitter: null}
+    ];
   }
 
   getState()
