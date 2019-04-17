@@ -105,7 +105,7 @@ class Config extends Component {
   render() {
     return(
       <React.Fragment>
-        <h5>Config Panel</h5>
+        <Row><h5>Config Panel</h5></Row>
         {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
         {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
         {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
