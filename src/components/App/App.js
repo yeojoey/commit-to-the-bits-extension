@@ -61,8 +61,8 @@ class App extends Component {
           queuePosition: "",
           guestStar: "",
           guessingGame: {
-            words: null,
-            answers: null,
+            words: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}],
+            answers: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}],
             phase: "Submission"
           }
       }
