@@ -71,8 +71,8 @@ class GuessingGame extends Component {
   renderSubmission() {
     return (
       <React.Fragment>
-        <Row className="justify-content-md-center mx-5">
-          <h5>Submit a Word:</h5>
+        <Row className="justify-content-md-center">
+          <h6>SUBMIT A WORD</h6>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm">
@@ -105,7 +105,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center mx-5">
-          <h5>Words to Guess:</h5>
+          <h5>GUESS THE NOUN, WORD & LOCATION IN CHAT!</h5>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm padding-md guess-box">
@@ -115,7 +115,6 @@ class GuessingGame extends Component {
             <div>
               <h4>???</h4>
               <h6>Submitted by: ???</h6>
-              <h6>GUESS IN CHAT</h6>
             </div>
             :
             <div>
@@ -126,14 +125,13 @@ class GuessingGame extends Component {
           }
 
           </Col>
-          <Col className="col-sm padding-md">
+          <Col className="col-sm padding-md guess-box">
           <h6>Verb</h6>
           {
             this.props.answers[1].word === null ?
             <div>
               <h4>???</h4>
               <h6>Submitted by: ???</h6>
-              <h6>GUESS IN CHAT</h6>
             </div>
             :
             <div>
@@ -143,14 +141,13 @@ class GuessingGame extends Component {
             </div>
           }
           </Col>
-          <Col className="col-sm padding-md">
+          <Col className="col-sm padding-md guess-box">
           <h6>Location</h6>
           {
             this.props.answers[2].word === null ?
             <div>
               <h4>???</h4>
               <h6>Submitted by: ???</h6>
-              <h6>GUESS IN CHAT</h6>
             </div>
             :
             <div>
