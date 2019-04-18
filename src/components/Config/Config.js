@@ -144,7 +144,6 @@ class Config extends Component {
       { this.props.guessingGameState.phase === "Guessing" ?
       <Button onClick={() => this.startSubmissionPhase()}>Start Submission Phase</Button> :
       <Button onClick={() => this.startGuessingPhase()}>Start Guessing Phase</Button> }
-
       </Row>
       <Row>
         <Col className="col-sm">
