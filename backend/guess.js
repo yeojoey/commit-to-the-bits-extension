@@ -121,19 +121,17 @@ const Guesser = class Guess
   getNoun()
   {
     console.log("Getting a noun.");
-    let rand = this.getRandomInt(nouns.length);
-    let word = nouns[rand];
-
-    if(nouns.length > 1)
-    {
-      previousNouns.push(nouns[rand]);
-      nouns.splice(rand, 1);
-    }
-    else
+    if(nouns.length <= 0))
     {
       nouns = previousNouns.slice();
       previousNouns = [];
     }
+
+    let rand = this.getRandomInt(nouns.length);
+    let word = nouns[rand];
+
+    previousNouns.push(nouns[rand]);
+    nouns.splice(rand, 1);
 
     words[0].word = word.word;
     words[0].submitter = word.user;
@@ -145,19 +143,17 @@ const Guesser = class Guess
   getVerb()
   {
     console.log("Getting a verb.");
-    let rand = this.getRandomInt(verbs.length);
-    let word = verbs[rand];
-
-    if(verbs.length > 1)
-    {
-      previousVerbs.push(verbs[rand]);
-      verbs.splice(rand, 1);
-    }
-    else
+    if(verbs.length <= 0))
     {
       verbs = previousVerbs.slice();
       previousVerbs = [];
     }
+
+    let rand = this.getRandomInt(verbs.length);
+    let word = verbs[rand];
+
+    previousVerbs.push(verbs[rand]);
+    verbs.splice(rand, 1);
 
     words[1].word = word.word;
     words[1].submitter = word.user;
@@ -169,19 +165,17 @@ const Guesser = class Guess
   getLocation()
   {
     console.log("Getting a location.");
-    let rand = this.getRandomInt(locations.length);
-    let word = locations[rand];
-
-    if(locations.length > 1)
-    {
-      previousLocations.push(locations[rand]);
-      locations.splice(rand, 1);
-    }
-    else
+    if(locations.length <= 0))
     {
       locations = previousLocations.slice();
       previousLocations = [];
     }
+
+    let rand = this.getRandomInt(locations.length);
+    let word = locations[rand];
+
+    previousLocations.push(locations[rand]);
+    locations.splice(rand, 1);
 
     words[2].word = word.word;
     words[2].submitter = word.user;
