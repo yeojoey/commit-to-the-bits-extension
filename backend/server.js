@@ -597,6 +597,10 @@ function changeGameHandler (req) {
 
   const botState = Voter.getState();
   currentGame = req.headers.game;
+  if(currentGame == "GuessingGame")
+    AcaBot.setGuessing(true);
+  else
+    AcaBot.setGuessing(false);
 
   attemptStateBroadcast(channelId);
   return {

@@ -32,7 +32,7 @@ const ABot = class AcademicBot
 
     this.restrictions = [];
 
-    this.guessing = "Submission";
+    this.guess = false;
 
     this.startup()
   }
@@ -86,7 +86,7 @@ const ABot = class AcademicBot
         }
       }
 
-      if(this.guessing)
+      if(this.guess)
       {
         Guesser.guess(chatter.message, chatter.username);
       }
@@ -191,12 +191,12 @@ const ABot = class AcademicBot
 
   setGuessing(phase)
   {
-    this.guessing = phase;
+    this.guess = phase;
   }
 
   getGuessing()
   {
-    return this.guessing;
+    return this.guess;
   }
 
   clearRestrictions()
