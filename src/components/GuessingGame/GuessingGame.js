@@ -17,7 +17,6 @@ class GuessingGame extends Component {
       locationSubmission: "",
       answers: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: "bathroom", guesser: "committothebits", submitter: "charlieparke"}]
     }
-    this.handleChange = this.handleChange.bind(this, 'type');
   }
 
   submitWord = async (event) => {
@@ -30,19 +29,19 @@ class GuessingGame extends Component {
     }
   }
 
-  handleChange =  (type, event) => {
+  handleChange =  (type, e) => {
     console.log("Word type: " + type);
     if (type === "noun") {
       this.setState({
-        nounSubmission: event.target.value
+        nounSubmission: e.target.value
       })
     } else if (type === "verb") {
       this.setState({
-        verbSubmission: event.target.value
+        verbSubmission: e.target.value
       })
     } else {
       this.setState({
-        locationSubmission: event.target.value
+        locationSubmission: e.target.value
       })
     }
   }
@@ -57,21 +56,21 @@ class GuessingGame extends Component {
           <Col className="col-sm">
           <h6>Noun</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. fisherman" value={this.state.nounSubmission} onChange={() => this.handleChange("noun")}/>
+            <FormControl placeholder="e.g. fisherman" value={this.state.nounSubmission} onChange={(e) => this.handleChange("noun", e)}/>
             <Button as={InputGroup.Append} onClick={() => this.submitWord("noun")} >Submit</Button>
           </InputGroup>
           </Col>
           <Col className="col-sm">
           <h6>Verb</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. driving" value={this.state.verbSubmission} onChange={() => this.handleChange("verb")}/>
+            <FormControl placeholder="e.g. driving" value={this.state.verbSubmission} onChange={(e) => this.handleChange("verb", e)}/>
             <Button as={InputGroup.Append} onClick={() => this.submitWord("verb")}>Submit</Button>
           </InputGroup>
           </Col>
           <Col className="col-sm">
           <h6>Location</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. classroom" value={this.state.locationSubmission} onChange={() => this.handleChange("location")}/>
+            <FormControl placeholder="e.g. classroom" value={this.state.locationSubmission} onChange={(e) => this.handleChange("location", e)}/>
             <Button as={InputGroup.Append} onClick={() => this.submitWord("location")}>Submit</Button>
           </InputGroup>
           </Col>
