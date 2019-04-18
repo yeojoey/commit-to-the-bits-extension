@@ -195,18 +195,19 @@ const Guesser = class Guess
     word = word.toLowerCase();
 
     console.log(user+" has guessed "+word);
-
+    var cont = true;
     if(guessedBy.noun == "")
-      this.guessNoun(word, user);
-    if(guessedBy.verb == "")
-      this.guessVerb(word, user);
-    if(guessedBy.location == "")
+      cont = this.guessNoun(word, user);
+    if(cont && guessedBy.verb == "")
+      cont = this.guessVerb(word, user);
+    if(cont && guessedBy.location == "")
       this.guessLocation(word, user);
   }
 
   guessNoun(message, user)
   {
     console.log("Checking if noun.");
+    var keepGoing = true;
     if(!(words[0].submitter == user))
     {
       console.log("Guesser is not submitter.");
@@ -218,12 +219,16 @@ const Guesser = class Guess
         guessedBy.noun = user;
         answers[0].word = words[0].word;
         answers[0].guesser = user;
+        keepGoing = false;
       }
     }
+
+    return keepGoing;
   }
 
   guessVerb(message, user)
   {
+    var keepGoing = true;
     if(!(words[1].submitter == user))
     {
       let toCompare = words[1].word.toLowerCase();
@@ -232,12 +237,15 @@ const Guesser = class Guess
         guessedBy.verb = user;
         answers[1].word = words[1].word;
         answers[1].guesser = user;
+        keepGoing = false;
       }
     }
+    return keepGoing;
   }
 
   guessLocation(message, user)
   {
+    var keepGoing = true;
     if(!(words[2].user == user))
     {
       let toCompare = words[2].word.toLowerCase();
@@ -246,8 +254,10 @@ const Guesser = class Guess
         guessedBy.location = user;
         answers[2].word = words[2].word;
         answers[2].guesser = user;
+        keepGoing = false;
       }
     }
+    return keepGoing;
   }
 
   getRandomInt(max)
