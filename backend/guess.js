@@ -100,7 +100,7 @@ const Guesser = class Guess
   getState()
   {
     var state = {
-      phase: "Submission",
+      phase: false,
       words: words,
       answers: answers,
     }
