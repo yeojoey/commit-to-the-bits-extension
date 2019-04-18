@@ -7,6 +7,9 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
+
+import './GuessingGame.css';
+
 class GuessingGame extends Component {
 
   constructor(props) {
@@ -69,7 +72,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center mx-5">
-          <h5>Submission Phase</h5>
+          <h5>Submit a Word:</h5>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm">
@@ -102,10 +105,10 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center mx-5">
-          <h5>Guessing Phase</h5>
+          <h5>Words to Guess:</h5>
         </Row>
         <Row className="justify-content-md-center mx-5">
-          <Col className="col-sm">
+          <Col className="col-sm padding-md guess-box">
           <h6>Noun</h6>
           {
             this.props.answers[0].word === null ?
@@ -123,7 +126,7 @@ class GuessingGame extends Component {
           }
 
           </Col>
-          <Col className="col-sm">
+          <Col className="col-sm padding-md">
           <h6>Verb</h6>
           {
             this.props.answers[1].word === null ?
@@ -140,7 +143,7 @@ class GuessingGame extends Component {
             </div>
           }
           </Col>
-          <Col className="col-sm">
+          <Col className="col-sm padding-md">
           <h6>Location</h6>
           {
             this.props.answers[2].word === null ?
