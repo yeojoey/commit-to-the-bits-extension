@@ -385,7 +385,7 @@ function botStateQueryHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  AcaBot.setChannelID(channelId);
+  //AcaBot.setChannelID(channelId);
 
   verifyUserExists(opaqueUserId);
 

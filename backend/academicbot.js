@@ -92,7 +92,7 @@ const ABot = class AcademicBot
       {
         console.log("Checking message.");
         Guesser.guess(chatter.message, chatter.username);
-        server.attemptStateBroadcast(channelID);
+        //server.attemptStateBroadcast(channelID);
       }
 
       this.writeToLog(chatter)
