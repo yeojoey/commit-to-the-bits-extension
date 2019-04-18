@@ -141,49 +141,51 @@ class Config extends Component {
     return (
       <React.Fragment>
       <Row>
+        <div>
       { this.props.guessingGameState.phase === "Guessing" ?
-      <Button onClick={() => this.startSubmissionPhase()}>Start Submission Phase</Button> :
-      <Button onClick={() => this.startGuessingPhase()}>Start Guessing Phase</Button> }
+        <Button onClick={() => this.startSubmissionPhase()}>Start Submission Phase</Button> :
+        <Button onClick={() => this.startGuessingPhase()}>Start Guessing Phase</Button> }
+        </div>
       </Row>
       <Row>
         <Col className="col-sm">
-        {this.props.guessingGameState.words[0].word === null ? <h5>None yet</h5>
+        {this.props.guessingGameState.words[0].word === null ? <div><h5>None yet</h5></div>
           :
           <div>
             <h5>{this.props.guessingGameState.words[0].word}</h5>
             <h6>Submitted by: {this.props.guessingGameState.words[0].submitter}</h6>
           </div>
         }
-        <Button onClick={(e) => this.getGuessingWord("noun", e)}>Get New Noun</Button>
-        </Col>
-        <Col className="col-sm">
-        {this.props.guessingGameState.words[1].word === null ? <h5>None yet</h5>
-          :
-          <div>
-            <h5>{this.props.guessingGameState.words[1].word}</h5>
-            <h6>Submitted by: {this.props.guessingGameState.words[1].submitter}</h6>
-          </div>
-        }
-        <Button onClick={(e) => this.getGuessingWord("verb", e)}>Get New Verb</Button>
-        </Col>
-        <Col className="col-sm">
-        {this.props.guessingGameState.words[2].word === null ? <h5>None yet</h5>
-          :
-          <div>
-            <h5>{this.props.guessingGameState.words[2].word}</h5>
-            <h6>Submitted by: {this.props.guessingGameState.words[2].submitter}</h6>
-          </div>
-        }
-        <Button onClick={(e) => this.getGuessingWord("location", e)}>Get New Location</Button>
-        </Col>
+          <Button onClick={(e) => this.getGuessingWord("noun", e)}>Get New Noun</Button>
+          </Col>
+          <Col className="col-sm">
+          {this.props.guessingGameState.words[1].word === null ? <div><h5>None yet</h5></div>
+            :
+            <div>
+              <h5>{this.props.guessingGameState.words[1].word}</h5>
+              <h6>Submitted by: {this.props.guessingGameState.words[1].submitter}</h6>
+            </div>
+          }
+          <Button onClick={(e) => this.getGuessingWord("verb", e)}>Get New Verb</Button>
+          </Col>
+          <Col className="col-sm">
+          {this.props.guessingGameState.words[2].word === null ? <div><h5>None yet</h5></div>
+            :
+            <div>
+              <h5>{this.props.guessingGameState.words[2].word}</h5>
+              <h6>Submitted by: {this.props.guessingGameState.words[2].submitter}</h6>
+            </div>
+          }
+          <Button onClick={(e) => this.getGuessingWord("location", e)}>Get New Location</Button>
+          </Col>
         </Row>
         <Row>
-        <div>
-          <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
-          <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
-          <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
-          <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>
-        </div>
+          <div>
+            <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
+            <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
+            <Button onClick={() => this.handleChangeGame("FreezeTag")}>Start Freeze Tag</Button>{' '}
+            <Button onClick={() => this.handleChangeGame("Music")}>Start Music Game</Button>
+          </div>
         </Row>
       </React.Fragment>
     )
