@@ -45,14 +45,14 @@ const Guesser = class Guess
     console.log("Submitting "+word+" as "+type+". Word submitted by "+user);
 
     if(type == "noun")
-      addNoun(word, user);
+      this.addNoun(word, user);
     else if(type == "verb")
     {
-      addVerb(word, user);
+      this.addVerb(word, user);
     }
     else if(type == "location")
     {
-      addLocation(word, user);
+      this.addLocation(word, user);
     }
   }
 
@@ -110,11 +110,11 @@ const Guesser = class Guess
   getWord(type)
   {
     if(type == "noun")
-      return getNoun();
+      return this.getNoun();
     else if(type == "verb")
-      return getVerb();
+      return this.getVerb();
     else if(type == "location")
-      return getLocation();
+      return this.getLocation();
   }
 
   getNoun()
@@ -198,11 +198,11 @@ const Guesser = class Guess
     word = word.toLowerCase();
 
     if(guessedBy.noun == "")
-      guessNoun(word, user);
+      this.guessNoun(word, user);
     if(guessedBy.verb == "")
-      guessVerb(word, user);
+      this.guessVerb(word, user);
     if(guessedBy.location == "")
-      guessLocation(word, user);
+      this.guessLocation(word, user);
   }
 
   guessNoun(message, user)
