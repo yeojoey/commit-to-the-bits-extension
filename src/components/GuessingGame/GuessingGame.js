@@ -126,7 +126,7 @@ class GuessingGame extends Component {
           }
           </div>
           </Col>
-          <Col className="col-sm margin-md guess-box">
+          <Col className="col-sm margin-md">
           <div className="guess-box">
           <h6>Verb</h6>
           {
@@ -144,7 +144,7 @@ class GuessingGame extends Component {
           }
           </div>
           </Col>
-          <Col className="col-sm margin-md guess-box">
+          <Col className="col-sm margin-md">
           <div className="guess-box">
           <h6>Location</h6>
           {
