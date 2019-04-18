@@ -106,7 +106,6 @@ class App extends Component {
           })
 
           this.twitch.listen("broadcast", (target, contentType, message) => {
-            console.log("broadcast received");
             this.setState(JSON.parse(message));
             this.getState();
           })
@@ -118,7 +117,6 @@ class App extends Component {
           this.twitch.onContext((context,delta)=>{
               this.contextUpdate(context,delta)
           })
-
 
       }
 
@@ -157,7 +155,6 @@ class App extends Component {
   }
 
   handleEnqueue = async (discordTag) => {
-    console.log("attempting to enqueue " + discordTag);
     const response = await fetch ("/api/enqueueAudienceMember", {
       method: "POST",
       headers: {
@@ -180,7 +177,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log("Guest Star: " + body.guestStar);
     this.setState(body);
   }
 
@@ -194,7 +190,6 @@ class App extends Component {
       }
     });
     const body = await response.json();
-    console.log("Guest Star: " + body.guestStar);
     this.setState(body);
   }
 
@@ -250,7 +245,7 @@ class App extends Component {
                     guestStar={this.state.guestStar}
                     currentDJ={this.state.dj}
                     selectedSongs={this.state.musicQueue}
-                    guessingWords={this.state.guessingGame.words}
+                    guessingGameState ={this.state.guessingGame}
                     />
           : ""}
         </Row>
@@ -264,7 +259,6 @@ class App extends Component {
 
 
   renderGame = () => {
-    console.log(this.state.currentGame);
     if (this.state.currentGame === "FreezeTag") {
       return ( <React.Fragment>{ this.renderFreezeTag() }</React.Fragment> );
     }
@@ -380,7 +374,7 @@ class App extends Component {
                           guestStar={this.state.guestStar}
                           currentDJ={this.state.dj}
                           selectedSongs={this.state.musicQueue}
-                          guessingWords = {this.state.guessingGame.words}
+                          guessingGameState = {this.state.guessingGame}
                           />
                     </Row>
                   {this.renderHomepage()}

@@ -20,6 +20,9 @@ class GuessingGame extends Component {
   }
 
   submitWord = async (type, word, event) => {
+    if (word === "") {
+      return;
+    }
     const response = await fetch ("/api/submitWord", {
       method: "POST",
       headers: {
@@ -30,7 +33,7 @@ class GuessingGame extends Component {
       }
     });
     const body = await response.json();
-    switch (word) {
+    switch (type) {
       case "noun":
         this.state.nounSubmission = "";
         break;
@@ -47,7 +50,6 @@ class GuessingGame extends Component {
   }
 
   handleChange =  (type, e) => {
-    console.log("Word type: " + type);
     if (type === "noun") {
       this.setState({
         nounSubmission: e.target.value
