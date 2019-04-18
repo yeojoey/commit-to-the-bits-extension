@@ -73,22 +73,22 @@ class GuessingGame extends Component {
           <Col className="col-sm">
           <h6>Noun</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. fisherman" value={this.state.nounSubmission} onChange={(e) => this.handleChange("noun", this.state.nounSubmission, e)}/>
-            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("noun", e)} >Submit</Button>
+            <FormControl placeholder="e.g. fisherman" value={this.state.nounSubmission} onChange={(e) => this.handleChange("noun", e)}/>
+            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("noun", this.state.nounSubmission, e)} >Submit</Button>
           </InputGroup>
           </Col>
           <Col className="col-sm">
           <h6>Verb</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. driving" value={this.state.verbSubmission} onChange={(e) => this.handleChange("verb", this.state.verbSubmission, e)}/>
-            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("verb", e)}>Submit</Button>
+            <FormControl placeholder="e.g. driving" value={this.state.verbSubmission} onChange={(e) => this.handleChange("verb", e)}/>
+            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("verb", this.state.verbSubmission, e)}>Submit</Button>
           </InputGroup>
           </Col>
           <Col className="col-sm">
           <h6>Location</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-            <FormControl placeholder="e.g. classroom" value={this.state.locationSubmission} onChange={(e) => this.handleChange("location", this.state.locationSubmission, e)}/>
-            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("location", e)}>Submit</Button>
+            <FormControl placeholder="e.g. classroom" value={this.state.locationSubmission} onChange={(e) => this.handleChange("location", e)}/>
+            <Button as={InputGroup.Append} onClick={(e) => this.submitWord("location", this.state.locationSubmission, e)}>Submit</Button>
           </InputGroup>
           </Col>
         </Row>
