@@ -385,6 +385,8 @@ function botStateQueryHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
+  AcaBot.setChannelID(channelId);
+
   verifyUserExists(opaqueUserId);
 
   const state = getState(opaqueUserId);
@@ -1005,7 +1007,7 @@ function getWordHandler(req)
 }
 
 //**********************************
-//***GUESSING GAME HANDLING START***
+//***GUESSING GAME HANDLING END***
 //**********************************
 
 function attemptStateBroadcast(channelId) {

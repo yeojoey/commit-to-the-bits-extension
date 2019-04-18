@@ -4,12 +4,14 @@ const fs = require('fs')
 var os = require('os')
 const GoogleSheetHandler = require('./googleSheetHandler.js');
 const VoteHandler = require('./voteHandler.js');
+const server = require('./server.js');
 
 require('dotenv').config();
 
 const GoogSheet = new GoogleSheetHandler();
 var Voter;
 var Guesser;
+var channelID = "";
 
 const ABot = class AcademicBot
 {
@@ -90,6 +92,7 @@ const ABot = class AcademicBot
       {
         console.log("Checking message.");
         Guesser.guess(chatter.message, chatter.username);
+        server.attemptStateBroadcast(channelID);
       }
 
       this.writeToLog(chatter)
@@ -160,6 +163,11 @@ const ABot = class AcademicBot
   setCaptain(cap)
   {
     this.captain = cap;
+  }
+
+  setChannelID(id)
+  {
+    channelID = id;
   }
   //TIMER FOR PRINTING DISCLAIMER and/or CONSENT FORM
 
