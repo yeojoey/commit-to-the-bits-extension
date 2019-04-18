@@ -11,7 +11,7 @@ class Config extends Component {
     super(props)
     this.state = {
       queue: "",
-      guessingGameState.words: [{word: null, submitter: null}, {word: null, submitter: null}, {word: null, submitter: null}]
+      words: [{word: null, submitter: null}, {word: null, submitter: null}, {word: null, submitter: null}]
     }
   }
 
