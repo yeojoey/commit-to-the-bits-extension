@@ -141,8 +141,10 @@ class Config extends Component {
     return (
       <React.Fragment>
       <Row>
-      {this.props.ph}
-      <Button>Start Guessing Phase</Button>
+      { this.props.guessingGameState.phase === "Guessing" ?
+      <Button onClick={() => this.startSubmissionPhase()}>Start Submission Phase</Button> :
+      <Button onClick={() => this.stateGuessingPhase()}>Start Guessing Phase</Button> }
+
       </Row>
       <Row>
         <Col className="col-sm">
