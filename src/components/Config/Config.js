@@ -89,14 +89,13 @@ class Config extends Component {
     const body = await response.json();
   }
 
-  getGuessingWord = async (e) => {
-    console.log(e.target.wordType);
+  getGuessingWord = async (type, e) => {
     const response = await fetch ("/api/getWord", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.props.authToken,
-        "type": e.target.wordType
+        "type": type
       }
     });
     const body = await response.json();
@@ -130,7 +129,7 @@ class Config extends Component {
             <h6>Submitted by: {this.props.guessingWords[0].submitter}</h6>
           </div>
         }
-        <Button wordType="noun" onClick={() => this.getGuessingWord()}>Get New Noun</Button>
+        <Button onClick={(e) => this.getGuessingWord("noun", e)}>Get New Noun</Button>
         </Col>
         <Col className="col-sm">
         {this.props.guessingWords[1].word === null ? <h5>None yet</h5>
@@ -140,7 +139,7 @@ class Config extends Component {
             <h6>Submitted by: {this.props.guessingWords[1].submitter}</h6>
           </div>
         }
-        <Button>Get New Verb</Button>
+        <Button onClick={(e) => this.getGuessingWord("verb", e)}>Get New Verb</Button>
         </Col>
         <Col className="col-sm">
         {this.props.guessingWords[2].word === null ? <h5>None yet</h5>
@@ -150,7 +149,7 @@ class Config extends Component {
             <h6>Submitted by: {this.props.guessingWords[2].submitter}</h6>
           </div>
         }
-        <Button>Get New Location</Button>
+        <Button onClick={(e) => this.getGuessingWord("location", e)}>Get New Location</Button>
         </Col>
         </Row>
         <Row>
