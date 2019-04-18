@@ -118,7 +118,6 @@ class App extends Component {
               this.contextUpdate(context,delta)
           })
 
-
       }
 
   }
@@ -246,7 +245,7 @@ class App extends Component {
                     guestStar={this.state.guestStar}
                     currentDJ={this.state.dj}
                     selectedSongs={this.state.musicQueue}
-                    guessingWords={this.state.guessingGame.words}
+                    guessingGameState ={this.state.guessingGame}
                     />
           : ""}
         </Row>
@@ -375,7 +374,7 @@ class App extends Component {
                           guestStar={this.state.guestStar}
                           currentDJ={this.state.dj}
                           selectedSongs={this.state.musicQueue}
-                          guessingWords = {this.state.guessingGame.words}
+                          guessingGameState = {this.state.guessingGame}
                           />
                     </Row>
                   {this.renderHomepage()}
