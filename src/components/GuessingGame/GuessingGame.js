@@ -108,16 +108,17 @@ class GuessingGame extends Component {
           <Col className="col-sm">
           <h6>Noun</h6>
           {
-            this.state.answers[0].word === null ?
-            <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-              <FormControl placeholder="e.g. fisherman" id="noun" value={this.state.nounSubmission} onChange={this.handleChange}/>
-              <Button as={InputGroup.Append} id="noun" onClick={() => this.submitNoun()} >Submit</Button>
-            </InputGroup>
+            this.props.answers[0].word === null ?
+            <div>
+              <h4>???</h4>
+              <h6>Submitted by: ???</h6>
+              <h6>GUESS IN CHAT</h6>
+            </div>
             :
             <div>
-              <h4>{this.state.answers[0].word}</h4>
-              <h6>Guessed by: {this.state.answers[0].guesser}</h6>
-              <h6>Submitted by: {this.state.answers[0].submitter}</h6>
+              <h4>{this.props.answers[0].word}</h4>
+              <h6>Guessed by: {this.props.answers[0].guesser}</h6>
+              <h6>Submitted by: {this.props.answers[0].submitter}</h6>
             </div>
           }
 
@@ -125,32 +126,34 @@ class GuessingGame extends Component {
           <Col className="col-sm">
           <h6>Verb</h6>
           {
-            this.state.answers[1].word === null ?
-            <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-              <FormControl placeholder="e.g. driving" id="verb" value={this.state.verbSubmission} onChange={this.handleChange}/>
-              <Button as={InputGroup.Append} id="verb" onClick={() => this.submitVerb()}>Submit</Button>
-            </InputGroup>
+            this.props.answers[1].word === null ?
+            <div>
+              <h4>???</h4>
+              <h6>Submitted by: ???</h6>
+              <h6>GUESS IN CHAT</h6>
+            </div>
             :
             <div>
-              <h4>{this.state.answers[1].word}</h4>
-              <h6>Guessed by: {this.state.answers[1].guesser}</h6>
-              <h6>Submitted by: {this.state.answers[0].submitter}</h6>
+              <h4>{this.props.answers[1].word}</h4>
+              <h6>Guessed by: {this.props.answers[1].guesser}</h6>
+              <h6>Submitted by: {this.props.answers[0].submitter}</h6>
             </div>
           }
           </Col>
           <Col className="col-sm">
           <h6>Location</h6>
           {
-            this.state.answers[2].word === null ?
-            <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
-              <FormControl placeholder="e.g. classroom" id="location"  value={this.state.locationSubmission} onChange={this.handleChange}/>
-              <Button as={InputGroup.Append} id="location" onClick={() => this.submitLocation()}>Submit</Button>
-            </InputGroup>
+            this.props.answers[2].word === null ?
+            <div>
+              <h4>???</h4>
+              <h6>Submitted by: ???</h6>
+              <h6>GUESS IN CHAT</h6>
+            </div>
             :
             <div>
-              <h4>{this.state.answers[2].word}</h4>
-              <h6>Guessed by: {this.state.answers[2].guesser}</h6>
-              <h6>Submitted by: {this.state.answers[2].submitter}</h6>
+              <h4>{this.props.answers[2].word}</h4>
+              <h6>Submitted by: {this.props.answers[2].submitter}</h6>
+              <h6>Guessed by: {this.props.answers[2].guesser}</h6>
             </div>
           }
           </Col>
@@ -160,11 +163,12 @@ class GuessingGame extends Component {
   }
 
   render () {
-    if (this.props.phase === "Submission") {
-      return (<React.Fragment>{this.renderSubmission()}</React.Fragment>);
-    } else {
-      return (<React.Fragment>{this.renderGuessing()}</React.Fragment>);
-    }
+    return (
+      <React.Fragment>
+      {this.renderGuessing()}
+      {this.renderSubmission()}
+      </React.Fragment>
+    )
   }
 
 }
