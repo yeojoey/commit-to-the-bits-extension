@@ -121,7 +121,7 @@ const Guesser = class Guess
   getNoun()
   {
     console.log("Getting a noun.");
-    if(nouns.length <= 0))
+    if(nouns.length <= 0)
     {
       nouns = previousNouns.slice();
       previousNouns = [];
@@ -143,7 +143,7 @@ const Guesser = class Guess
   getVerb()
   {
     console.log("Getting a verb.");
-    if(verbs.length <= 0))
+    if(verbs.length <= 0)
     {
       verbs = previousVerbs.slice();
       previousVerbs = [];
@@ -165,7 +165,7 @@ const Guesser = class Guess
   getLocation()
   {
     console.log("Getting a location.");
-    if(locations.length <= 0))
+    if(locations.length <= 0)
     {
       locations = previousLocations.slice();
       previousLocations = [];
