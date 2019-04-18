@@ -88,6 +88,7 @@ const ABot = class AcademicBot
 
       if(this.guess)
       {
+        console.log("Checking message.");
         Guesser.guess(chatter.message, chatter.username);
       }
 

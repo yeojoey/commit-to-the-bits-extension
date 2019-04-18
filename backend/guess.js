@@ -198,6 +198,8 @@ const Guesser = class Guess
 
     word = word.toLowerCase();
 
+    console.log(user+" has guessed "+word);
+
     if(guessedBy.noun == "")
       this.guessNoun(word, user);
     if(guessedBy.verb == "")
@@ -208,11 +210,15 @@ const Guesser = class Guess
 
   guessNoun(message, user)
   {
+    console.log("Checking if noun.");
     if(!(words[0].submitter == user))
     {
+      console.log("Guesser is not submitter.");
       let toCompare = words[0].word.toLowerCase();
+      console.log("Comparing "+message+" with "+toCompare);
       if(message.includes(toCompare))
       {
+        console.log("They match.");
         guessedBy.noun = user;
         answers[0].word = words[0].word;
         answers[0].guesser = user;
