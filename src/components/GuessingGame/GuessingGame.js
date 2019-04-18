@@ -17,7 +17,7 @@ class GuessingGame extends Component {
       locationSubmission: "",
       answers: [{word: null, guesser: null, submitter: null}, {word: null, guesser: null, submitter: null}, {word: "bathroom", guesser: "committothebits", submitter: "charlieparke"}]
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this, 'type');
   }
 
   submitWord = async (event) => {
