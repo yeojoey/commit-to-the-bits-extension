@@ -21,7 +21,7 @@ class GuessingGame extends Component {
 
   submitWord = async (type, event) => {
     const response = await fetch ("/api/submitWord", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         "authorization": this.props.authToken,
