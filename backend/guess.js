@@ -1,4 +1,5 @@
 require('dotenv').config();
+const request = require('request-promise');
 
 //Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
 const words = [
@@ -38,7 +39,7 @@ const Guesser = class Guess
 
   async addWord(word, uid, type)
   {
-    let promise = await this.convertUidToUsername(id);
+    let promise = await this.convertUidToUsername(uid);
     promise = JSON.parse(promise);
     var user = promise.display_name;
 
@@ -191,7 +192,7 @@ const Guesser = class Guess
 
   async guess(word, uid)
   {
-    let promise = await this.convertUidToUsername(id);
+    let promise = await this.convertUidToUsername(uid);
     promise = JSON.parse(promise);
     var user = promise.display_name;
 
