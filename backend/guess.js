@@ -190,12 +190,8 @@ const Guesser = class Guess
     return word.word;
   }
 
-  async guess(word, uid)
+  guess(word, user)
   {
-    let promise = await this.convertUidToUsername(uid);
-    promise = JSON.parse(promise);
-    var user = promise.display_name;
-
     word = word.toLowerCase();
 
     console.log(user+" has guessed "+word);
