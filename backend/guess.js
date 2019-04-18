@@ -1,4 +1,5 @@
 require('dotenv').config();
+const request = require('request-promise');
 
 //Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
 const words = [
