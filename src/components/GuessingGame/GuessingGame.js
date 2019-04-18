@@ -50,7 +50,6 @@ class GuessingGame extends Component {
   }
 
   handleChange =  (type, e) => {
-    console.log("Word type: " + type);
     if (type === "noun") {
       this.setState({
         nounSubmission: e.target.value
