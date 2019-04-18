@@ -362,7 +362,7 @@ class App extends Component {
               <div className="App">
                 <Container fluid={true}>
                   {this.renderHeader()}
-                  <Row className="justify-content-md-center Config">
+                  <div className="justify-content-md-center Config">
                   <Config currentGame = {this.state.currentGame}
                           isVoting={this.state.isVoting}
                           authToken ={this.Authentication.state.token}
@@ -376,7 +376,7 @@ class App extends Component {
                           selectedSongs={this.state.musicQueue}
                           guessingGameState = {this.state.guessingGame}
                           />
-                    </Row>
+                    </div>
                   {this.renderHomepage()}
                 </Container>
               </div>
