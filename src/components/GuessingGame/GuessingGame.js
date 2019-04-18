@@ -72,7 +72,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center">
-          <h6>SUBMIT A WORD</h6>
+          <h5>SUBMIT A WORD BELOW</h5>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm">
@@ -105,7 +105,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center mx-5">
-          <h5>GUESS THE NOUN, WORD & LOCATION IN CHAT!</h5>
+          <h5>GUESS THE NOUN, WORD & LOCATION <b>IN CHAT!</b></h5>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm margin-md guess-box">
@@ -123,7 +123,6 @@ class GuessingGame extends Component {
               <h6>Submitted by: {this.props.answers[0].submitter}</h6>
             </div>
           }
-
           </Col>
           <Col className="col-sm margin-md guess-box">
           <h6>Verb</h6>
