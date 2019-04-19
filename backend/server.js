@@ -974,6 +974,7 @@ function beginGuessingHandler(req)
 
   AcaBot.setGuessing(true);
   Gus.clearGuessers();
+  Gus.clearAnswers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
@@ -987,7 +988,6 @@ function beginWordSubmissionHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(false);
-  Gus.clearAnswers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
