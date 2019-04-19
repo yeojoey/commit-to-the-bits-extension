@@ -150,7 +150,7 @@ class GuessingGame extends Component {
             <div>
               <h4>{this.props.answers[1].word}</h4>
               <h6>Guessed by: {this.props.answers[1].guesser}</h6>
-              <h6>Submitted by: {this.props.answers[0].submitter}</h6>
+              <h6>Submitted by: {this.props.answers[1].submitter}</h6>
             </div>
           }
           </div>
@@ -167,8 +167,8 @@ class GuessingGame extends Component {
             :
             <div>
               <h4>{this.props.answers[2].word}</h4>
-              <h6>Submitted by: {this.props.answers[2].submitter}</h6>
               <h6>Guessed by: {this.props.answers[2].guesser}</h6>
+              <h6>Submitted by: {this.props.answers[2].submitter}</h6>
             </div>
           }
           </div>
