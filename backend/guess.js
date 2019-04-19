@@ -42,6 +42,7 @@ const Guesser = class Guess
     let promise = await this.convertUidToUsername(uid);
     promise = JSON.parse(promise);
     var user = promise.display_name;
+    user = user.toLowerCase();
 
     console.log("Submitting "+word+" as "+type+". Word submitted by "+user);
 
