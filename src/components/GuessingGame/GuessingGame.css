@@ -2,3 +2,9 @@
     background-color: rgba(110, 60, 190, 0.7);
     padding: 10px;
 }
+
+.switch-tab {
+  float: right;
+  position: absolute;
+  z-index: 1000
+}
