@@ -122,6 +122,8 @@ const Guesser = class Guess
       return this.getVerb();
     else if(type == "location")
       return this.getLocation();
+
+    console.log(answers);
   }
 
   getNoun()
