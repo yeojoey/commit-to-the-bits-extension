@@ -1041,7 +1041,7 @@ function sendStateBroadcast(channelId) {
   //I hope this doesn't break everything
   const guessState = Gus.getState();
   let actualGuessPhase = AcaBot.getGuessing();
-  console.log("Broadcasting Guess Answers: "+guessState.answers);
+  console.log("Broadcasting Guess Answers: "+guessState.answers[0]);
   guessState.phase = actualGuessPhase;
   const obj = JSON.stringify({ guessingGame: {phase: guessState.phase, words: guessState.words, answers: guessState.answers}, isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
