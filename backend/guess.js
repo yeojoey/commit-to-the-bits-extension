@@ -145,6 +145,7 @@ const Guesser = class Guess
     words[0].submitter = word.user;
     answers[0].submitter = word.user;
     console.log("Got noun: "+word.word);
+    console.log("SUBMITTER: "+words[0].submitter);
     return word.word;
   }
 
