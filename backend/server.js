@@ -975,6 +975,7 @@ function beginGuessingHandler(req)
   AcaBot.setGuessing(true);
   Gus.clearGuessers();
   Gus.clearAnswers();
+  Gus.setPublic();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);

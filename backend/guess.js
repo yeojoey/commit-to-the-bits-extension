@@ -112,7 +112,10 @@ const Guesser = class Guess
     answers[0].guesser = null;
     answers[1].guesser = null;
     answers[2].guesser = null;
+  }
 
+  setPublic()
+  {
     publicAnswers = answers.slice();
   }
 
