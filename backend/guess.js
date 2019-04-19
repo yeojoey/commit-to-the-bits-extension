@@ -25,6 +25,12 @@ var answers = [
   {word: null, submitter: null, guesser: null}
 ];
 
+var publicAnswers = [
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null}
+];
+
 //These objects store more objects that contain a suggested word and the user who submitted the word. There are 'previous' versions to allow us to avoid repeating words.
 var nouns = [];
 var verbs = [];
@@ -105,6 +111,8 @@ const Guesser = class Guess
     answers[0].guesser = null;
     answers[1].guesser = null;
     answers[2].guesser = null;
+
+    publicAnswers = answers;
   }
 
   getState()
@@ -112,7 +120,7 @@ const Guesser = class Guess
     var state = {
       phase: false,
       words: words,
-      answers: answers,
+      answers: publicAnswers,
     }
 
     return state;
