@@ -1,5 +1,6 @@
 require('dotenv').config();
 const request = require('request-promise');
+const stringSimilarity = require('string-similarity');
 
 //Stores objects that contain a word and the user who submitted the word. This object stores the selections from randomly choosing a noun, verb, or location.
 const words = [
@@ -7,6 +8,8 @@ const words = [
   {word: null, submitter: null},
   {word: null, submitter: null}
 ];
+
+const similarityThreshold = .75;
 
 //Stores the username of the person who correctly guessed the noun, verb, or loaction.
 var guessedBy = {
@@ -209,16 +212,17 @@ const Guesser = class Guess
     return !cont;
   }
 
-  guessNoun(message, user)
+  guessNoun(stringReceived, user)
   {
     console.log("Checking if noun.");
     var keepGoing = true;
     if(!(words[0].submitter == user))
     {
       console.log("Guesser is not submitter.");
-      let toCompare = words[0].word.toLowerCase();
-      console.log("Comparing "+message+" with "+toCompare);
-      if(message.includes(toCompare))
+      let correctString = words[0].word.toLowerCase();
+      console.log("Comparing "+stringReceived+" with "+correctString);
+      let simValue = stringSimilarity.compareTwoStrings(stringReceived, correctString);
+      if(simValue >= similarityThreshold)
       {
         console.log("They match.");
         guessedBy.noun = user;
@@ -231,13 +235,15 @@ const Guesser = class Guess
     return keepGoing;
   }
 
-  guessVerb(message, user)
+  guessVerb(stringReceived, user)
   {
     var keepGoing = true;
     if(!(words[1].submitter == user))
     {
-      let toCompare = words[1].word.toLowerCase();
-      if(message.includes(toCompare))
+      let correctString = words[1].word.toLowerCase();
+      console.log("Comparing "+stringReceived+" with "+correctString);
+      let simValue = stringSimilarity.compareTwoStrings(stringReceived, correctString);
+      if(simValue >= similarityThreshold)
       {
         guessedBy.verb = user;
         answers[1].word = words[1].word;
@@ -248,13 +254,15 @@ const Guesser = class Guess
     return keepGoing;
   }
 
-  guessLocation(message, user)
+  guessLocation(stringReceived, user)
   {
     var keepGoing = true;
     if(!(words[2].user == user))
     {
-      let toCompare = words[2].word.toLowerCase();
-      if(message.includes(toCompare))
+      let correctString = words[2].word.toLowerCase();
+      console.log("Comparing "+stringReceived+" with "+correctString);
+      let simValue = stringSimilarity.compareTwoStrings(stringReceived, correctString);
+      if(simValue >= similarityThreshold)
       {
         guessedBy.location = user;
         answers[2].word = words[2].word;
