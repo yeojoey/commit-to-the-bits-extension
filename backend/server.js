@@ -1039,7 +1039,10 @@ function sendStateBroadcast(channelId) {
   const state = Voter.getState();
   const museState = Muse.getState();
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
+  const guessState = Gus.getState();
+  let actualGuessPhase = AcaBot.getGuessing();
+  guessState.phase = actualGuessPhase;
+  const obj = JSON.stringify({ guessingGame: {phase: guessState.phase, words: guessState.words, answers: guessState.answers}, isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
