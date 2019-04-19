@@ -230,6 +230,8 @@ const Guesser = class Guess
     if(cont && guessedBy.location == "")
       cont = this.guessLocation(word, user);
 
+    publicAnswers = JSON.parse(JSON.stringify(answers));
+
     return !cont;
   }
 
