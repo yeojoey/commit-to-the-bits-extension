@@ -970,7 +970,7 @@ function beginGuessingHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(true);
-  AcaBot.clearWords();
+  Gus.clearWords();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
