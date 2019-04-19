@@ -159,8 +159,10 @@ const Guesser = class Guess
 
     words[0].word = word.word;
     words[0].submitter = word.user;
+    console.log("BEFORE");
+    console.log(publicAnswers);
     answers[0].submitter = word.user;
-    console.log("Got noun: "+word.word);
+    console.log("AFTER");
     console.log(publicAnswers);
     return word.word;
   }
