@@ -988,6 +988,8 @@ function beginWordSubmissionHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(false);
+  Gus.clearGuessers();
+  Gus.clearAnswers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
