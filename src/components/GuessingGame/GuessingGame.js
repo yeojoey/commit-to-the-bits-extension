@@ -80,7 +80,7 @@ class GuessingGame extends Component {
   renderSubmission() {
     return (
       <React.Fragment>
-        <div className="switch-tab float-right"><Button onClick={() => this.switchMode()}>View guessed words</Button></div>
+        <div className="switch-tab"><Button onClick={() => this.switchMode()}>View guessed words</Button></div>
         <Row className="justify-content-md-center">
           <h5>SUBMIT A WORD BELOW</h5>
         </Row>
