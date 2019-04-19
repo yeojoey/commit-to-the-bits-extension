@@ -598,7 +598,10 @@ function changeGameHandler (req) {
   const botState = Voter.getState();
   currentGame = req.headers.game;
   if(currentGame == "GuessingGame")
-    Gus.clearWords();
+  {
+    Gus.clearGuessers();
+    Gus.clearAnswers();
+  }
   else
     AcaBot.setGuessing(false);
 
@@ -970,7 +973,8 @@ function beginGuessingHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(true);
-  Gus.clearWords();
+  Gus.clearGuessers();
+  Gus.clearAnswers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
@@ -984,6 +988,8 @@ function beginWordSubmissionHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(false);
+  Gus.clearGuessers();
+  Gus.clearAnswers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);
@@ -1036,7 +1042,11 @@ function sendStateBroadcast(channelId) {
   const state = Voter.getState();
   const museState = Muse.getState();
   //I hope this doesn't break everything
-  const obj = JSON.stringify({ isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
+  const guessState = Gus.getState();
+  let actualGuessPhase = AcaBot.getGuessing();
+  console.log("Broadcasting Guess Answers: "+guessState.answers[0]);
+  guessState.phase = actualGuessPhase;
+  const obj = JSON.stringify({ guessingGame: {phase: guessState.phase, words: guessState.words, answers: guessState.answers}, isVoting: state.isVoting, votes: state.votes, options: state.options, finalWord: state.finalWord, currentGame: currentGame, musicQueue: museState.musicQueue, musicOptions: museState.musicOptions, dj: museState.dj, canSelectSong: museState.canSelectSong }) ;
 
   const body = JSON.stringify({
     content_type: 'application/json',
