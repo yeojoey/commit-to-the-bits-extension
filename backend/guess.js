@@ -9,7 +9,7 @@ const words = [
 ];
 
 //Stores the username of the person who correctly guessed the noun, verb, or loaction.
-const guessedBy = {
+var guessedBy = {
   noun: "",
   verb: "",
   location: ""
