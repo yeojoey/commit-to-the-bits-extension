@@ -232,7 +232,7 @@ class App extends Component {
     if (this.state.showPanel) {
       return (
         <React.Fragment>
-        <Row className="justify-content-md-center Config">
+        <div className="justify-content-md-center Config">
           {this.Authentication.isModerator() ?
             <Config currentGame = {this.state.currentGame}
                     isVoting={this.state.isVoting}
@@ -248,7 +248,7 @@ class App extends Component {
                     guessingGameState ={this.state.guessingGame}
                     />
           : ""}
-        </Row>
+        </div>
         { this.renderGame() }
         </React.Fragment>
       )

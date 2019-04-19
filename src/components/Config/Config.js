@@ -127,7 +127,7 @@ class Config extends Component {
   render() {
     return(
       <React.Fragment>
-        <Row><h5>Config Panel</h5></Row>
+        <Row className="justify-content-md-center"><h5>Config Panel</h5></Row>
         {this.props.currentGame === "FreezeTag" ? this.renderFreezeTag() : "" }
         {this.props.currentGame === "TSA" ? this.renderTSA() : "" }
         {this.props.currentGame === "Courtroom" ? this.renderCourtroom() : "" }
@@ -140,14 +140,7 @@ class Config extends Component {
   renderGuessing () {
     return (
       <React.Fragment>
-      <Row>
-        <div>
-      { this.props.guessingGameState.phase === "Guessing" ?
-        <Button onClick={() => this.startSubmissionPhase()}>Start Submission Phase</Button> :
-        <Button onClick={() => this.startGuessingPhase()}>Start Guessing Phase</Button> }
-        </div>
-      </Row>
-      <Row>
+      <Row className="justify-content-md-center">
         <Col className="col-sm">
         {this.props.guessingGameState.words[0].word === null ? <div><h5>None yet</h5></div>
           :
@@ -179,7 +172,12 @@ class Config extends Component {
           <Button onClick={(e) => this.getGuessingWord("location", e)}>Get New Location</Button>
           </Col>
         </Row>
-        <Row>
+        <Row className="justify-content-md-center">
+          <div>
+          <Button onClick={() => this.startGuessingPhase()}>Use these words</Button>
+          </div>
+        </Row>
+        <Row className="justify-content-md-center">
           <div>
             <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
             <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
@@ -193,7 +191,7 @@ class Config extends Component {
 
   renderMusic () {
     return (
-      <React.Fragment><Row><Col>
+      <React.Fragment><Row className="justify-content-md-center"><Col>
       <div><h5>Current DJ: {this.props.currentDJ}</h5></div>
       <div><Button onClick={() => this.handleGetNextDJ()}>Get Next DJ</Button></div>
       </Col>
@@ -206,7 +204,7 @@ class Config extends Component {
       </ol>
       </Col>
       </Row>
-      <Row>
+      <Row className="justify-content-md-center">
       <div>
         <Button onClick={() => this.handleChangeGame("TSA")}>Start TSA Game</Button>{' '}
         <Button onClick={() => this.handleChangeGame("Courtroom")}>Start Courtroom</Button>{' '}
