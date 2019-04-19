@@ -431,8 +431,6 @@ function getState(userId) {
   const guessState = Gus.getState();
   let actualGuessPhase = AcaBot.getGuessing();
   guessState.phase = actualGuessPhase;
-  console.log("Guessing game state: ");
-  console.log(guessState);
 
   //verifyUserExists(userId);
   pos = getQueuePosition(userId);
