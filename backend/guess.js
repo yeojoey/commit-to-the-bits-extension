@@ -99,11 +99,9 @@ const Guesser = class Guess
 
   clearAnswers()
   {
-    answers = [
-      {word: null, submitter: null, guesser: null},
-      {word: null, submitter: null, guesser: null},
-      {word: null, submitter: null, guesser: null}
-    ];
+    answers[0].word = null;
+    answers[1].word = null;
+    answers[2].word = null;
   }
 
   getState()
