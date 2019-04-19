@@ -108,6 +108,7 @@ const Guesser = class Guess
     answers[0].word = null;
     answers[1].word = null;
     answers[2].word = null;
+
     answers[0].guesser = null;
     answers[1].guesser = null;
     answers[2].guesser = null;
@@ -157,7 +158,7 @@ const Guesser = class Guess
     words[0].submitter = word.user;
     answers[0].submitter = word.user;
     console.log("Got noun: "+word.word);
-    console.log(answers);
+    console.log(publicAnswers);
     return word.word;
   }
 
@@ -182,7 +183,7 @@ const Guesser = class Guess
     words[1].submitter = word.user;
     answers[1].submitter = word.user;
     console.log("Got verb: "+word.word);
-    console.log(answers);
+    console.log(publicAnswers);
     return word.word;
   }
 
@@ -207,7 +208,7 @@ const Guesser = class Guess
     words[2].submitter = word.user;
     answers[2].submitter = word.user;
     console.log("Got location: "+word.word);
-    console.log(answers);
+    console.log(publicAnswers);
     return word.word;
   }
 
