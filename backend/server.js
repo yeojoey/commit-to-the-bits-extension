@@ -835,7 +835,7 @@ function getInDJBucketHandler(req)
 
   //verifyUserExists(opaqueUserId);
   Muse.getInDJBucket(payload.user_id, opaqueUserId);
-
+  console.log("GOT IN DJBUCKET");
   console.log(payload);
 
   userStates[opaqueUserId].inDJBucket = true;

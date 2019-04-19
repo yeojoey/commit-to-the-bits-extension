@@ -19,6 +19,7 @@ const Muse = class Music
     {
       this.djBucket.push(uID);
       this.opaqueBucket.push(opID);
+      console.log(this.djBucket);
     }
   }
 
