@@ -81,7 +81,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center"><Col>
-          <div className="switch-tab"><Button onClick={() => this.switchMode()}>View guessed words</Button></div>
+          <div className="switch-tab"><Button variant="info" onClick={() => this.switchMode()}>View guessed words</Button></div>
           <h5>SUBMIT A WORD BELOW</h5>
         </Col></Row>
         <Row className="justify-content-md-center mx-5">
@@ -115,7 +115,7 @@ class GuessingGame extends Component {
     return (
       <React.Fragment>
         <Row className="justify-content-md-center mx-5"><Col>
-          <div className="switch-tab"><Button onClick={() => this.switchMode()}>Submit new words</Button></div>
+          <div className="switch-tab"><Button variant="info" onClick={() => this.switchMode()}>Submit new words</Button></div>
           <h5>GUESS THE NOUN, VERB & LOCATION <b>IN CHAT!</b></h5>
         </Col></Row>
         <Row className="justify-content-md-center mx-5">
