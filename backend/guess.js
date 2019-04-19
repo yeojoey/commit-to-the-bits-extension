@@ -86,14 +86,16 @@ const Guesser = class Guess
 
   clearWords()
   {
-    nouns = [];
-    verbs = [];
-    locations = [];
+    guessedBy = {
+      noun: "",
+      verb: "",
+      location: ""
+    }
 
-    words = [
-      {word: null, submitter: null},
-      {word: null, submitter: null},
-      {word: null, submitter: null}
+    answers = [
+      {word: null, submitter: null, guesser: null},
+      {word: null, submitter: null, guesser: null},
+      {word: null, submitter: null, guesser: null}
     ];
   }
 
@@ -201,7 +203,9 @@ const Guesser = class Guess
     if(cont && guessedBy.verb == "")
       cont = this.guessVerb(word, user);
     if(cont && guessedBy.location == "")
-      this.guessLocation(word, user);
+      cont = this.guessLocation(word, user);
+
+    return !cont;
   }
 
   guessNoun(message, user)
