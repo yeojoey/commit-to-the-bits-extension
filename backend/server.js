@@ -598,7 +598,10 @@ function changeGameHandler (req) {
   const botState = Voter.getState();
   currentGame = req.headers.game;
   if(currentGame == "GuessingGame")
-    Gus.clearWords();
+  {
+    Gus.clearGuessers();
+    Gus.clearAnswers();
+  }
   else
     AcaBot.setGuessing(false);
 
@@ -970,7 +973,7 @@ function beginGuessingHandler(req)
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
   AcaBot.setGuessing(true);
-  Gus.clearWords();
+  Gus.clearGuessers();
 
   //Broadcast to everyone
   attemptStateBroadcast(channelId);

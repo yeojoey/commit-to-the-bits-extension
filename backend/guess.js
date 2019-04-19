@@ -88,14 +88,17 @@ const Guesser = class Guess
     console.log(locations);
   }
 
-  clearWords()
+  clearGuessers()
   {
     guessedBy = {
       noun: "",
       verb: "",
       location: ""
     }
+  }
 
+  clearAnswers()
+  {
     answers = [
       {word: null, submitter: null, guesser: null},
       {word: null, submitter: null, guesser: null},
