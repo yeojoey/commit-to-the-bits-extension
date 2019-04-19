@@ -5,6 +5,5 @@
 
 .switch-tab {
   float: right;
-  position: absolute;
   z-index: 1000
 }
