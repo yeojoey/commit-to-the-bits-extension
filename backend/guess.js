@@ -116,7 +116,7 @@ const Guesser = class Guess
 
   setPublic()
   {
-    publicAnswers = answers.slice();
+    publicAnswers = JSON.parse(JSON.stringify(answers));
   }
 
   getState()
