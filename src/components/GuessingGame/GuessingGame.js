@@ -82,7 +82,7 @@ class GuessingGame extends Component {
       <React.Fragment>
         <Row className="justify-content-md-center">
           <h5>SUBMIT A WORD BELOW</h5>
-          <div className="switch-tab ">{'                   '}<Button onClick={() => this.switchMode()}>View guessed words</Button></div>
+          <div className="switch-tab"><Button onClick={() => this.switchMode()}>View guessed words</Button></div>
         </Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm">
