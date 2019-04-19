@@ -91,8 +91,9 @@ const ABot = class AcademicBot
       if(this.guess)
       {
         console.log("Checking message.");
-        Guesser.guess(chatter.message, chatter.username);
-        //server.attemptStateBroadcast(channelID);
+        let foundMatch = Guesser.guess(chatter.message, chatter.username);
+        if(foundMatch)
+          server.attemptStateBroadcast(server.getCHID());
       }
 
       this.writeToLog(chatter)

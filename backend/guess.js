@@ -201,7 +201,9 @@ const Guesser = class Guess
     if(cont && guessedBy.verb == "")
       cont = this.guessVerb(word, user);
     if(cont && guessedBy.location == "")
-      this.guessLocation(word, user);
+      cont = this.guessLocation(word, user);
+
+    return !cont;
   }
 
   guessNoun(message, user)

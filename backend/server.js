@@ -57,6 +57,7 @@ const channelCooldowns = {};                // rate limit compliance
 let userCooldowns = {};                     // spam prevention
 
 const queue = [];                           // Used for queueing users for Courtroom Game
+var guessingGameChannelID = "";
 var djBucket = [];                        // Used for collecting users who want to be DJ
 var dj = "";
 
@@ -385,7 +386,7 @@ function botStateQueryHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
-  //AcaBot.setChannelID(channelId);
+  //locationnnelID(channelId);
 
   verifyUserExists(opaqueUserId);
 
@@ -464,7 +465,6 @@ function getState(userId) {
     }
   };
   return toReturn;
-
 }
 
 function botClearHandler(req)
@@ -997,6 +997,8 @@ function getWordHandler(req)
   const payload = verifyAndDecode(req.headers.authorization);
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 
+  guessingGameChannelID = channelId;
+
   const type = req.headers.type;
   console.log("Received 'Get Word' request. Type: "+type);
   Gus.getWord(type);
@@ -1086,3 +1088,11 @@ function userIsInCooldown(opaqueUserId) {
   userCooldowns[opaqueUserId] = now + userCooldownMs;
   return false;
 }
+//TESTING
+function getCHID()
+{
+  return guessingGameChannelID;
+}
+//TESTSING
+module.exports.attemptStateBroadcast = attemptStateBroadcast;
+module.exports.getCHID = getCHID;
