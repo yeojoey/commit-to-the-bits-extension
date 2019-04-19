@@ -17,6 +17,4 @@
 
 .floating-header {
   float: right;
-  position: absolute;
-  z-index: 1000;
 }

@@ -15,6 +15,7 @@ class GuessingGame extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      mode: "Guessing",
       nounSubmission: "",
       verbSubmission: "",
       locationSubmission: "",
@@ -68,9 +69,18 @@ class GuessingGame extends Component {
     }
   }
 
+  switchMode = () => {
+    if (this.state.mode === "Guessing") {
+      this.setState({mode: "Submission"});
+    } else {
+      this.setState({mode: "Guessing"})
+    }
+  }
+
   renderSubmission() {
     return (
       <React.Fragment>
+        <div className="switch-tab"><Button onClick={() => this.switchMode()}>View guessed words</Button></div>
         <Row className="justify-content-md-center">
           <h5>SUBMIT A WORD BELOW</h5>
         </Row>
@@ -104,6 +114,7 @@ class GuessingGame extends Component {
   renderGuessing() {
     return (
       <React.Fragment>
+        <div className="switch-tab"><Button onClick={() => this.switchMode()}>Submit new words</Button></div>
         <Row className="justify-content-md-center mx-5">
           <h5>GUESS THE NOUN, VERB & LOCATION <b>IN CHAT!</b></h5>
         </Row>
@@ -170,8 +181,7 @@ class GuessingGame extends Component {
   render () {
     return (
       <React.Fragment>
-      {this.renderGuessing()}
-      {this.renderSubmission()}
+      {this.state.mode === "Guessing" ? this.renderGuessing() : this.renderSubmission() }
       </React.Fragment>
     )
   }
