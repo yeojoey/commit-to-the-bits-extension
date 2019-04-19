@@ -86,14 +86,16 @@ const Guesser = class Guess
 
   clearWords()
   {
-    nouns = [];
-    verbs = [];
-    locations = [];
+    guessedBy = {
+      noun: "",
+      verb: "",
+      location: ""
+    }
 
-    words = [
-      {word: null, submitter: null},
-      {word: null, submitter: null},
-      {word: null, submitter: null}
+    answers = [
+      {word: null, submitter: null, guesser: null},
+      {word: null, submitter: null, guesser: null},
+      {word: null, submitter: null, guesser: null}
     ];
   }
 
