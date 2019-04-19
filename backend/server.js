@@ -601,6 +601,7 @@ function changeGameHandler (req) {
   {
     Gus.clearGuessers();
     Gus.clearAnswers();
+    Gus.setPublic();
   }
   else
     AcaBot.setGuessing(false);
