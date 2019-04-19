@@ -112,7 +112,7 @@ const Guesser = class Guess
     answers[1].guesser = null;
     answers[2].guesser = null;
 
-    publicAnswers = answers;
+    publicAnswers = answers.slice();
   }
 
   getState()
