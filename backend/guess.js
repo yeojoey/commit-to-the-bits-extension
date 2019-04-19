@@ -102,6 +102,9 @@ const Guesser = class Guess
     answers[0].word = null;
     answers[1].word = null;
     answers[2].word = null;
+    answers[0].guesser = null;
+    answers[1].guesser = null;
+    answers[2].guesser = null;
   }
 
   getState()
