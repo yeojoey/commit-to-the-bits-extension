@@ -86,7 +86,7 @@ class GuessingGame extends Component {
         </Col></Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm">
-          <h6>Noun</h6>
+          <h6>Character</h6>
           <InputGroup className="mx-auto" style={{"max-width": "250px"}}>
             <FormControl placeholder="e.g. fisherman" value={this.state.nounSubmission} onChange={(e) => this.handleChange("noun", e)}/>
             <Button as={InputGroup.Append} onClick={(e) => this.submitWord("noun", this.state.nounSubmission, e)} >Submit</Button>
@@ -116,7 +116,7 @@ class GuessingGame extends Component {
       <React.Fragment>
         <Row className="justify-content-md-center mx-5"><Col>
           <div className="switch-tab"><Button variant="info" onClick={() => this.switchMode()}>Submit new words</Button></div>
-          <h5>GUESS THE NOUN, VERB & LOCATION <b>IN CHAT!</b></h5>
+          <h5>GUESS THE CHARACTER, VERB & LOCATION <b>IN CHAT!</b></h5>
         </Col></Row>
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm margin-md">
