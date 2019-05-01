@@ -25,6 +25,12 @@ var answers = [
   {word: null, submitter: null, guesser: null}
 ];
 
+var publicAnswers = [
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null},
+  {word: null, submitter: null, guesser: null}
+];
+
 //These objects store more objects that contain a suggested word and the user who submitted the word. There are 'previous' versions to allow us to avoid repeating words.
 var nouns = [];
 var verbs = [];
@@ -102,9 +108,15 @@ const Guesser = class Guess
     answers[0].word = null;
     answers[1].word = null;
     answers[2].word = null;
+
     answers[0].guesser = null;
     answers[1].guesser = null;
     answers[2].guesser = null;
+  }
+
+  setPublic()
+  {
+    publicAnswers = JSON.parse(JSON.stringify(answers));
   }
 
   getState()
@@ -112,7 +124,7 @@ const Guesser = class Guess
     var state = {
       phase: false,
       words: words,
-      answers: answers,
+      answers: publicAnswers,
     }
 
     return state;
@@ -147,9 +159,11 @@ const Guesser = class Guess
 
     words[0].word = word.word;
     words[0].submitter = word.user;
+    console.log("BEFORE");
+    console.log(publicAnswers);
     answers[0].submitter = word.user;
-    console.log("Got noun: "+word.word);
-    console.log(answers);
+    console.log("AFTER");
+    console.log(publicAnswers);
     return word.word;
   }
 
@@ -174,7 +188,7 @@ const Guesser = class Guess
     words[1].submitter = word.user;
     answers[1].submitter = word.user;
     console.log("Got verb: "+word.word);
-    console.log(answers);
+    console.log(publicAnswers);
     return word.word;
   }
 
@@ -199,7 +213,7 @@ const Guesser = class Guess
     words[2].submitter = word.user;
     answers[2].submitter = word.user;
     console.log("Got location: "+word.word);
-    console.log(answers);
+    console.log(publicAnswers);
     return word.word;
   }
 
@@ -215,6 +229,8 @@ const Guesser = class Guess
       cont = this.guessVerb(word, user);
     if(cont && guessedBy.location == "")
       cont = this.guessLocation(word, user);
+
+    publicAnswers = JSON.parse(JSON.stringify(answers));
 
     return !cont;
   }
