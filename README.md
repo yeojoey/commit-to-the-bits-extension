@@ -17,10 +17,15 @@ Host this app on a server like Heroku.
 
 Set the following environment variables:
 `ENV_CLIENT_ID = obtained from Twitch dev`
+
 `ENV_OWNER_ID = ID of extension owner`
+
 `ENV_SECRET = obtained from Twitch dev`
+
 `CHANNEL_TO_SCRAPE = username of channel to scrape from`
+
 `TWITCHBOT_USERNAME = username of chatbot`
+
 `TWITCHBOT_OAUTH = oauth of chatbot`
 
 
