@@ -68,26 +68,7 @@ const GoogSheet = class GoogleSheetHandler
     });
   }
 
-
-  // listFiles(auth) {
-  //   const drive = google.drive({version: 'v3', auth});
-  //   drive.files.list({
-  //     pageSize: 10,
-  //     fields: 'nextPageToken, files(id, name)',
-  //   }, (err, res) => {
-  //     if (err) return console.log('The API returned an error: ' + err);
-  //     const files = res.data.files;
-  //     if (files.length) {
-  //       console.log('Files:');
-  //       files.map((file) => {
-  //         console.log(`${file.name} (${file.id})`);
-  //       });
-  //     } else {
-  //       console.log('No files found.');
-  //     }
-  //   });
-  // }
-
+  //Reads whitelisted users from our internal google sheet to ensure that we only scrape their data.
   readWhiteListedUsers(auth, self)
   {
     const sheets = google.sheets({version: 'v4', auth});
@@ -104,16 +85,13 @@ const GoogSheet = class GoogleSheetHandler
       const rows = res.data.values;
       if (rows.length)
       {
-        //console.log('Username:');
         rows.map((row) =>
         {
           inArray = false;
-          //console.log(row[0]);
           for(var i = 0; i < self.whiteList.length; i++)
           {
             if(row[0] == self.whiteList[i])
             {
-              //console.log("Breaking from loop due to duplicate.");
               inArray = true;
               break;
             }
@@ -121,7 +99,6 @@ const GoogSheet = class GoogleSheetHandler
           if(!inArray)
           {
             self.whiteList[self.whiteList.length] = row[0];
-            //console.log("USERS: "+users);
           }
         });
       }
@@ -133,10 +110,11 @@ const GoogSheet = class GoogleSheetHandler
     });
   }
 
+  //Return whitelisted users.
   getWhiteListedUsers()
   {
     try{
-    var content = process.env.GOOGLE_SHEETS_CREDENTIALS;//fs.readFileSync('credentials.json');
+    var content = process.env.GOOGLE_SHEETS_CREDENTIALS;
     var auth = this.authorize(JSON.parse(content));
     this.readWhiteListedUsers(auth, this);
     return this.whiteList;
@@ -146,6 +124,7 @@ const GoogSheet = class GoogleSheetHandler
     }
   }
 
+  //Writes chatter to our chatlog google sheet.
   appendData(auth, chatter)
   {
     const whiteListedUsers = this.getWhiteListedUsers();
@@ -161,7 +140,6 @@ const GoogSheet = class GoogleSheetHandler
 
     if(listed)
     {
-      //For some reason the bot marks some things that should logically be false as undefined. I am shifting them here for the purposes of logging. Will do research before changing the actual bot in case of functionality I'm unaware of.
       if(chatter.emote_only === undefined)
         chatter.emote_only = false
       if(chatter.mod === undefined)
@@ -191,7 +169,6 @@ const GoogSheet = class GoogleSheetHandler
           // Handle error.
           console.log(err);
         } else {
-          //console.log(`${result.updates.updatedCells} cells appended.`);
         }
       });
     }
@@ -200,7 +177,7 @@ const GoogSheet = class GoogleSheetHandler
   writeToChatLog(chatter)
   {
     try{
-      var content = process.env.GOOGLE_SHEETS_CREDENTIALS;//fs.readFileSync('credentials.json');
+      var content = process.env.GOOGLE_SHEETS_CREDENTIALS;
       var auth = this.authorize(JSON.parse(content));
       this.appendData(auth, chatter);}
     catch(err){
