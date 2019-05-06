@@ -369,7 +369,6 @@ function getOption(optionName, environmentName) {
 
 // Verify the header and the enclosed JWT.
 function verifyAndDecode(header) {
-  // if (header.startsWith(bearerPrefix)) {
   try {
     const token = header; //header.substring(bearerPrefix.length);
     return jsonwebtoken.verify(token, secret, { algorithms: ['HS256'] });
@@ -377,7 +376,6 @@ function verifyAndDecode(header) {
   catch (ex) {
     throw Boom.unauthorized(STRINGS.invalidJwt);
   }
-  //throw Boom.unauthorized(STRINGS.invalidAuthHeader);
 }
 
 function botStateQueryHandler(req)
@@ -432,7 +430,6 @@ function getState(userId) {
   let actualGuessPhase = AcaBot.getGuessing();
   guessState.phase = actualGuessPhase;
 
-  //verifyUserExists(userId);
   pos = getQueuePosition(userId);
 
   const toReturn = {
@@ -849,7 +846,6 @@ async function getDJHandler(req)
     Muse.getOptions();
 
     //Make sure this userID exists. (This should never be a problem, but hey who knows)
-    //verifyUserExists(dj);
     //Make everyone else not a DJ.
     dropOtherDJ();
 
