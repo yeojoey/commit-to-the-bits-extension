@@ -2,92 +2,57 @@ const TwitchBot = require('twitch-bot')
 const request = require('request');
 const fs = require('fs')
 var os = require('os')
+
+//GoogleSheetHandler needed to read whitelistsed users from our google sheet, which is fed by a google form
 const GoogleSheetHandler = require('./googleSheetHandler.js');
+//VoteHandler needed for edge cases in which people want to vote via chat, but this design was later deprecated in favor of the Twitch extension
 const VoteHandler = require('./voteHandler.js');
+//Uses server to update frontend in the case of a correct guess found in guessing game
 const server = require('./server.js');
 
 require('dotenv').config();
 
 const GoogSheet = new GoogleSheetHandler();
 var Voter;
+//Guesser used for Guessing game. Must be in bot's code for the bot to send messages received to guessing code.
 var Guesser;
+//Uses this channel id as the id for the state broadcast in the case of a correct guess.
 var channelID = "";
 
 const ABot = class AcademicBot
 {
-
+  //Uses environment variables on our server to initialize the chatbot.
   constructor(channel = process.env.CHANNEL_TO_SCRAPE)
   {
-    // Captain is the chosen one of the audience.
-    this.captain = "";
-
-    //Hotkey Explanations
-    this.hotkeys = ["!v - Initiates voting. This will grab a random suggestion from each of C, R, O, and W (if one exists) and post them in chat. It accepts votes for 15 seconds, or until it is manually stopped, and then posts the results.",
-                  "!# - Manually selects a winner. This hotkey will only work while voting is in progress. It allows the user to select the suggestion they wish to win, denoted by its number. Voting ends immediately.",
-                  "!h - Prints hotkey information."]
-
     this.Bot = new TwitchBot({
       username: process.env.TWITCHBOT_USERNAME,
       oauth: process.env.TWITCHBOT_OAUTH,
       channels: [channel]
     })
 
-    this.restrictions = [];
-
+    //Guessing defaults to false, because the Guessing game doesn't start in guessing mode.
     this.guess = false;
 
     this.startup()
   }
 
-  //CHATBOT INITIALIZATION AND UPKEEP
+  //Sets up the bots most vital functions/responses.
   startup()
   {
+    //Joins the given channel.
     this.Bot.on('join', channel => {
       console.log(`Joined channel: ${channel}`)
     })
 
+    //Logs any errors received.
     this.Bot.on('error', err => {
       console.log(err)
     })
 
+    //This is where it deals with messages it reads in chat.
+    //It logs all messages from whitelisted users into our chatlog via GoogSheet.
+    //If guess is true, it'll compare the given message with the answers and update the state if correct.
     this.Bot.on('message', chatter => {
-      if(chatter.message.charAt(0) === '!') {
-        //TODO: SANITIZE INPUT
-        switch(chatter.message.charAt(1))
-        {
-          case 'c':
-            Voter.addCharacter(chatter.message.slice(3, chatter.message.length))
-            break
-          case 'r':
-            Voter.addRelationship(chatter.message.slice(3, chatter.message.length))
-            break
-          case 'o':
-            Voter.addObjective(chatter.message.slice(3, chatter.message.length))
-            break
-          case 'w':
-            Voter.addWhere(chatter.message.slice(3, chatter.message.length))
-            break
-          case 'v':
-            Voter.voteFor(chatter.message.charAt(3), chatter.username)
-            break
-        }
-      }
-
-      if(this.restrictions.length > 0)
-      {
-        console.log("restrictions exist");
-        for(var i = 0; i < this.restrictions.length; i++)
-        {
-          console.log("Restriction : "+this.restrictions[i]);
-          if(chatter.message.includes(this.restrictions[i]))
-          {
-            console.log("get banned");
-            this.Bot.say('/timeout '+chatter.username+' 1');
-            break;
-          }
-        }
-      }
-
       if(this.guess)
       {
         console.log("Checking message.");
@@ -95,60 +60,11 @@ const ABot = class AcademicBot
         if(foundMatch)
           server.attemptStateBroadcast(server.getCHID());
       }
-
       this.writeToLog(chatter)
     })
-
-    //HOTKEYS
-
-    var stdin = process.openStdin();
-    stdin.on('data', chunk =>
-    {
-      var chunkster = (""+chunk).split(os.EOL)[0]
-      if(chunkster.charAt(0) == "!")
-      {
-        switch(chunkster.charAt(1))
-        {
-          case "v":
-            if(!this.voting)
-            {
-              Voter.vote();
-            }
-            break
-          case "1":
-            if(this.voting)
-            {
-              Voter.displayWinner(0);
-            }
-            break
-          case "2":
-            if(this.voting)
-            {
-              Voter.displayWinner(1);
-            }
-            break
-          case "3":
-            if(this.voting)
-            {
-              Voter.displayWinner(2);
-            }
-            break
-          case "4":
-            if(this.voting)
-            {
-              Voter.displayWinner(3);
-            }
-            break
-          case "r":
-            Voter.getRandomSuggestion();
-            break
-          case "h":
-            this.getHelp()
-            break
-        }
-      }
-    })
   }
+
+  //Gets and Sets.
 
   setVoter(v)
   {
@@ -160,28 +76,14 @@ const ABot = class AcademicBot
     Guesser = g;
   }
 
-  // Retrieves a user to act as Captain
-  setCaptain(cap)
-  {
-    this.captain = cap;
-  }
-
   setChannelID(id)
   {
     channelID = id;
   }
-  //TIMER FOR PRINTING DISCLAIMER and/or CONSENT FORM
 
-  printLegalDoc()
+  setGuessing(phase)
   {
-    //this.Bot.say("A legal consent form or disclaimer would go here. ;)")
-  }
-
-  //LOGGING
-
-  writeToLog(chatter)
-  {
-    GoogSheet.writeToChatLog(chatter);
+    this.guess = phase;
   }
 
   //Print out hotkey information
@@ -194,24 +96,16 @@ const ABot = class AcademicBot
     }
   }
 
-  setRestriction(restrs)
-  {
-    this.restrictions = restrs;
-  }
-
-  setGuessing(phase)
-  {
-    this.guess = phase;
-  }
-
   getGuessing()
   {
     return this.guess;
   }
 
-  clearRestrictions()
+  //Logging.
+
+  writeToLog(chatter)
   {
-    this.restrictions = [];
+    GoogSheet.writeToChatLog(chatter);
   }
 
 }
