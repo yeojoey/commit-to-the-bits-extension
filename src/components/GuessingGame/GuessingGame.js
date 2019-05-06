@@ -7,7 +7,6 @@ import FormControl from 'react-bootstrap/FormControl';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 
-
 import './GuessingGame.css';
 
 class GuessingGame extends Component {
