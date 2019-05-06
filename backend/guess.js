@@ -18,13 +18,14 @@ var guessedBy = {
   location: ""
 }
 
-//Joey's preference for state. Contains word info for current secret words. Submitter is always filled in, word and guesser are only filled after correctly guessed.
+//Contains word info for current secret words. Submitter is always filled in, word and guesser are only filled after correctly guessed.
 var answers = [
   {word: null, submitter: null, guesser: null},
   {word: null, submitter: null, guesser: null},
   {word: null, submitter: null, guesser: null}
 ];
 
+//Public facing answers array. This is used so we can change our internal answers before changing the frontend. Otherwise, incorrect information would surface.
 var publicAnswers = [
   {word: null, submitter: null, guesser: null},
   {word: null, submitter: null, guesser: null},
@@ -46,6 +47,7 @@ const Guesser = class Guess
 
   }
 
+  //Adds a prospective word to our pool. Takes the word itself, the type of word (being a noun, verb, or location), and the user id of the submitter of the word.
   async addWord(word, uid, type)
   {
     let promise = await this.convertUidToUsername(uid);
@@ -66,6 +68,8 @@ const Guesser = class Guess
       this.addLocation(word, user);
     }
   }
+
+  //Specific add functions per word type.
 
   addNoun(no, user)
   {
@@ -94,6 +98,7 @@ const Guesser = class Guess
     console.log(locations);
   }
 
+  //Clears guessedBy object.
   clearGuessers()
   {
     guessedBy = {
@@ -103,6 +108,7 @@ const Guesser = class Guess
     }
   }
 
+  //Clears answers. This and the above function are used to prepare for a new round of guessing.
   clearAnswers()
   {
     answers[0].word = null;
@@ -114,11 +120,13 @@ const Guesser = class Guess
     answers[2].guesser = null;
   }
 
+  //Makes our internal answers public.
   setPublic()
   {
     publicAnswers = JSON.parse(JSON.stringify(answers));
   }
 
+  //Returns the state to the server.
   getState()
   {
     var state = {
@@ -130,6 +138,7 @@ const Guesser = class Guess
     return state;
   }
 
+  //Gets a word based on type.
   getWord(type)
   {
     if(type == "noun")
@@ -139,6 +148,8 @@ const Guesser = class Guess
     else if(type == "location")
       return this.getLocation();
   }
+
+  //Get functions to randomly return a word per type.
 
   getNoun()
   {
@@ -217,6 +228,7 @@ const Guesser = class Guess
     return word.word;
   }
 
+  //Compares the given word with the answers. If found correct, the submitter of the guess is displayed on stream.
   guess(word, user)
   {
     word = word.toLowerCase();
@@ -234,6 +246,8 @@ const Guesser = class Guess
 
     return !cont;
   }
+
+  //Specific functions for guessing per word type.
 
   guessNoun(stringReceived, user)
   {
@@ -301,6 +315,7 @@ const Guesser = class Guess
     return Math.floor(Math.random() * max);
   }
 
+  //Converts user id to user name. user id is needed for this, NOT opaque user id.
   async convertUidToUsername(uid)
   {
     const url = 'https://api.twitch.tv/kraken/users/'+uid;
@@ -319,11 +334,6 @@ const Guesser = class Guess
     });
     return name;
   }
-
-  //Use
-  // let promise = await this.convertUidToUsername(id);
-  // promise = JSON.parse(promise);
-  // this.dj = promise.display_name;
 }
 
 module.exports = Guesser;
