@@ -16,17 +16,18 @@ To preview the project on a Twitch channel, you will need to first create an ext
 Host this app on a server like Heroku.
 
 Set the following environment variables:
-`ENV_CLIENT_ID = obtained from Twitch dev`
 
-`ENV_OWNER_ID = ID of extension owner`
+* `ENV_CLIENT_ID` = obtained from Twitch dev
 
-`ENV_SECRET = obtained from Twitch dev`
+* `ENV_OWNER_ID` = ID of extension owner
 
-`CHANNEL_TO_SCRAPE = username of channel to scrape from`
+* `ENV_SECRET` = obtained from Twitch dev
 
-`TWITCHBOT_USERNAME = username of chatbot`
+* `CHANNEL_TO_SCRAPE` = username of channel to scrape from
 
-`TWITCHBOT_OAUTH = oauth of chatbot`
+* `TWITCHBOT_USERNAME` = username of chatbot
+
+* `TWITCHBOT_OAUTH` = oauth of chatbot
 
 
 
