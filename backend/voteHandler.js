@@ -1,4 +1,3 @@
-
 var defaultCharacter = ["Narcissist", "Baker", "Baby", "Eskimo that is too Cold"]
 var defaultRelationship = ["Reluctant Boyfriend", "Grandma", "Long-time Butler", "Frenemies"]
 var defaultObjective = ["To Get Away", "To Become Taller", "Pass the Exam", "Earn Your License"]
@@ -36,6 +35,7 @@ const Vote = class VoteHandler
     this.finalWord = ""
   }
 
+  //Clears everything.
   clear()
   {
     //Suggestion Lists
@@ -48,9 +48,9 @@ const Vote = class VoteHandler
     this.votes = []
     this.options = []
     this.votedAlready = []
-
-    this.captain = ""
   }
+
+  //Add functions per suggestion type.
 
   addCharacter(cha)
   {
@@ -76,6 +76,7 @@ const Vote = class VoteHandler
     console.log(this.where)
   }
 
+  //Submits a suggestion. Takes the suggestion itself and the category of suggestion.
   submitSuggestion(category, suggestion)
   {
     switch(category)
@@ -94,6 +95,8 @@ const Vote = class VoteHandler
         break;
     }
   }
+
+  //Get functions for a random suggestion per suggestion type.
 
   getCharacter(num = 1)
   {
@@ -259,6 +262,7 @@ const Vote = class VoteHandler
     return chosen
   }
 
+  //Returns a random suggestion.
   getRandomSuggestion()
   {
     var randomSuggestions = getOptions()
@@ -271,6 +275,7 @@ const Vote = class VoteHandler
 
   }
 
+  //Gets options for viewers to vote on.
   getOptions()
   {
     var cha
@@ -297,6 +302,7 @@ const Vote = class VoteHandler
     return toReturn
   }
 
+  //Votes for the given choice, assuming the given user has not yet voted.
   voteFor(choice, user)
   {
     console.log("Vote received. Voting for: "+ choice +", Vote by: " + user)
@@ -308,6 +314,7 @@ const Vote = class VoteHandler
     this.votedAlready.push(user)
   }
 
+  //Determines the winner of the vote and displays them.
   displayWinner(winner = -1)
   {
     if(this.voting)
@@ -338,6 +345,7 @@ const Vote = class VoteHandler
     this.voting = false
   }
 
+  //Initiates a vote.
   vote()
   {
     this.voting = true
@@ -347,6 +355,7 @@ const Vote = class VoteHandler
     this.options = this.getOptions()
   }
 
+  //Returns the game state.
   getState()
   {
     return {
