@@ -1,6 +1,8 @@
 const request = require('request-promise');
 
+//Contains our music genres for users to choose from.
 const moods = ["Action", "Adventure", "Choral", "Comedy", "Dance", "Dramatic", "Gregorian Chant", "Groovy", "Fancy", "Futuristic", "Heavy Metal", "Mysterious", "Old-Timey", "Romance", "Sensual", "Smooth Jazz", "Spooky", "Suspense", "Sad", "Wild West"];
+
 const Muse = class Music
 {
   constructor()
@@ -13,6 +15,7 @@ const Muse = class Music
     this.options = [];
   }
 
+  //Puts the given user in the running to be DJ. Takes that user's user id and opaque user id.
   getInDJBucket(uID, opID)
   {
     if(!this.djBucket.includes(uID))
@@ -23,18 +26,21 @@ const Muse = class Music
     }
   }
 
+  //Clears the bucket.
   clearDJBucket()
   {
     this.djBucket = [];
     this.opaqueBucket = [];
   }
 
+  //Clears the song queue.
   clearQueue()
   {
     this.queue = [];
     this.canSelectSong = true;
   }
 
+  //Gets a random DJ from the bucket. Is async to retrieve user's username.
   async getDJ()
   {
     let rand = this.randomInt(this.djBucket.length);
@@ -52,6 +58,7 @@ const Muse = class Music
     };
   }
 
+  //Gets the song options for the current DJ.
   getOptions()
   {
     this.options = [];
@@ -77,16 +84,19 @@ const Muse = class Music
     return this.options;
   }
 
+  //Gets the queue.
   getQueue()
   {
     return this.queue;
   }
 
+  //Gets the DJ Bucket.
   getDJBucket()
   {
     return this.djBucket;
   }
 
+  //Returns the state of the music game.
   getState()
   {
     return {
@@ -97,6 +107,7 @@ const Muse = class Music
     }
   }
 
+  //Removes the given id from the bucket.
   removeFromDJBucket(uID)
   {
     for(var i = 0; i < this.djBucket.length; i++)
@@ -109,6 +120,7 @@ const Muse = class Music
     }
   }
 
+  //Removes the given song from the queue.
   removeFromQueue(index)
   {
     this.queue.splice(index, 1);
@@ -116,6 +128,7 @@ const Muse = class Music
     return this.queue;
   }
 
+  //Swaps two songs. Unused.
   swapElements(el1, el2)
   {
     let temp = this.queue[el1];
@@ -124,6 +137,7 @@ const Muse = class Music
     return this.queue;
   }
 
+  //Adds a song to the queue.
   addToQueue(mood)
   {
     this.queue.push(mood);
