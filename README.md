@@ -1,17 +1,37 @@
 Code base for [Commit to the Bits Helper](https://www.twitch.tv/ext/tndhpyr8a9l40u3m5cw5wpnrbievij-0.0.1).
 
-## Actual process
+## Quickstart
 
-Do this on a new pull:
+On cloning the project:
 ### `yarn install`
 
-If you're changing front-end stuff
+To preview the project:
 ### `npm run build`
 ### `npm start`
 
-Then go to localhost:8081 to preview changes
+Visit localhost:8081 to view the webpage.
 
-## Real readme for real people
+
+To preview the project on a Twitch channel, you will need to first create an extension using Twitch's Developer website.
+Host this app on a server like Heroku.
+
+Set the following environment variables:
+
+* `ENV_CLIENT_ID` = obtained from Twitch dev
+
+* `ENV_OWNER_ID` = ID of extension owner
+
+* `ENV_SECRET` = obtained from Twitch dev
+
+* `CHANNEL_TO_SCRAPE` = username of channel to scrape from
+
+* `TWITCHBOT_USERNAME` = username of chatbot
+
+* `TWITCHBOT_OAUTH` = oauth of chatbot
+
+
+
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

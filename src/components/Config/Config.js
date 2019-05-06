@@ -5,6 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+// The Config Panel is rendered above the main game panel and gives Twitch admins and moderators of
+// the channel additional powers such as switching games or triggering events.
+
 class Config extends Component {
 
   constructor(props) {
