@@ -68,7 +68,7 @@ class Instructions extends Component {
         </Modal.Body>
         :
         <Modal.Body>
-          <p>In Guesstination Unknown, audience members can input three suggestions - a noun, a verb, and a location.
+          <p>In Guesstination Unknown, audience members can input three suggestions - a character, a verb, and a location.
           One of each of these is picked to create a scenario (like “The Joker washing a goat in Paris), but the audience
           doesn’t know what that final scenario is.  A single improv performer will go on stage and perform a scene based
           on that scenario.  The audience must guess the three suggestions based on what they see.</p>
