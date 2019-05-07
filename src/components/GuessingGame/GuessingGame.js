@@ -120,7 +120,7 @@ class GuessingGame extends Component {
         <Row className="justify-content-md-center mx-5">
           <Col className="col-sm margin-md">
           <div className="guess-box">
-          <h6>Noun</h6>
+          <h6>Character</h6>
           {
             this.props.answers[0].word === null ?
             <div>
