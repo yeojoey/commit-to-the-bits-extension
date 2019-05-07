@@ -30,6 +30,7 @@ class FreezeTag extends Component {
     })
   }
 
+  // Submits vote to server
   handleVote = async (vote) => {
       const response = await fetch ("/api/vote", {
         method: "POST",
@@ -70,6 +71,7 @@ class FreezeTag extends Component {
     this.setState({selectedCategory: category, suggestion: "", placeholder: placeholder});
   }
 
+  // Submits suggestion of [catergory] to server
   handleSubmit = async () => {
     const response = await fetch ("/api/submitSuggestion", {
       method: "POST",
@@ -84,7 +86,7 @@ class FreezeTag extends Component {
     this.setState({ suggestion: "" });
   }
 
-
+  // Renders dropdown depending on what category is currently selected
   renderDropdownItems() {
     let result = [];
     this.categories.forEach((category) => {
@@ -95,6 +97,7 @@ class FreezeTag extends Component {
     return result;
   }
 
+  // Renders voting options
   renderVoting() {
     if (this.props.isVoting) {
       return (

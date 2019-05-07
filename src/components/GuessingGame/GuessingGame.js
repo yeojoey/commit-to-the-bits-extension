@@ -76,6 +76,7 @@ class GuessingGame extends Component {
     }
   }
 
+  // Renders submission interface
   renderSubmission() {
     return (
       <React.Fragment>
@@ -110,6 +111,7 @@ class GuessingGame extends Component {
     )
   }
 
+  // Renders guessing interface
   renderGuessing() {
     return (
       <React.Fragment>
