@@ -153,11 +153,14 @@ var currentGame = "GuessingGame";
     }
   });
 
+  //Changes current game state.
   server.route ({
     method: 'POST',
     path: "/api/changeGame",
     handler: changeGameHandler
   })
+
+  //Specific game state changing functions per game.
 
   server.route ({
     method: "POST",
@@ -208,34 +211,32 @@ var currentGame = "GuessingGame";
     handler: botEndVoteHandler
   });
 
+  //Allows a user to vote for a specific suggestion.
   server.route ({
     method: 'POST',
     path: '/api/vote',
     handler: botVoteHandler
   });
 
+  //Submits a suggestion.
   server.route ({
     method: "POST",
     path: "/api/submitSuggestion",
     handler: submitSuggestionHandler
   })
 
+  //Gets the winner of a vote.
   server.route ({
     method: "GET",
     path: "/api/getFreezeTagPrompt",
     handler: getFreezeTagPromptHandler
   })
 
+  //Gets the state of the voting game.
   server.route ({
     method: "GET",
     path: "/api/getBotState",
     handler: botStateQueryHandler
-  })
-
-  server.route ({
-    method: "GET",
-    path: "/api/getCaptain",
-    handler: captainQueryHandler
   })
 
   //******************************
@@ -248,18 +249,21 @@ var currentGame = "GuessingGame";
     handler: enqueueAudienceMemberHandler
   })
 
+  //Puts a viewer into the DJBucket
   server.route ({
     method: "POST",
     path: "/api/getInDJBucket",
     handler: getInDJBucketHandler
   })
 
+  //Empties the DJ Bucket
   server.route ({
     method: "POST",
     path: "/api/clearDJBucket",
     handler: clearDJBucketHandler
   })
 
+  //Picks a song for the queue.
   server.route ({
     method: "POST",
     path: "/api/chooseMusic",
@@ -306,24 +310,29 @@ var currentGame = "GuessingGame";
   //**************************
   //***GUESSGING GAME ROUTE***
   //**************************
+
+  //Submits a word for the pool
   server.route ({
     method: "POST",
     path: "/api/submitWord",
     handler: submitWordHandler
   })
 
+  //Begins guessing phase.
   server.route ({
     method: "POST",
     path: "/api/beginGuessing",
     handler: beginGuessingHandler
   })
 
+  //Allows word submission
   server.route ({
     method: "POST",
     path: "/api/beginWordSubmission",
     handler: beginWordSubmissionHandler
   })
 
+  //Gets a random word, given the word type.
   server.route ({
     method: "GET",
     path: "/api/getWord",
@@ -378,6 +387,7 @@ function verifyAndDecode(header) {
   }
 }
 
+//Gets the state of the voting game
 function botStateQueryHandler(req)
 {
   // Verify all requests.
@@ -392,12 +402,14 @@ function botStateQueryHandler(req)
   return state;
 }
 
+//Gets the winning word from the vote.
 function getFreezeTagPromptHandler(req) {
   return { freezeTagPrompt: Voter.getState().finalWord }
 }
 
 //UserState Handling
 
+//Stores a user's information in an internal array
 function verifyUserExists(opaqueUserId)
 {
   if(!(userStates.hasOwnProperty(opaqueUserId)))
@@ -415,6 +427,7 @@ function verifyUserExists(opaqueUserId)
   }
 }
 
+//Clears a user's voting state, allowing them to vote again.
 function clearUserVotes()
 {
   for(var key in userStates)
@@ -423,6 +436,7 @@ function clearUserVotes()
   }
 }
 
+//Broad state retrieval function. Does a LOT.
 function getState(userId) {
   const botState = Voter.getState();
   const musicState = Muse.getState();
@@ -462,6 +476,7 @@ function getState(userId) {
   return toReturn;
 }
 
+//Clears the voting data.
 function botClearHandler(req)
 {
   // Verify all requests.
@@ -477,6 +492,7 @@ function botClearHandler(req)
   };
 }
 
+//Starts a vote.
 function botStartVoteHandler(req)
 {
   // Verify all requests.
@@ -496,6 +512,7 @@ function botStartVoteHandler(req)
   };
 }
 
+//Ends a vote.
 function botEndVoteHandler(req)
 {
   // Verify all requests.
@@ -515,6 +532,7 @@ function botEndVoteHandler(req)
   };
 }
 
+//Votes for a suggestion.
 function botVoteHandler(req)
 {
   // Verify all requests.
@@ -534,27 +552,7 @@ function botVoteHandler(req)
   return getState(opaqueUserId);
 }
 
-function captainQueryHandler(req)
-{
-  // Verify all requests.
-  const payload = verifyAndDecode(req.headers.authorization);
-
-  var cap = "undefined";
-  var url = "https://tmi.twitch.tv/group/user/" + "charlieparke" + "/chatters"
-  var semaphore = 0;
-  var toReturn = "";
-  rp(url)
-    .then(function(body)
-    {
-      console.log(body)
-    })
-    .catch(function(err)
-    {
-      console.log(err)
-    })
-  return toReturn;
-}
-
+//Changes the current game.
 function changeGameHandler (req) {
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
@@ -580,6 +578,8 @@ function changeGameHandler (req) {
     currentGame: currentGame
   }
 }
+
+//Specific game state changing functions per game.
 
 function changeToTSAHandler(req) {
     // Verify all requests.
@@ -652,7 +652,7 @@ function changeToMusicHandler(req) {
 }
 
 /*******************
-*   QUEUE RELATED
+*   QUEUE RELATED  *
 ********************/
 
 function getHeadOfQueueHandler (req) {
@@ -1007,7 +1007,6 @@ function sendStateBroadcast(channelId) {
 
   const state = Voter.getState();
   const museState = Muse.getState();
-  //I hope this doesn't break everything
   const guessState = Gus.getState();
   let actualGuessPhase = AcaBot.getGuessing();
   console.log("Broadcasting Guess Answers: "+guessState.answers[0]);
@@ -1063,11 +1062,10 @@ function userIsInCooldown(opaqueUserId) {
   userCooldowns[opaqueUserId] = now + userCooldownMs;
   return false;
 }
-//TESTING
+
 function getCHID()
 {
   return guessingGameChannelID;
 }
-//TESTSING
 module.exports.attemptStateBroadcast = attemptStateBroadcast;
 module.exports.getCHID = getCHID;
